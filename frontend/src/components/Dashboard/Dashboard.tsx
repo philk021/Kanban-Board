@@ -41,13 +41,17 @@ function Dashboard() {
         <div className="dashboard-container">
           <SideMenu />
           <div className="dashboard">
-            <BoardsNav />
             <Routes>
               <Route path="/" element={ <Boards boards={boards}/> }/>
               {
                 boards && boards.map((item) => 
                   <Route key={item.board_id} path={"" + item.board_id}
-                    element={ <Board title={item.board_title} id={item.board_id} /> } 
+                    element={ 
+                      <>
+                        <BoardsNav title={item.board_title} />
+                        <Board id={item.board_id} />
+                      </> 
+                    } 
                   />)
               }
               <Route path='new' element={ <NewBoard/> }/>

@@ -6,7 +6,7 @@ import AuthContext from "../../context/AuthContext";
 import "./styles/board.css";
 import TaskColumn from "./TaskColumn";
 
-function Board({title, id} : {title: string, id: number}) {
+function Board({id} : {id: number}) {
     const [tasks, setTasks] = useState<Task[]>([]);
     const {token} = useContext(AuthContext);
 

@@ -1,7 +1,7 @@
 .dashboard-heading {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
     padding: 15px;
 }
 .dashboard-heading h1 {
