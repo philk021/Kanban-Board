@@ -1,0 +1,14 @@
+.dashboard-heading {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 15px;
+}
+.dashboard-heading h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+.divider {
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+}

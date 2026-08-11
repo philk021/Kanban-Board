@@ -1,0 +1,23 @@
+.edit-bar {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.edit-bar h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+.board-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+.search {
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 5px 10px;
+}

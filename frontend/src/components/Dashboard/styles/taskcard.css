@@ -1,0 +1,51 @@
+.task-card {
+    background-color: var(--bg-card);
+    margin: 15px auto;
+    padding: 15px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.task-card-header {
+    margin: 0 0 15px 0;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.task-card-header button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background: var(--bg-card);
+}
+.task-card-header button:hover {
+    cursor: pointer;
+    background: var(--bg-subtle-hover);
+}
+.low, .medium, .high {
+    width: min-content;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+.low {
+    color: var(--low-priority);
+    background: var(--low-priority-bg);
+}
+.medium {
+    color: var(--medium-priority);
+    background: var(--medium-priority-bg);
+}
+.high {
+    color: var(--high-priority);
+    background: var(--high-priority-bg);
+}
+.task-info {
+    margin: 0 0 10px 0;
+}
+.task-info h1 {
+    margin: 0 0 10px 0;
+}
+.task-info p {
+    color: var(--text-subtle);
+}

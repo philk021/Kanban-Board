@@ -1,0 +1,9 @@
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 10px;
+    margin-right: auto;
+    padding: 15px;
+    overflow: scroll;
+}

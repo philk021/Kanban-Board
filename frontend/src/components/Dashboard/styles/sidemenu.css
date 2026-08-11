@@ -1,0 +1,47 @@
+.side-menu {
+    width: min-content;
+    height: 100vh;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--border);
+    padding: 15px 25px;
+}
+a.board-link {
+    margin: 0 auto 15px auto;
+    padding: 0;
+}
+.board-link{
+    display: block;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+.board-link h1 {
+    font-weight: 600;
+}
+.new-board-btn {
+    width: min-content;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: var(--primary);
+}
+.new-board-btn:hover {
+    cursor: pointer;
+    background: var(--primary-hover);
+}
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid var(--primary);
+    background: var(--bg-card);
+}
+.logout-btn:hover {
+    cursor: pointer;
+}

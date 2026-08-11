@@ -1,0 +1,7 @@
+.dashboard-container {
+    display: flex;
+}
+.dashboard {
+    width: 100%;
+    background-color: var(--bg);
+}
