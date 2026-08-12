@@ -22,15 +22,25 @@ a.board-link {
     font-weight: 600;
 }
 .new-board-btn {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
     width: min-content;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     background: var(--primary);
+    font-size: 1rem;
 }
 .new-board-btn:hover {
     cursor: pointer;
     background: var(--primary-hover);
+}
+.new-board-btn div {
+    padding: none;
+    margin: none;
+    white-space: nowrap;
 }
 .logout-btn {
     display: flex;
@@ -44,4 +54,12 @@ a.board-link {
 }
 .logout-btn:hover {
     cursor: pointer;
+}
+.logout-btn svg {
+    position: relative;
+    top: -1px;
+}
+.new-board-btn svg {
+    position: relative;
+    top: -1px;
 }

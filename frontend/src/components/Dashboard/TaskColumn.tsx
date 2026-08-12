@@ -10,8 +10,8 @@ function TaskColumn({title, tasks} : {title: string, tasks: Task[]}) {
             <div className="column-header">
                 <h1>{title}</h1>
                 <div className="column-header-btns">
-                    <button><FaPlus className="icon"/></button>
-                    <button><FaEllipsisVertical className="icon"/></button>
+                    <button><FaPlus /></button>
+                    <button><FaEllipsisVertical /></button>
                 </div>
             </div>
             {tasks && tasks.map((item) => 
