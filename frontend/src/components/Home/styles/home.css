@@ -10,6 +10,7 @@ main {
     font-size: 3rem;
 }
 .sub-banner{
+    margin: 25px auto;
     font-size: 1.2rem;
 }
 a {
@@ -45,20 +46,19 @@ nav {
     justify-content: space-between;
     border-bottom: 1px solid var(--border);
     height: 70px;
-    padding: 0 5px 0 5px;
+    padding: 0 10px 0 10px;
 }
 nav ul {
     width: 80%;
     display: flex;
     justify-content: flex-end;
-}
-nav ul li {
-    margin-left: 2%;
+    align-items: center;
+    gap: 8px;
 }
 li {
     list-style-type: none;
 }
-.logo {
+.landing-page-logo {
     width: 20%;
 }
 .login-account-btn {

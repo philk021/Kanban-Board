@@ -47,7 +47,7 @@ function Board({id} : {id: number}) {
             <EditBar />
             <div className="board">
                 {Object.entries(categorized).map(([category, group]) => 
-                    <TaskColumn key={category} title={category} tasks={group}/>
+                    <TaskColumn key={category} boardId={id} title={category} tasks={group}/>
                 )}
             </div>
         </>

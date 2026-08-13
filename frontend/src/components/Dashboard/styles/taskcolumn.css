@@ -33,3 +33,48 @@
     position: relative;
     top: 1px;
 }
+.task-dialog {
+    padding: none;
+    margin: none;
+    border: none;
+    position: fixed;
+    border-radius: 8px;
+}
+.task-dialog::backdrop {
+    background: var(--overlay);
+}
+.task-form {
+    width: 500px;
+    border: 1px solid var(--border);
+    padding: 15px;
+}
+.task-form textarea {
+    resize: none;
+}
+.priority-dropdown {
+    margin: 0 0 15px 0;
+    background-color: var(--bg-subtle);
+    border: none;
+    padding: 10px 15px;
+}
+.task-btns {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+.create-task-btn, .close-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+}
+.create-task-btn, .close-btn:hover {
+    cursor: pointer;
+}
+.create-task-btn {
+    background: var(--primary);
+}
+.close-btn {
+    border: 1px solid var(--primary);
+    background: var(--bg-card);
+}

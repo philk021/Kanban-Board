@@ -1,20 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import './styles/home.css';
 
 function Home() {
     return (
         <main>
-            {}
             <div>
-                <div className="banner">A project management platform</div>
-                <br/>
+                <div className="banner">Free No-Signup Kanban Board</div>
                 <div className="sub-banner">
-                    Create collaborative kanban boards to track project progress
+                    Get started in seconds. Signing up is free and optional, if you want to save your progress.
                 </div>
-                <br/>
-                <br/>
-                <Link className="join-btn" to="/signup">Sign up for free</Link>
-                <Link className="login-btn" to="/login">Login</Link>
+                <div>
+                    <Link className="join-btn" to="/">Create a board</Link>
+                </div>
             </div>
         </main>
     )

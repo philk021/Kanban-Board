@@ -3,7 +3,6 @@ import Home from './components/Home/Home';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Home/Login';
 import Signup from './components/Home/Signup';
-import About from './components/Home/About';
 import Nav from './components/Home/Nav';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import PageNotFound from './components/Shared/PageNotFound';
@@ -41,7 +40,6 @@ function App() {
             <Nav/> 
             <Routes>
               <Route path='/' element={ <Home/> }/>
-              <Route path='/about' element={ <About/> }/>
               <Route path='/login' element={ <Login /> }/>
               <Route path='/signup' element={ < Signup /> }/>
               <Route path='*' element={ <PageNotFound/> }/>

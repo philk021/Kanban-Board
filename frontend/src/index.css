@@ -8,6 +8,8 @@
   --border: #E5E4E2;
   --primary: #1fa0fc;
   --primary-hover: #3ba5f0;
+  --overlay: #b2b2b687;
+  
   --low-priority: rgb(28, 125, 28);
   --medium-priority: rgb(137, 137, 4);
   --high-priority: rgb(232, 51, 51);
