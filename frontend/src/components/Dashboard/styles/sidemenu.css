@@ -5,6 +5,23 @@
     border-right: 1px solid var(--border);
     padding: 15px 25px;
 }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 15px 0;
+}
+.logo button {
+    border: none;
+    background: none;
+}
+.logo button:hover {
+    cursor: pointer;
+}
+.logo svg {
+    height: 20px;
+    width: 20px;
+}
 a.board-link {
     margin: 0 auto 15px auto;
     padding: 0;
@@ -62,4 +79,10 @@ a.board-link {
 .new-board-btn svg {
     position: relative;
     top: -1px;
+}
+
+@media screen and (max-width: 900px) {
+    .side-menu {
+        display: none;
+    }
 }

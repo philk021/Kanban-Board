@@ -2,14 +2,20 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
 import "./styles/sidemenu.css";
-import { FaGear, FaFolder, FaRightFromBracket, FaPlus } from "react-icons/fa6";
+import { FaGear, FaFolder, FaRightFromBracket, FaPlus, FaBars } from "react-icons/fa6";
 
 function SideMenu() {
     const {logout} = useContext(AuthContext);
 
     return (
-        <div className="side-menu">
+        <div className="side-menu" id="side-menu">
             <div className="side-menu-sub">
+                <div className="logo">
+                    <button>
+                        <FaBars />
+                    </button>
+                    <h1>Logo</h1>
+                </div>
                 <Link className="board-link" to="/boards/new">
                     <button className="new-board-btn">
                         <FaPlus/>
