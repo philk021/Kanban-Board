@@ -9,6 +9,7 @@ import PageNotFound from "../Shared/PageNotFound";
 import NewBoard from "./NewBoard";
 import "./styles/dashboard.css";
 import BoardsNav from "./BoardsNav";
+import DashboardContext from "../../context/DashboardContext";
 
 function Dashboard() {
     const [boards, setBoards] = useState<BoardInfo[]>([]);
@@ -38,14 +39,16 @@ function Dashboard() {
     }
 
     return (
+      <DashboardContext value={{boards, setBoards}}>
         <div className="dashboard-container">
           <SideMenu />
           <div className="dashboard">
             <Routes>
-              <Route path="/" element={ <Boards boards={boards}/> }/>
+              <Route path="/" element={ <Boards/> }/>
               {
                 boards && boards.map((item) => 
-                  <Route key={item.board_id} path={"" + item.board_id}
+                  <Route key={item.board_id} 
+                    path={`${item.board_id}`}
                     element={ 
                       <>
                         <BoardsNav title={item.board_title} />
@@ -59,6 +62,7 @@ function Dashboard() {
             </Routes>
           </div>
         </div>
+      </DashboardContext>
     )
 }
 
