@@ -9,7 +9,7 @@ function TaskColumn({boardId, title, tasks} : {boardId:number, title: string, ta
     const [columnTasks, setColumnTasks] = useState<Task[]>(tasks);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
-    const [selectedPriority, setSelectedPriority] = useState("");
+    const [selectedPriority, setSelectedPriority] = useState("low");
     const [responseMessage, setResponseMessage] = useState("");
     
     const dialogRef = useRef<HTMLDialogElement | null>(null);
@@ -45,7 +45,7 @@ function TaskColumn({boardId, title, tasks} : {boardId:number, title: string, ta
             const data = await response.json();
            
             if (response.status == 201) {
-                setColumnTasks([...columnTasks, data.message]);
+                setColumnTasks(data);
                 setTaskTitle("");
                 setTaskDescription("");
                 setSelectedPriority("");
