@@ -59,12 +59,12 @@ router.put('/edit/:id', async (req, res) => {
     };
 });
 
-router.delete('/remove/:id', async (req, res) => {
-    const boardId = req.body.boardId;
+router.delete('/delete/:boardId/:taskId', async (req, res) => {
+    const boardId = req.params.boardId
     const taskId = req.params.taskId;
 
-    if (!boardId || !taskId) {
-      res.status(500).json({error: "Invalid input"})
+    if (!taskId) {
+      res.status(500).json({error: "Invalid input"});
     };
 
     try {

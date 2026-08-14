@@ -101,6 +101,8 @@ function TaskColumn({boardId, title, tasks} : {boardId:number, title: string, ta
                 </div>
                 {columnTasks && columnTasks.map((item) => 
                     <TaskCard key={item.task_id} 
+                        boardId={boardId}
+                        taskId={item.task_id}
                         title={item.task_title} 
                         description={item.task_description}
                         priority={item.task_priority}
