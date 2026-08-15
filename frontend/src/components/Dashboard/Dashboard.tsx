@@ -8,7 +8,6 @@ import Board from "./Board";
 import PageNotFound from "../Shared/PageNotFound";
 import NewBoard from "./NewBoard";
 import "./styles/dashboard.css";
-import BoardsNav from "./BoardsNav";
 import DashboardContext from "../../context/DashboardContext";
 
 function Dashboard() {
@@ -45,14 +44,7 @@ function Dashboard() {
           <div className="dashboard">
             <Routes>
               <Route path="/" element={ <Boards/> }/>
-                <Route path=":boardId"
-                  element={ 
-                    <>
-                      <BoardsNav title={"title"} />
-                      <Board />
-                    </> 
-                  }
-                />
+                <Route path=":boardId" element={ <Board/> }/>
               <Route path='new' element={ <NewBoard/> }/>
               <Route path='*' element={ <PageNotFound/> }/>
             </Routes>

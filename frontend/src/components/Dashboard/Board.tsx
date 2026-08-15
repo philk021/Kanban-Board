@@ -6,6 +6,7 @@ import AuthContext from "../../context/AuthContext";
 import "./styles/board.css";
 import TaskColumn from "./TaskColumn";
 import { useParams } from "react-router-dom";
+import BoardsNav from "./BoardsNav";
 
 function Board() {
     const {boardId} = useParams();
@@ -46,6 +47,7 @@ function Board() {
 
     return (
         <>  
+            <BoardsNav title={"k"}/>
             <EditBar />
             <div className="board">
                 {Object.entries(categorized).map(([category, group]) => 

@@ -4,15 +4,17 @@ import "./styles/taskcolumn.css";
 import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
+import BoardsNav from "./BoardsNav";
+import EditBar from "./EditBar";
 
-function TaskColumn({boardId, title, tasks} : {boardId: string | undefined, title: string, tasks: Task[]}) {
+function TaskColumn({boardId, title, tasks} 
+    : {boardId: string | undefined, title: string, tasks: Task[]}) {
     const [columnTasks, setColumnTasks] = useState<Task[]>(tasks);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [selectedPriority, setSelectedPriority] = useState("low");
     
     const dialogRef = useRef<HTMLDialogElement | null>(null);
-
     const {token} = useContext(AuthContext);
 
     async function handleSubmit(e: any) {

@@ -4,7 +4,7 @@ import "./styles/boardsnav.css";
 
 function BoardsNav({title} : {title: string}) {
     const {userEmail} = useContext(AuthContext);
-    
+
     return (
         <>
             <div className="dashboard-heading">
