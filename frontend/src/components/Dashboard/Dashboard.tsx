@@ -45,18 +45,14 @@ function Dashboard() {
           <div className="dashboard">
             <Routes>
               <Route path="/" element={ <Boards/> }/>
-              {
-                boards && boards.map((item) => 
-                  <Route key={item.board_id} 
-                    path={`${item.board_id}`}
-                    element={ 
-                      <>
-                        <BoardsNav title={item.board_title} />
-                        <Board id={item.board_id} />
-                      </> 
-                    } 
-                  />)
-              }
+                <Route path=":boardId"
+                  element={ 
+                    <>
+                      <BoardsNav title={"title"} />
+                      <Board />
+                    </> 
+                  }
+                />
               <Route path='new' element={ <NewBoard/> }/>
               <Route path='*' element={ <PageNotFound/> }/>
             </Routes>

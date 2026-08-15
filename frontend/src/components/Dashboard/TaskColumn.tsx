@@ -5,12 +5,11 @@ import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
 
-function TaskColumn({boardId, title, tasks} : {boardId: number, title: string, tasks: Task[]}) {
+function TaskColumn({boardId, title, tasks} : {boardId: string | undefined, title: string, tasks: Task[]}) {
     const [columnTasks, setColumnTasks] = useState<Task[]>(tasks);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [selectedPriority, setSelectedPriority] = useState("low");
-    const [responseMessage, setResponseMessage] = useState("");
     
     const dialogRef = useRef<HTMLDialogElement | null>(null);
 
@@ -20,7 +19,7 @@ function TaskColumn({boardId, title, tasks} : {boardId: number, title: string, t
         e.preventDefault();
 
         if (!taskTitle || !taskDescription) {
-            setResponseMessage("Invalid input");
+            console.log("Invalid input");
             return
         }
 
@@ -50,11 +49,10 @@ function TaskColumn({boardId, title, tasks} : {boardId: number, title: string, t
                 setTaskDescription("");
                 setSelectedPriority("");
             } else {
-                setResponseMessage(data.message);
+                console.log(data.message);
             }
         } catch (err: any) {
             console.log(err);
-            setResponseMessage(err);
         }
         dialogRef.current?.close();
     }

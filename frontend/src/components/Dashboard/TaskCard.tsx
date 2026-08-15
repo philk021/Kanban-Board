@@ -4,10 +4,9 @@ import { FaPenToSquare, FaTrash } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
 
 function TaskCard({boardId, taskId, title, description, priority} : 
-    {boardId: number, taskId: number, title: string, description: string, priority: string}) {
+    {boardId: string | undefined, taskId: number, title: string, description: string, priority: string}) {
     
     const [showDelete, setShowDelete] = useState(false);
-    const [responseMessage, setResponseMessage] = useState("");
 
     const {token} = useContext(AuthContext);
 
@@ -29,11 +28,10 @@ function TaskCard({boardId, taskId, title, description, priority} :
             if (response.status == 200) {
                 console.log("deleted");
             } else {
-                setResponseMessage(data.message);
+                console.log(data.message);
             }
         } catch (err: any) {
             console.log(err);
-            setResponseMessage(err);
         }
     }
     
