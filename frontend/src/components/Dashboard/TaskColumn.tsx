@@ -5,7 +5,7 @@ import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
 
-function TaskColumn({boardId, title, tasks} : {boardId:number, title: string, tasks: Task[]}) {
+function TaskColumn({boardId, title, tasks} : {boardId: number, title: string, tasks: Task[]}) {
     const [columnTasks, setColumnTasks] = useState<Task[]>(tasks);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
@@ -76,9 +76,9 @@ function TaskColumn({boardId, title, tasks} : {boardId:number, title: string, ta
                     <label htmlFor="priority">Priority: </label>
                     <select name="priority" className="priority-dropdown" value={selectedPriority}
                         onChange={(e) => setSelectedPriority(e.target.value)}>
-                        <option value="low">low</option>
-                        <option value="medium">medium</option>
-                        <option value="high">high</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
                     </select>
                     <div className="task-btns">
                         <button type="submit" className="create-task-btn">Create</button>
