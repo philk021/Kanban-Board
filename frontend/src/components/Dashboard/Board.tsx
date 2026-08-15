@@ -7,11 +7,14 @@ import "./styles/board.css";
 import TaskColumn from "./TaskColumn";
 import { useParams } from "react-router-dom";
 import BoardsNav from "./BoardsNav";
+import DashboardContext from "../../context/DashboardContext";
 
 function Board() {
     const {boardId} = useParams();
+    const [boardTitle, setBoardTitle] = useState("");
     const [tasks, setTasks] = useState<Task[]>([]);
     const {token} = useContext(AuthContext);
+    const {boards} = useContext(DashboardContext);
 
     async function getTasks() {
         try {
@@ -33,6 +36,12 @@ function Board() {
     }
 
     useEffect(() => {
+        const title = boards.find((item) => item.board_id == boardId)?.board_title;
+        if (title) {
+            setBoardTitle(title);
+        } else {
+            setBoardTitle("Untitled");
+        }
         getTasks();
     }, []);
 
@@ -47,11 +56,12 @@ function Board() {
 
     return (
         <>  
-            <BoardsNav title={"k"}/>
+            <BoardsNav title={boardTitle}/>
             <EditBar />
             <div className="board">
                 {Object.entries(categorized).map(([category, group]) => 
-                    <TaskColumn key={category} boardId={boardId} title={category} tasks={group}/>)}
+                    <TaskColumn key={category} boardId={boardId} title={category} tasks={group}/>
+                )}
             </div>
         </>
     )

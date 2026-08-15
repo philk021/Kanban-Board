@@ -4,8 +4,6 @@ import "./styles/taskcolumn.css";
 import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
-import BoardsNav from "./BoardsNav";
-import EditBar from "./EditBar";
 
 function TaskColumn({boardId, title, tasks} 
     : {boardId: string | undefined, title: string, tasks: Task[]}) {
