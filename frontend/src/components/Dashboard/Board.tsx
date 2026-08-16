@@ -16,6 +16,7 @@ function Board() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const {token} = useContext(AuthContext);
     const {boards} = useContext(DashboardContext);
+    const [showNewColumnCard, setShowNewColumnCard] = useState(false);
 
     async function getTasks() {
         try {
@@ -67,7 +68,9 @@ function Board() {
                 {Object.entries(categorized).map(([category, group]) => 
                     <TaskColumn key={category} boardId={boardId} title={category} tasks={group}/>
                 )}
-                <button className="new-column-card" type="button">
+                {showNewColumnCard && <TaskColumn boardId={boardId} title="Untitled" tasks={[]}/>}
+                <button className="new-column-card" type="button" 
+                    onClick={() => setShowNewColumnCard(prev => !prev)}>
                     <div className="new-column-btn">
                         <FaPlus/>
                         <h1>New Category</h1>

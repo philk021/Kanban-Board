@@ -94,9 +94,13 @@ function TaskColumn({boardId, title, tasks}
                 <div className="column-header">
                     <h1>{title}</h1>
                     <div className="column-header-btns">
-                        <button type="button" onClick={() => dialogRef.current?.showModal()} ><FaPlus /></button>
+                        <button type="button" onClick={() => dialogRef.current?.showModal()}>
+                            <FaPlus />
+                        </button>
                         {showDeleteBtn && <button><FaTrash/></button>}
-                        <button type="button" onClick={() => setShowDeleteBtn(prev => !prev)}><FaEllipsisVertical /></button>
+                        <button type="button" onClick={() => setShowDeleteBtn(prev => !prev)}>
+                            <FaEllipsisVertical />
+                        </button>
                     </div>
                 </div>
                 {columnTasks && columnTasks.map((item) => 
