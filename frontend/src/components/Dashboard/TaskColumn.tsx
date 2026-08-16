@@ -2,7 +2,7 @@ import { useContext, useRef, useState } from "react";
 import type { Task } from "../../types/Task";
 import "./styles/taskcolumn.css";
 import TaskCard from "./TaskCard";
-import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
+import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
 
 function TaskColumn({boardId, title, tasks} 
@@ -11,6 +11,7 @@ function TaskColumn({boardId, title, tasks}
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [selectedPriority, setSelectedPriority] = useState("low");
+    const [showDeleteBtn, setShowDeleteBtn] = useState(false);
     
     const dialogRef = useRef<HTMLDialogElement | null>(null);
     const {token} = useContext(AuthContext);
@@ -93,8 +94,9 @@ function TaskColumn({boardId, title, tasks}
                 <div className="column-header">
                     <h1>{title}</h1>
                     <div className="column-header-btns">
-                        <button onClick={() => dialogRef.current?.showModal()} ><FaPlus /></button>
-                        <button><FaEllipsisVertical /></button>
+                        <button type="button" onClick={() => dialogRef.current?.showModal()} ><FaPlus /></button>
+                        {showDeleteBtn && <button><FaTrash/></button>}
+                        <button type="button" onClick={() => setShowDeleteBtn(prev => !prev)}><FaEllipsisVertical /></button>
                     </div>
                 </div>
                 {columnTasks && columnTasks.map((item) => 

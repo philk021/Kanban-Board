@@ -7,12 +7,7 @@ function TaskCard({boardId, taskId, title, description, priority} :
     {boardId: string | undefined, taskId: number, title: string, description: string, priority: string}) {
     
     const [showDelete, setShowDelete] = useState(false);
-
     const {token} = useContext(AuthContext);
-
-    function handleClick() {
-        setShowDelete(prev => !prev);
-    }
 
     async function deleteTask(e: any) {
         e.preventDefault();
@@ -40,7 +35,7 @@ function TaskCard({boardId, taskId, title, description, priority} :
             <div className="task-card-header">
                 <div className={priority}>{priority}</div>
                 <div>
-                    <button type="button" onClick={() => handleClick()}><FaPenToSquare/></button>
+                    <button type="button" onClick={() => setShowDelete(prev => !prev)}><FaPenToSquare/></button>
                     {showDelete && <button type="button" onClick={(e) => deleteTask(e)}><FaTrash/></button>}
                 </div>
             </div>
