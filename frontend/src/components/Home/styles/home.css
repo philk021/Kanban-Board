@@ -74,9 +74,9 @@ li {
 }
 .login-form {
     border: 1px solid var(--border);
-    border-radius: 5px;
+    border-radius: 10px;
     width: min(95%, 400px);
-    padding: 15px;
+    padding: 25px;
 }
 .login-form-btn {
     border: none;

@@ -8,3 +8,25 @@
     padding: 15px;
     overflow: scroll;
 }
+.new-column-card {
+    width: 300px;
+    height: 65px;
+    border: 1px dashed var(--text-subtle);
+    border-radius: 8px;
+    background: var(--bg-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.new-column-card:hover {
+    background: var(--bg-subtle-hover);
+    cursor: pointer;
+}
+.new-column-btn {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+.new-column-btn h1 {
+    font-size: 1rem;
+}

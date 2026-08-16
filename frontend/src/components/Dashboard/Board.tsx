@@ -8,6 +8,7 @@ import TaskColumn from "./TaskColumn";
 import { useParams } from "react-router-dom";
 import BoardsNav from "./BoardsNav";
 import DashboardContext from "../../context/DashboardContext";
+import { FaPlus } from "react-icons/fa6";
 
 function Board() {
     const {boardId} = useParams();
@@ -66,6 +67,12 @@ function Board() {
                 {Object.entries(categorized).map(([category, group]) => 
                     <TaskColumn key={category} boardId={boardId} title={category} tasks={group}/>
                 )}
+                <button className="new-column-card" type="button">
+                    <div className="new-column-btn">
+                        <FaPlus/>
+                        <h1>New Category</h1>
+                    </div>
+                </button>
             </div>
         </>
     )

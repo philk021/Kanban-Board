@@ -28,4 +28,5 @@
   color: var(--text);
   border-color: var(--border);
   font-family: Helvetica, sans-serif;
+  letter-spacing: 0.4px;
 }
