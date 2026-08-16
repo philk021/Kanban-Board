@@ -35,13 +35,17 @@ function Board() {
         }
     }
 
-    useEffect(() => {
+    function getBoardTitle() {
         const title = boards.find((item) => item.board_id == boardId)?.board_title;
         if (title) {
             setBoardTitle(title);
         } else {
             setBoardTitle("Untitled");
         }
+    }
+
+    useEffect(() => {
+        getBoardTitle();
         getTasks();
     }, []);
 
