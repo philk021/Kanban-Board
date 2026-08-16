@@ -26,8 +26,12 @@ router.post('/create', async (req, res) => {
     
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const result = await createUser(email, hashedPassword);
-        res.status(201).json({message: "Account successfully created."});
+        await createUser(email, hashedPassword);
+        const accessToken = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'});
+        const refreshToken = jwt.sign({email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'}); 
+        await storeRefreshToken(refreshToken);
+        res.cookie('refresh-token', refreshToken, {httpOnly: true}, {maxAge: 24 * 60 * 60 * 1000});
+        res.status(201).json({message: accessToken});
     } catch (error) {
         console.log(error);
         res.status(500).json({message: error.message});
@@ -55,14 +59,9 @@ router.post('/login', async (req, res) => {
 
     try {
         if (await bcrypt.compare(password, user[0].user_password)) {
-            const accessToken = jwt.sign({email},
-                process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '30m'});
-            const refreshToken = jwt.sign({email},
-                process.env.REFRESH_TOKEN_SECRET,
-                {expiresIn: '1d'});
-
-            const result = await storeRefreshToken(refreshToken);
+            const accessToken = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'});
+            const refreshToken = jwt.sign({email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'});
+            await storeRefreshToken(refreshToken);      
             res.cookie('refresh-token', refreshToken, {httpOnly: true}, {maxAge: 24 * 60 * 60 * 1000});
             res.status(200).json({message: accessToken});
         } else {
