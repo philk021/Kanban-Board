@@ -33,7 +33,8 @@ async function createProject(title, user) {
 };
 
 async function deleteProject(id) {
-  const [result] = await db.query("DELETE FROM project_management_db.projects WHERE project_id = ?", 
+  await db.query("DELETE FROM project_management_db.tasks WHERE board_id = ?", [id]);
+  const [result] = await db.query("DELETE FROM project_management_db.boards WHERE board_id = ?",
     [id]);
   return result;
 };

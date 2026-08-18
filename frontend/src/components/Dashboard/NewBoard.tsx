@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./styles/newboard.css";
+import DashboardContext from "../../context/DashboardContext";
 
 function NewBoard() {
-
+    const {setBoards} = useContext(DashboardContext);
     const [title, setTitle] = useState("");
     const [responseMessage, setResponseMessage] = useState("");
 
@@ -19,7 +20,7 @@ function NewBoard() {
         
         try {
             const response = await fetch(import.meta.env.VITE_API_URL_BOARDS, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -29,7 +30,8 @@ function NewBoard() {
             const data = await response.json();
            
             if (response.status == 201) {
-                navigate('/boards');
+                setBoards(data);
+                navigate("/boards");
             } else {
                 setResponseMessage(data.message);
             }

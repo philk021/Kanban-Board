@@ -62,7 +62,7 @@ function Board() {
     return (
         <>
             <BoardsNav title={boardTitle}/>
-            <EditBar /> 
+            <EditBar title={boardTitle}/> 
             <div className="board">
                 {Object.entries(categorized).map(([category, group]) => 
                     <TaskColumn key={category} newColumn={false} boardId={boardId} title={category} tasks={group}/>
