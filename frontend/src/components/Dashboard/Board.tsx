@@ -25,8 +25,7 @@ function Board() {
                     "Authorization": `Bearer ${token}`
                 },
             });
-            const data = await response.json();
-            
+            const data = await response.json();      
             if (response.status == 200) {
                 setTasks(data);
             } else {
@@ -61,23 +60,23 @@ function Board() {
     }, [tasks]);
 
     return (
-        <>  
+        <div className="board-container">
             <BoardsNav title={boardTitle}/>
-            <EditBar />
+            <EditBar /> 
             <div className="board">
                 {Object.entries(categorized).map(([category, group]) => 
-                    <TaskColumn key={category} boardId={boardId} title={category} tasks={group}/>
+                    <TaskColumn key={category} newColumn={false} boardId={boardId} title={category} tasks={group}/>
                 )}
-                {showNewColumnCard && <TaskColumn boardId={boardId} title="Untitled" tasks={[]}/>}
+                {showNewColumnCard && <TaskColumn newColumn={true} boardId={boardId} title="Untitled" tasks={[]}/>}
                 <button className="new-column-card" type="button" 
-                    onClick={() => setShowNewColumnCard(prev => !prev)}>
+                        onClick={() => setShowNewColumnCard(prev => !prev)}>
                     <div className="new-column-btn">
                         <FaPlus/>
                         <h1>New Category</h1>
                     </div>
                 </button>
             </div>
-        </>
+        </div>
     )
 }
 

@@ -5,12 +5,15 @@ import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
 
-function TaskColumn({boardId, title, tasks} 
-    : {boardId: string | undefined, title: string, tasks: Task[]}) {
+function TaskColumn({newColumn, boardId, title, tasks} 
+    : {newColumn: boolean, boardId: string | undefined, title: string, tasks: Task[]}) {
+    
+    const [isNewColumn, setIsNewColumn] = useState(newColumn);
     const [columnTasks, setColumnTasks] = useState<Task[]>(tasks);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [selectedPriority, setSelectedPriority] = useState("low");
+    const [columnTitle, setColumnTitle] = useState(title);
     const [showDeleteBtn, setShowDeleteBtn] = useState(false);
     
     const dialogRef = useRef<HTMLDialogElement | null>(null);
@@ -28,7 +31,7 @@ function TaskColumn({boardId, title, tasks}
             boardId: boardId,
             taskTitle: taskTitle,
             taskDescription: taskDescription,
-            taskCategory: title,
+            taskCategory: columnTitle,
             taskPriority: selectedPriority,
             taskDate: "10/10/10"
         }
@@ -63,22 +66,26 @@ function TaskColumn({boardId, title, tasks}
             <dialog ref={dialogRef} className="task-dialog">
                 <form className="task-form" onSubmit={(e) => handleSubmit(e)}>
                     <h3>Add Task</h3>
+                    
                     <input className="form-input" 
                         type="text"
                         placeholder="Name"
                         onChange={(e) => setTaskTitle(e.target.value)}
                     />
+                    
                     <textarea className="form-input"
                         placeholder="Description"
                         onChange={(e) => setTaskDescription(e.target.value)}
                     />
                     <label htmlFor="priority">Priority: </label>
+                    
                     <select name="priority" className="priority-dropdown" value={selectedPriority}
                         onChange={(e) => setSelectedPriority(e.target.value)}>
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </select>
+                    
                     <div className="task-btns">
                         <button type="submit" className="create-task-btn">Create</button>
                         <button type="button" className="close-btn" onClick={(e) => {
@@ -88,11 +95,20 @@ function TaskColumn({boardId, title, tasks}
                             Close
                         </button>
                     </div>
+                
                 </form>
             </dialog>
+            
             <div className="task-column">
                 <div className="column-header">
-                    <h1>{title}</h1>
+                    {isNewColumn ? 
+                        <div>
+                            <input className="column-title" type="text" placeholder={title} 
+                                onChange={(e) => setColumnTitle(e.target.value)}/>
+                            <button type="button" onClick={() => setIsNewColumn(false)}>Save</button>
+                        </div>
+                    : <h1>{columnTitle}</h1>}
+                    
                     <div className="column-header-btns">
                         <button type="button" onClick={() => dialogRef.current?.showModal()}>
                             <FaPlus />
@@ -103,6 +119,7 @@ function TaskColumn({boardId, title, tasks}
                         </button>
                     </div>
                 </div>
+                
                 {columnTasks && columnTasks.map((item) => 
                     <TaskCard key={item.task_id} 
                         boardId={boardId}

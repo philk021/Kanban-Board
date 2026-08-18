@@ -33,6 +33,13 @@
     position: relative;
     top: 1px;
 }
+.column-title {
+    border: none;
+    padding: 5px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    font-style: italic;
+}
 .task-dialog {
     padding: none;
     margin: none;

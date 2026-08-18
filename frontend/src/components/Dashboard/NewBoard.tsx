@@ -47,7 +47,7 @@ function NewBoard() {
                 type="text"
                 required
                 placeholder="Title"
-                onChange={(e)=>setTitle(e.target.value)}/>
+                onChange={(e) => setTitle(e.target.value)}/>
             <button className="new-board-create-btn">Create</button>
         </form>
     )

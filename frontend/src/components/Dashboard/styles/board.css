@@ -1,12 +1,12 @@
+.board-container {
+    width: 100vw;
+}
 .board {
-    height: 80vh;
     display: flex;
-    flex-wrap: wrap;
     justify-content: start;
     gap: 10px;
-    margin-right: auto;
     padding: 15px;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 .new-column-card {
     width: 300px;
