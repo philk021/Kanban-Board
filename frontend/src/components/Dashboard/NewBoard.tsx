@@ -18,7 +18,7 @@ function NewBoard() {
         }
         
         try {
-            const response = await fetch(import.meta.env.VITE_API_URL_BOARDS_NEW, {
+            const response = await fetch(import.meta.env.VITE_API_URL_BOARDS, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

@@ -12,7 +12,7 @@ function TaskCard({boardId, taskId, title, description, priority} :
     async function deleteTask(e: any) {
         e.preventDefault();
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL_TASKS_DELETE}/${boardId}/${taskId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/tasks/${taskId}`, {
                 method: 'DELETE',
                 headers: {
                     "Authorization": `Bearer ${token}`

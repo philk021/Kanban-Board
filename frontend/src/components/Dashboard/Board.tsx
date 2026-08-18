@@ -20,7 +20,7 @@ function Board() {
 
     async function getTasks() {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL_TASKS}/${boardId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
                 "headers": {
                     "Authorization": `Bearer ${token}`
                 },

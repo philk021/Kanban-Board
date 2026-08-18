@@ -28,16 +28,15 @@ function TaskColumn({newColumn, boardId, title, tasks}
         }
 
         const task = {
-            boardId: boardId,
-            taskTitle: taskTitle,
-            taskDescription: taskDescription,
-            taskCategory: columnTitle,
-            taskPriority: selectedPriority,
-            taskDate: "10/10/10"
+            title: taskTitle,
+            description: taskDescription,
+            category: columnTitle,
+            priority: selectedPriority,
+            date: "10/10/10"
         }
         
         try {
-            const response = await fetch(import.meta.env.VITE_API_URL_TASKS_NEW, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

@@ -7,7 +7,7 @@ const {createUser, loginUser, storeRefreshToken} = require('../db/db_connection'
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-router.post('/create', async (req, res) => {
+router.post('/signup', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     let user = [];
