@@ -9,6 +9,7 @@ function EditBar() {
                 <input className="search" type="text" placeholder="Search board"/>
             </div>
             <div className="edit-buttons">
+                <button>Filter</button>
                 <button>Invite</button>
                 <button>Edit</button>
                 <button>Export</button>
