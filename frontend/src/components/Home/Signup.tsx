@@ -7,12 +7,16 @@ function Signup() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [responseMessage, setResponseMessage] = useState("");
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const {login} = useContext(AuthContext);
 
     function validInput() {
         if (password !== confirmPassword || email == null 
             || password == null || confirmPassword == null) {
+            return false;
+        }
+        if (!emailRegex.test(email)) {
             return false;
         }
         return true

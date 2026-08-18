@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {createUser, loginUser, storeRefreshToken} = require('../db/db_connection');
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 router.post('/create', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -13,6 +15,9 @@ router.post('/create', async (req, res) => {
     if (!email || !password) {
         res.status(500).json({message: "Invalid email or password."})
     };
+    if (!emailRegex.test(email)) {
+        res.status(500).json({message: "Invalid email."})
+    }
 
     try {
         user = await loginUser(email);
