@@ -1,15 +1,13 @@
-.board-container {
-    width: 100vw;
-}
 .board {
+    width: 80vw;
+    overflow: auto;
     display: flex;
     justify-content: start;
     gap: 10px;
     padding: 15px;
-    overflow-x: scroll;
 }
 .new-column-card {
-    width: 300px;
+    min-width: 300px;
     height: 65px;
     border: 1px dashed var(--text-subtle);
     border-radius: 8px;

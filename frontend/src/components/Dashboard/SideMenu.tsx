@@ -8,7 +8,7 @@ function SideMenu() {
     const {logout} = useContext(AuthContext);
 
     return (
-        <div className="side-menu" id="side-menu">
+        <div className="side-menu">
             <div className="side-menu-sub">
                 <div className="logo">
                     <button>

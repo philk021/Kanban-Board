@@ -1,5 +1,5 @@
 .task-column {
-    width: 300px;
+    min-width: 300px;
     height: min-content;
     background: var(--bg-subtle);
     padding: 15px;

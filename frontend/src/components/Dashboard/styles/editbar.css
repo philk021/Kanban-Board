@@ -1,6 +1,6 @@
 .edit-bar {
-    width: 95%;
-    height: 65px;
+    width: auto;
+    height: 50px;
     padding: 15px;
     display: flex;
     align-items: center;

@@ -1,5 +1,5 @@
 .side-menu {
-    width: min-content;
+    min-width: 200px;
     height: 100vh;
     background-color: var(--bg-card);
     border-right: 1px solid var(--border);
@@ -80,7 +80,6 @@ a.board-link {
     position: relative;
     top: -1px;
 }
-
 @media screen and (max-width: 900px) {
     .side-menu {
         display: none;

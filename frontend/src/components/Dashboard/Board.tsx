@@ -60,7 +60,7 @@ function Board() {
     }, [tasks]);
 
     return (
-        <div className="board-container">
+        <>
             <BoardsNav title={boardTitle}/>
             <EditBar /> 
             <div className="board">
@@ -76,7 +76,7 @@ function Board() {
                     </div>
                 </button>
             </div>
-        </div>
+        </>
     )
 }
 
