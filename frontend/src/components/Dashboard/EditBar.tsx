@@ -4,9 +4,11 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import DashboardContext from "../../context/DashboardContext";
 import AuthContext from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
+import useBoardTitle from "../../hooks/useBoardTitle";
 
-function EditBar({title} : {title: string}) {
+function EditBar() {
     const {boardId} = useParams();
+    const boardTitle = useBoardTitle(boardId);
     const [newBoardTitle, setNewBoardTitle] = useState("");
     const {token} = useContext(AuthContext);
     const {setBoards} = useContext(DashboardContext);
@@ -14,7 +16,7 @@ function EditBar({title} : {title: string}) {
     const navigate = useNavigate();
 
     async function editBoard() {
-        if (newBoardTitle === "" || newBoardTitle === title) {
+        if (newBoardTitle === "" || newBoardTitle === boardTitle) {
             return
         }
 
@@ -75,7 +77,7 @@ function EditBar({title} : {title: string}) {
                     
                     <input className="form-input" 
                         type="text"
-                        placeholder={title}
+                        placeholder={boardTitle}
                         onChange={(e) => setNewBoardTitle(e.target.value)}
                     />
 
