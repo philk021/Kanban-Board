@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql2 = require('mysql2');
-const {getProjects, createProject, deleteProject, getTasks, 
+const {getProjects, createProject, deleteProject, updateProject, getTasks, 
   createTask, updateTask, deleteTask} = require('../db/db_connection');
 
 router.get('/', async (req, res) => {
@@ -150,5 +150,28 @@ router.delete('/:boardId', async (req, res) => {
       res.status(500).json({message: error.message});
     };
 });
+
+router.put('/:boardId', async (req, res) => {
+    const boardId = req.params.boardId;
+    const boardTitle = req.body.title;
+    const user = req.user;
+
+    if (!user) {
+      res.status(500).json({error: "Not logged in"});
+    };
+
+    if (!boardTitle) {
+      res.status(500).json({error: "Board already exists."})
+    }
+
+    try {
+      const result = await updateProject(boardTitle, boardId);
+      const projects = await getProjects(user);
+      res.status(200).json(projects);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({message: error.message});
+    };
+})
 
 module.exports = router;

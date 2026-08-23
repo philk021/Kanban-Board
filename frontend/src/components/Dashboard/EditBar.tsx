@@ -9,27 +9,33 @@ function EditBar({title} : {title: string}) {
     const {boardId} = useParams();
     const {token} = useContext(AuthContext);
     const {setBoards} = useContext(DashboardContext);
-    const [newColumnTitle, setNewColumnTitle] = useState("");
+    const [newBoardTitle, setNewBoardTitle] = useState("");
     const dialogRef = useRef<HTMLDialogElement | null>(null);
     const navigate = useNavigate();
 
     async function editBoard() {
-        if (newColumnTitle === title) {
+        if (newBoardTitle === title) {
             return
+        }
+
+        const boardUpdate = {
+            title: newBoardTitle
         }
 
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
-                method: "PATCH",
+                method: "PUT",
                 headers: {
+                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
-                }
-            });  
+                },
+                body: JSON.stringify(boardUpdate)
+            });
             
             const data = await response.json();
             if (response.status == 200) {
+                dialogRef.current?.close();
                 setBoards(data);
-                navigate("/boards");
             } else {
                 console.log(data.message);
             }
@@ -70,7 +76,7 @@ function EditBar({title} : {title: string}) {
                     <input className="form-input" 
                         type="text"
                         placeholder={title}
-                        onChange={(e) => setNewColumnTitle(e.target.value)}
+                        onChange={(e) => setNewBoardTitle(e.target.value)}
                     />
 
                     <div className="task-btns">

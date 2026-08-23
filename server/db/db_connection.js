@@ -40,8 +40,8 @@ async function deleteProject(id) {
 };
 
 async function updateProject(title, id) {
-  const [result] = await db.query("UPDATE project_management_db.project SET project_title = ? WHERE project_id = ?", 
-    [id]);
+  const [result] = await db.query("UPDATE project_management_db.boards SET board_title = ? WHERE board_id = ?",
+    [title, id]);
   return result;
 };
 
