@@ -10,30 +10,54 @@
     font-size: 1.5rem;
     font-weight: 400;
 }
-.board-info {
+.edit-search {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     gap: 10px;
 }
-.search {
+.edit-search-field {
     border: 1px solid var(--border);
     border-radius: 15px;
     padding: 5px 10px;
 }
-.edit-buttons{
+.edit-utility-buttons {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     gap: 5px;
 }
-.edit-buttons button {
+.edit-utility-buttons button {
     padding: 5px 10px;
     border: 1px solid var(--border);
     border-radius: 5px;
     background: var(--bg-subtle);
 }
-.edit-buttons button:hover {
+.edit-utility-buttons button:hover {
     cursor: pointer;
     background: var(--bg-subtle-hover);
+}
+.edit-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+}
+.edit-buttons button {
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+}
+.edit-buttons button:hover {
+    cursor: pointer;
+}
+.edit-buttons-save {
+    background: var(--primary);
+}
+.edit-buttons-close {
+    background: var(--bg-subtle);
+}
+.edit-buttons-delete {
+    background: var(--high-priority);
 }

@@ -81,16 +81,16 @@ function EditBar() {
                         onChange={(e) => setNewBoardTitle(e.target.value)}
                     />
 
-                    <div className="task-btns">
-                        <button type="button" className="delete-board-btn" 
+                    <div className="edit-buttons">
+                        <button type="button" className="edit-buttons-delete"
                             onClick={() => deleteBoard()}>
                             Delete
                         </button>
-                        <button type="button" className="create-task-btn" 
+                        <button type="button" className="edit-buttons-save"
                             onClick={() => editBoard()}>
                             Save
                         </button>
-                        <button type="button" className="close-btn" 
+                        <button type="button" className="edit-buttons-close" 
                             onClick={(e) => {
                                 e.preventDefault();
                                 dialogRef.current?.close()
@@ -102,11 +102,11 @@ function EditBar() {
                 </form>
             </dialog>
 
-            <div className="board-info">
+            <div className="edit-search">
                 <FaMagnifyingGlass/>
-                <input className="search" type="text" placeholder="Search board"/>
+                <input className="edit-search-field" type="text" placeholder="Search board"/>
             </div>
-            <div className="edit-buttons">
+            <div className="edit-utility-buttons">
                 <button>Filter</button>
                 <button>Invite</button>
                 <button type="button" onClick={() => dialogRef.current?.showModal()}>Edit</button>
