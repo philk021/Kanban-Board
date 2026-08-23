@@ -7,14 +7,14 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EditBar({title} : {title: string}) {
     const {boardId} = useParams();
+    const [newBoardTitle, setNewBoardTitle] = useState("");
     const {token} = useContext(AuthContext);
     const {setBoards} = useContext(DashboardContext);
-    const [newBoardTitle, setNewBoardTitle] = useState("");
     const dialogRef = useRef<HTMLDialogElement | null>(null);
     const navigate = useNavigate();
 
     async function editBoard() {
-        if (newBoardTitle === title) {
+        if (newBoardTitle === "" || newBoardTitle === title) {
             return
         }
 
@@ -34,8 +34,8 @@ function EditBar({title} : {title: string}) {
             
             const data = await response.json();
             if (response.status == 200) {
-                dialogRef.current?.close();
                 setBoards(data);
+                dialogRef.current?.close();
             } else {
                 console.log(data.message);
             }
@@ -52,7 +52,7 @@ function EditBar({title} : {title: string}) {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
-            });  
+            });
             
             const data = await response.json();
             if (response.status == 200) {
