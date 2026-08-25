@@ -18,5 +18,12 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      "no-console": "warn",
+      "no-debugger": "error",
+      "indent": ["error", 2],
+      "semi": ["error", "always"],
+      "eqeqeq": ["error", "always"]
+    }
   },
 ])

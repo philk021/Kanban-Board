@@ -11,47 +11,47 @@ import "./styles/dashboard.css";
 import DashboardContext from "../../context/DashboardContext";
 
 function Dashboard() {
-    const [boards, setBoards] = useState<BoardInfo[]>([]);
-    const {token} = useContext(AuthContext);
+  const [boards, setBoards] = useState<BoardInfo[]>([]);
+  const {token} = useContext(AuthContext);
 
-    useEffect(()=>{
-      getBoards();
-    }, []);
+  useEffect(()=>{
+    getBoards();
+  }, []);
 
-    async function getBoards() {
-      try {
-            const response = await fetch(import.meta.env.VITE_API_URL_BOARDS, {
-              "headers": {
-                "Authorization": `Bearer ${token}`
-              }
-            });
-            const data = await response.json();
-            
-            if (response.status == 200) {
-                setBoards(data);
-            } else {
-                console.log(data);
-            }
-        } catch (err: any) {
-            console.log(err);
+  async function getBoards() {
+    try {
+      const response = await fetch(import.meta.env.VITE_API_URL_BOARDS, {
+        "headers": {
+          "Authorization": `Bearer ${token}`
         }
+      });
+      const data = await response.json();
+            
+      if (response.status == 200) {
+        setBoards(data);
+      } else {
+        console.log(data);
+      }
+    } catch (err: any) {
+      console.log(err);
     }
+  }
 
-    return (
-      <DashboardContext value={{boards, setBoards}}>
-        <div className="dashboard-container">
-          <SideMenu />
-          <div className="dashboard">
-            <Routes>
-              <Route path="/" element={ <Boards/> }/>
-                <Route path=":boardId" element={ <Board/> }/>
-              <Route path='new' element={ <NewBoard/> }/>
-              <Route path='*' element={ <PageNotFound/> }/>
-            </Routes>
-          </div>
+  return (
+    <DashboardContext value={{boards, setBoards}}>
+      <div className="dashboard-container">
+        <SideMenu />
+        <div className="dashboard">
+          <Routes>
+            <Route path="/" element={ <Boards/> }/>
+            <Route path=":boardId" element={ <Board/> }/>
+            <Route path='new' element={ <NewBoard/> }/>
+            <Route path='*' element={ <PageNotFound/> }/>
+          </Routes>
         </div>
-      </DashboardContext>
-    )
+      </div>
+    </DashboardContext>
+  );
 }
 
 export default Dashboard;

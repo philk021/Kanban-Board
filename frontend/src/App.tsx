@@ -31,7 +31,7 @@ function App() {
   return (
     <>
       <AuthContext value={{isLoggedIn, login, logout, token, userEmail}}>
-          {isLoggedIn ? 
+        {isLoggedIn ? 
           <Routes>
             <Route path='/boards/*' element={ <Dashboard/> }/>
             <Route path='*' element={ <PageNotFound/> }/>

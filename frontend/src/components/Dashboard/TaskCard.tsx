@@ -7,46 +7,46 @@ import TaskContext from "../../context/TaskContext";
 function TaskCard({boardId, taskId, title, description, priority} : 
     {boardId: string | undefined, taskId: number, title: string, description: string, priority: string}) {
     
-    const [showDelete, setShowDelete] = useState(false);
-    const {token} = useContext(AuthContext);
-    const {setTasks} = useContext(TaskContext);
+  const [showDelete, setShowDelete] = useState(false);
+  const {token} = useContext(AuthContext);
+  const {setTasks} = useContext(TaskContext);
 
-    async function deleteTask(e: any) {
-        e.preventDefault();
-        try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/tasks/${taskId}`, {
-                method: 'DELETE',
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            const data = await response.json(); 
-            
-            if (response.status == 200) {
-                setTasks(data);
-            } else {
-                console.log(data.message);
-            }
-        } catch (err: any) {
-            console.log(err);
+  async function deleteTask(e: any) {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/tasks/${taskId}`, {
+        method: 'DELETE',
+        headers: {
+          "Authorization": `Bearer ${token}`
         }
+      });
+      const data = await response.json(); 
+            
+      if (response.status == 200) {
+        setTasks(data);
+      } else {
+        console.log(data.message);
+      }
+    } catch (err: any) {
+      console.log(err);
     }
+  }
     
-    return (
-        <div className="task-card">
-            <div className="task-card-header">
-                <div className={priority}>{priority}</div>
-                <div>
-                    {showDelete && <button type="button" onClick={(e) => deleteTask(e)}><FaTrash/></button>}
-                    <button type="button" onClick={() => setShowDelete(prev => !prev)}><FaPenToSquare/></button>
-                </div>
-            </div>
-            <div className="task-info">
-                <h1>{title}</h1>
-                <p>{description}</p>
-            </div>
+  return (
+    <div className="task-card">
+      <div className="task-card-header">
+        <div className={priority}>{priority}</div>
+        <div>
+          {showDelete && <button type="button" onClick={(e) => deleteTask(e)}><FaTrash/></button>}
+          <button type="button" onClick={() => setShowDelete(prev => !prev)}><FaPenToSquare/></button>
         </div>
-    )
+      </div>
+      <div className="task-info">
+        <h1>{title}</h1>
+        <p>{description}</p>
+      </div>
+    </div>
+  );
 }
 
 export default TaskCard;

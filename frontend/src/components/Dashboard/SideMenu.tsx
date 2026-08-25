@@ -5,32 +5,32 @@ import "./styles/sidemenu.css";
 import { FaGear, FaFolder, FaRightFromBracket, FaPlus, FaBars } from "react-icons/fa6";
 
 function SideMenu() {
-    const {logout} = useContext(AuthContext);
+  const {logout} = useContext(AuthContext);
 
-    return (
-        <div className="side-menu">
-            <div className="side-menu-sub">
-                <div className="logo">
-                    <button>
-                        <FaBars />
-                    </button>
-                    <h1>Logo</h1>
-                </div>
-                <Link className="board-link" to="/boards/new">
-                    <button className="new-board-btn">
-                        <FaPlus/>
-                        <div>New Board</div>
-                    </button>
-                </Link>
-                <Link className="board-link" to="/boards"><FaFolder/>Boards</Link>
-                <Link className="board-link" to="/settings"><FaGear/>Settings</Link>
-                <button className="logout-btn" onClick={logout}>
-                    <div>Logout</div>
-                    <FaRightFromBracket/>
-                </button>
-            </div>
+  return (
+    <div className="side-menu">
+      <div className="side-menu-sub">
+        <div className="logo">
+          <button>
+            <FaBars />
+          </button>
+          <h1>Logo</h1>
         </div>
-    )
+        <Link className="board-link" to="/boards/new">
+          <button className="new-board-btn">
+            <FaPlus/>
+            <div>New Board</div>
+          </button>
+        </Link>
+        <Link className="board-link" to="/boards"><FaFolder/>Boards</Link>
+        <Link className="board-link" to="/settings"><FaGear/>Settings</Link>
+        <button className="logout-btn" onClick={logout}>
+          <div>Logout</div>
+          <FaRightFromBracket/>
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default SideMenu;
