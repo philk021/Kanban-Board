@@ -8,6 +8,7 @@ import TaskColumn from "./TaskColumn";
 import { useParams } from "react-router-dom";
 import BoardsNav from "./BoardsNav";
 import { FaPlus } from "react-icons/fa6";
+import TaskContext from "../../context/TaskContext";
 
 function Board() {
     const {boardId} = useParams();
@@ -48,21 +49,25 @@ function Board() {
 
     return (
         <>
-            <BoardsNav/>
-            <EditBar/>    
-            <div className="board">
-                {Object.entries(categorized).map(([category, group]) => 
-                    <TaskColumn key={category} newColumn={false} boardId={boardId} title={category} tasks={group}/>
-                )}       
-                {showNewColumnCard && <TaskColumn newColumn={true} boardId={boardId} title="Untitled" tasks={[]}/>}         
-                <button className="new-column-card" type="button" 
-                        onClick={() => setShowNewColumnCard(prev => !prev)}>
-                    <div className="new-column-btn">
-                        <FaPlus/>
-                        <h1>New Category</h1>
-                    </div>
-                </button>
-            </div>
+            <TaskContext value={{tasks, setTasks}}>
+                <BoardsNav/>
+                <EditBar/>    
+                <div className="board">         
+                    {Object.entries(categorized).map(([category]) =>
+                        <TaskColumn key={category} newColumn={false} boardId={boardId} title={category}/>
+                    )}
+
+                    {showNewColumnCard && <TaskColumn newColumn={true} boardId={boardId} title="Untitled"/>}         
+
+                    <button className="new-column-card" type="button" 
+                            onClick={() => setShowNewColumnCard(prev => !prev)}>
+                        <div className="new-column-btn">
+                            <FaPlus/>
+                            <h1>New Category</h1>
+                        </div>
+                    </button>
+                </div>
+            </TaskContext>
         </>
     )
 }

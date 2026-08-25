@@ -1,15 +1,16 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import type { Task } from "../../types/Task";
 import "./styles/taskcolumn.css";
 import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
 import AuthContext from "../../context/AuthContext";
+import TaskContext from "../../context/TaskContext";
 
-function TaskColumn({newColumn, boardId, title, tasks} 
-    : {newColumn: boolean, boardId: string | undefined, title: string, tasks: Task[]}) {
+function TaskColumn({newColumn, boardId, title} 
+    : {newColumn: boolean, boardId: string | undefined, title: string}) {
     
+    const [categorisedTasks, setCategorizedTasks] = useState<Task[]>([]);
     const [isNewColumn, setIsNewColumn] = useState(newColumn);
-    const [columnTasks, setColumnTasks] = useState<Task[]>(tasks);
     const [taskTitle, setTaskTitle] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
     const [selectedPriority, setSelectedPriority] = useState("low");
@@ -18,6 +19,11 @@ function TaskColumn({newColumn, boardId, title, tasks}
     
     const dialogRef = useRef<HTMLDialogElement | null>(null);
     const {token} = useContext(AuthContext);
+    const {tasks, setTasks} = useContext(TaskContext);
+
+    useEffect(() => {
+        setCategorizedTasks(tasks.filter((item: Task) => item.task_category == title));
+    }, [tasks]);
 
     async function handleSubmit(e: any) {
         e.preventDefault();
@@ -47,7 +53,7 @@ function TaskColumn({newColumn, boardId, title, tasks}
             const data = await response.json();
            
             if (response.status == 201) {
-                setColumnTasks(data);
+                setTasks(data);
                 setTaskTitle("");
                 setTaskDescription("");
                 setSelectedPriority("");
@@ -119,7 +125,7 @@ function TaskColumn({newColumn, boardId, title, tasks}
                     </div>
                 </div>
                 
-                {columnTasks && columnTasks.map((item) => 
+                {categorisedTasks && categorisedTasks.map((item) =>
                     <TaskCard key={item.task_id} 
                         boardId={boardId}
                         taskId={item.task_id}
