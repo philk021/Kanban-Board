@@ -71,7 +71,7 @@ function EditBar() {
 
   return (
     <div className="edit-bar">
-      <dialog ref={dialogRef} className="task-dialog">
+      <dialog ref={dialogRef} className="dialog">
         <form className="task-form">
           <h3>Edit Board</h3>
                     
@@ -84,18 +84,18 @@ function EditBar() {
           <div className="edit-buttons">
             <button type="button" className="edit-buttons-delete"
               onClick={() => deleteBoard()}>
-                            Delete
+                Delete
             </button>
             <button type="button" className="edit-buttons-save"
               onClick={() => editBoard()}>
-                            Save
+                Save
             </button>
             <button type="button" className="edit-buttons-close" 
               onClick={(e) => {
                 e.preventDefault();
                 dialogRef.current?.close();
               }}>
-                            Close
+                Close
             </button>
           </div>
                 

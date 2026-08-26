@@ -22,11 +22,3 @@
   --breakpoint-large: 900px;
   --breakpoint-extra-large: 1024px;
 }
-* {
-  padding: 0;
-  margin: 0;
-  color: var(--text);
-  border-color: var(--border);
-  font-family: Helvetica, sans-serif;
-  letter-spacing: 0.4px;
-}

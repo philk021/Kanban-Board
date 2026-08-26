@@ -68,7 +68,7 @@ function TaskColumn({newColumn, boardId, title}
 
   return (
     <>
-      <dialog ref={dialogRef} className="task-dialog">
+      <dialog ref={dialogRef} className="dialog">
         <form className="task-form" onSubmit={(e) => handleSubmit(e)}>
           <h3>Add Task</h3>
                     
@@ -97,7 +97,7 @@ function TaskColumn({newColumn, boardId, title}
               e.preventDefault();
               dialogRef.current?.close();}
             }>
-                            Close
+              Close
             </button>
           </div>
                 

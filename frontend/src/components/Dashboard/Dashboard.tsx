@@ -9,6 +9,7 @@ import PageNotFound from "../Shared/PageNotFound";
 import NewBoard from "./NewBoard";
 import "./styles/dashboard.css";
 import DashboardContext from "../../context/DashboardContext";
+import Settings from "./Settings";
 
 function Dashboard() {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
@@ -46,6 +47,7 @@ function Dashboard() {
             <Route path="/" element={ <Boards/> }/>
             <Route path=":boardId" element={ <Board/> }/>
             <Route path='new' element={ <NewBoard/> }/>
+            <Route path='settings' element={ <Settings/> }/>
             <Route path='*' element={ <PageNotFound/> }/>
           </Routes>
         </div>

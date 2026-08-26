@@ -23,7 +23,7 @@ function SideMenu() {
           </button>
         </Link>
         <Link className="board-link" to="/boards"><FaFolder/>Boards</Link>
-        <Link className="board-link" to="/settings"><FaGear/>Settings</Link>
+        <Link className="board-link" to="/boards/settings"><FaGear/>Settings</Link>
         <button className="logout-btn" onClick={logout}>
           <div>Logout</div>
           <FaRightFromBracket/>
