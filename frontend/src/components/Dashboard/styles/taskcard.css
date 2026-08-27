@@ -43,9 +43,12 @@
 .task-info {
     margin: 0 0 10px 0;
 }
-.task-info h1 {
+.task-info-title {
     margin: 0 0 10px 0;
+    font-size: 0.5rem;
+    font-weight: 500;
 }
-.task-info p {
+.task-info-description {
     color: var(--text-subtle);
+    font-weight: 400;
 }

@@ -42,8 +42,8 @@ function TaskCard({boardId, taskId, title, description, priority} :
         </div>
       </div>
       <div className="task-info">
-        <h1>{title}</h1>
-        <p>{description}</p>
+        <h1 className="task-info-title">{title}</h1>
+        <p className="task-info-description">{description}</p>
       </div>
     </div>
   );
