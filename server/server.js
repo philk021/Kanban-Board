@@ -3,11 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const authRouter = require('./routes/authRoutes');
 const boardRouter = require('./routes/boardRoutes');
-const {authenticateToken} = require('./middleware/auth');
-const { WebSocketServer } = require('ws');
-const url = require('url');
-
-const app = express();
+const { authenticateToken } = require('./middleware/auth');
+const { app, server } = require('./socket');
 
 app.use(cors({
   origin: process.env.API_URL,
@@ -23,11 +20,6 @@ app.use((req, res, next) => {
   res.status(404).json({message: "404 Error: Resource not Found."});
 });
 
-const server = app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`);
 });
-
-const wsServer = new WebSocketServer({ noServer: true });
-//server.on('connection', (connection, request) => {
-//  const { user_email } = url.parse(request.url, true).query;
-//})

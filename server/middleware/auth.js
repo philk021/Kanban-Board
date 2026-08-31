@@ -3,19 +3,19 @@ require('dotenv').config();
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
-    if (!authHeader) return res.status(401).json({message: "Unauthorized access."});
+    if (!authHeader) return res.status(401).json({ message: "Unauthorized access." });
     
     const token = authHeader.split(' ')[1];
     if (!token) {
-        return res.status(401).json({message: "Token not sent."})
+        return res.status(401).json({ message: "Token not sent." })
     }
     
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, 
         (err, decoded) => {
-            if (err) return res.status(403).json({message: "Invalid token."});
+            if (err) return res.status(403).json({ message: "Invalid token." });
             req.user = decoded.email;
             next();
     });
 }
 
-module.exports = {authenticateToken}
+module.exports = { authenticateToken };
