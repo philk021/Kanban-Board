@@ -9,3 +9,14 @@
     font-weight: 400;
     font-size: 1.5rem;
 }
+.board-card-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.board-card-title {
+    font-size: 1rem;
+}
+.board-card-role {
+    font-size: 0.8rem;
+}
