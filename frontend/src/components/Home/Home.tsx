@@ -5,12 +5,12 @@ function Home() {
   return (
     <main>
       <div>
-        <div className="banner">Free No-Signup Kanban Board</div>
+        <div className="banner">Kanban Board</div>
         <div className="sub-banner">
-                    Get started in seconds. Signing up is free and optional, if you want to save your progress.
+                    Get started in seconds. Signing up is free.
         </div>
         <div>
-          <Link className="join-btn" to="/">Create a board</Link>
+          <li><Link className="join-btn" to="/signup">Sign up</Link></li>
         </div>
       </div>
     </main>

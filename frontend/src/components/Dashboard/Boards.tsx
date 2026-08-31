@@ -12,7 +12,7 @@ function Boards() {
     <div className="boards-container">
       {boards ? boards.map((item: BoardInfo)=> 
         <Link to={'/boards/' + item.board_id} key={item.board_id}>
-          <BoardCard title={item.board_title} />
+          <BoardCard title={item.board_title} role={item.board_role}/>
         </Link>)
         : <p>No Boards</p>}
     </div>

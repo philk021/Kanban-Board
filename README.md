@@ -1,11 +1,6 @@
-# Kanban Board
+# Kanban Board (In-progress)
 
-An online kanban board that allows users to track and visualize project progress.
-
-## Features
-
-* Signing up is optional, if you want to create multiple boards and save progress.
-* Invite other users by email to collaborate on boards.
+A collaborative kanban board that allows users to track and visualize project progress.
 
 ## Installation
 
@@ -17,7 +12,6 @@ An online kanban board that allows users to track and visualize project progress
    cd frontend && npm install
    cd ../server && npm install
    ```
-
 2. Start a MySQL server and create schema with server/db.sql
 3. Create .env in frontend directory with API routes based on frontend/.env.example
 4. Create .env in server directory with MySQL info and JWT secrets based on server/.env.example
@@ -26,8 +20,7 @@ An online kanban board that allows users to track and visualize project progress
    ```Shell
    npm run dev
    ```
-
-4. Run backend development server
+6. Run backend development server
 
    ```Shell
    node server.js

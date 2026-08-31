@@ -1,9 +1,14 @@
 import "./styles/boardcard.css";
 
-function BoardCard({title} : {title: string}) {
+function BoardCard({title, role} : {title: string, role: string}) {
   return (
     <div className="board-card">
-      {title ? <h1>{title}</h1> : <h1>Untitled</h1>}
+      {title && role ? 
+      <div>
+        <h1>{title}</h1>
+        <h2>{role}</h2>
+      </div> : 
+      <h1>Untitled</h1>}
     </div>
   );
 }

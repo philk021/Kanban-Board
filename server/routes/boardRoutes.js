@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mysql2 = require('mysql2');
-const {getProjects, createProject, deleteProject, updateProject, getTasks, 
+const {getBoards, createBoard, deleteBoard, updateBoard, getTasks,
   createTask, updateTask, deleteTask} = require('../db/db_connection');
 
 router.get('/', async (req, res) => {
@@ -12,7 +11,7 @@ router.get('/', async (req, res) => {
     };
 
     try {
-      const projects = await getProjects(user);
+      const projects = await getBoards(user);
       res.status(200).json(projects);
     } catch (error) {
       console.log(error);
@@ -33,8 +32,8 @@ router.post('/', async (req, res) => {
     };
     
     try {
-      await createProject(boardTitle, user);
-      const projects = await getProjects(user);
+      await createBoard(boardTitle, user, 'OWNER');
+      const projects = await getBoards(user);
       res.status(201).json(projects);
     } catch (error) {
       console.log(error);
@@ -142,8 +141,8 @@ router.delete('/:boardId', async (req, res) => {
     };
 
     try {
-      const result = await deleteProject(boardId);
-      const projects = await getProjects(user);
+      const result = await deleteBoard(boardId);
+      const projects = await getBoards(user);
       res.status(200).json(projects);
     } catch (error) {
       console.log(error);
@@ -165,8 +164,8 @@ router.put('/:boardId', async (req, res) => {
     }
 
     try {
-      const result = await updateProject(boardTitle, boardId);
-      const projects = await getProjects(user);
+      const result = await updateBoard(boardTitle, boardId);
+      const projects = await getBoards(user);
       res.status(200).json(projects);
     } catch (error) {
       console.log(error);

@@ -8,7 +8,6 @@ function Nav() {
       </div>
       <ul>
         <li><Link className="login-btn" to="/login">Login</Link></li>
-        <li><Link className="join-btn" to="/signup">Sign up</Link></li>
       </ul>
     </nav>
   );
