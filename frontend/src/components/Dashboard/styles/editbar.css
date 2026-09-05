@@ -37,27 +37,18 @@
     cursor: pointer;
     background: var(--bg-subtle-hover);
 }
-.edit-buttons {
+.edit-buttons, .invite-buttons {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 5px;
 }
-.edit-buttons button {
+.edit-buttons button, .invite-buttons button {
     padding: 8px 10px;
     border-radius: 5px;
     border: none;
 }
-.edit-buttons button:hover {
+.edit-buttons button:hover, .invite-buttons button:hover {
     cursor: pointer;
-}
-.edit-buttons-save {
-    background: var(--primary);
-}
-.edit-buttons-close {
-    background: var(--bg-subtle);
-}
-.edit-buttons-delete {
-    background: var(--high-priority);
 }

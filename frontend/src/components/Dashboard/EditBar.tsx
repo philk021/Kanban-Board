@@ -10,13 +10,15 @@ function EditBar() {
   const {boardId} = useParams();
   const boardTitle = useBoardTitle(boardId);
   const [newBoardTitle, setNewBoardTitle] = useState("");
+  const [inviteEmail, setInviteEmail] = useState("");
   const {token} = useContext(AuthContext);
   const {setBoards} = useContext(DashboardContext);
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const editDialogRef = useRef<HTMLDialogElement | null>(null);
+  const inviteDialogRef = useRef<HTMLDialogElement | null>(null);
   const navigate = useNavigate();
 
   async function editBoard() {
-    if (newBoardTitle === "" || newBoardTitle === boardTitle) {
+    if (!newBoardTitle || newBoardTitle === boardTitle) {
       return;
     }
 
@@ -37,7 +39,7 @@ function EditBar() {
       const data = await response.json();
       if (response.status == 200) {
         setBoards(data);
-        dialogRef.current?.close();
+        editDialogRef.current?.close();
       } else {
         console.log(data.message);
       }
@@ -69,9 +71,40 @@ function EditBar() {
     }
   }
 
+  async function inviteToBoard() {
+    if (!inviteEmail) {
+      return;
+    }
+
+    const invite = {
+      email: inviteEmail
+    };
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/members`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(invite)
+      });
+            
+      const data = await response.json();
+      if (response.status == 201) {
+        editDialogRef.current?.close();
+      } else {
+        console.log(data.message);
+      }
+
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="edit-bar">
-      <dialog ref={dialogRef} className="dialog">
+      <dialog ref={editDialogRef} className="dialog">
         <form className="task-form">
           <h3>Edit Board</h3>
                     
@@ -93,7 +126,34 @@ function EditBar() {
             <button type="button" className="edit-buttons-close" 
               onClick={(e) => {
                 e.preventDefault();
-                dialogRef.current?.close();
+                editDialogRef.current?.close();
+              }}>
+                Close
+            </button>
+          </div>
+                
+        </form>
+      </dialog>
+
+      <dialog ref={inviteDialogRef} className="dialog">
+        <form className="task-form">
+          <h3>Invite to Board</h3>
+                    
+          <input className="form-input" 
+            type="text"
+            placeholder="Email"
+            onChange={(e) => setInviteEmail(e.target.value)}
+          />
+
+          <div className="invite-buttons">
+            <button type="button" className="invite-buttons-invite"
+              onClick={() => inviteToBoard()}>
+                Invite
+            </button>
+            <button type="button" className="invite-buttons-close" 
+              onClick={(e) => {
+                e.preventDefault();
+                inviteDialogRef.current?.close();
               }}>
                 Close
             </button>
@@ -108,8 +168,8 @@ function EditBar() {
       </div>
       <div className="edit-utility-buttons">
         <button>Filter</button>
-        <button>Invite</button>
-        <button type="button" onClick={() => dialogRef.current?.showModal()}>Edit</button>
+        <button type="button" onClick={() => inviteDialogRef.current?.showModal()}>Invite</button>
+        <button type="button" onClick={() => editDialogRef.current?.showModal()}>Edit</button>
         <button>Export</button>
       </div>
     </div>

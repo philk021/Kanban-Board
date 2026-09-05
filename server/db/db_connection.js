@@ -109,6 +109,8 @@ module.exports = {
   createBoard,
   deleteBoard,
   updateBoard,
+  createBoardUser,
+  getUserId,
   getTasks,
   createTask, 
   updateTask, 

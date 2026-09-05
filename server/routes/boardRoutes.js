@@ -1,176 +1,205 @@
 const express = require('express');
 const router = express.Router();
-const {getBoards, createBoard, deleteBoard, updateBoard, getTasks,
-  createTask, updateTask, deleteTask} = require('../db/db_connection');
+const {
+  getBoards, 
+  createBoard, 
+  deleteBoard, 
+  updateBoard, 
+  getTasks,
+  createTask, 
+  updateTask, 
+  deleteTask, 
+  createBoardUser, 
+  getUserId
+} = require('../db/db_connection');
 
 router.get('/', async (req, res) => {
-    const user = req.user;
+  const user = req.user;
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
 
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
-
-    try {
-      const projects = await getBoards(user);
-      res.status(200).json(projects);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  try {
+    const boards = await getBoards(user);
+    res.status(200).json(boards);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.post('/', async (req, res) => {
-    const boardTitle = req.body.boardTitle;
-    const user = req.user;
-    
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
-    
-    if (!boardTitle || !user) {
-      res.status(500).json({error: "Invalid input"});
-    };
-    
-    try {
-      await createBoard(boardTitle, user, 'OWNER');
-      const projects = await getBoards(user);
-      res.status(201).json(projects);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  const boardTitle = req.body.boardTitle;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
+  
+  if (!boardTitle || !user) {
+    res.status(500).json({ error: "Invalid input" });
+  };
+  
+  try {
+    await createBoard(boardTitle, user, 'OWNER');
+    const boards = await getBoards(user);
+    res.status(201).json(boards);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.get('/:boardId', async (req, res) => {
-    const boardId = req.params.boardId;
-    const user = req.user;
-    
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
+  const boardId = req.params.boardId;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
 
-    try {
-      const tasks = await getTasks(boardId);
-      res.status(200).json(tasks);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  try {
+    const tasks = await getTasks(boardId);
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.post('/:boardId', async (req, res) => {
-    const boardId = req.params.boardId;
-    const taskTitle = req.body.title;
-    const taskDescription = req.body.description;
-    const taskCategory = req.body.category;
-    const taskPriority = req.body.priority;
-    const taskDate = req.body.date;
-    const user = req.user;
-    
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
-    
-    if (!taskTitle || !taskDescription) {
-      res.status(500).json({error: "Invalid input"});
-    };
-    
-    try {
-      const result = await createTask(boardId, taskTitle, taskDescription, 
-        taskCategory, taskPriority, taskDate
-      );
-      const tasks = await getTasks(boardId);
-      res.status(201).json(tasks);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  const boardId = req.params.boardId;
+  const taskTitle = req.body.title;
+  const taskDescription = req.body.description;
+  const taskCategory = req.body.category;
+  const taskPriority = req.body.priority;
+  const taskDate = req.body.date;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
+  
+  if (!taskTitle || !taskDescription) {
+    res.status(500).json({ error: "Invalid input" });
+  };
+  
+  try {
+    const result = await createTask(boardId, taskTitle, taskDescription, 
+      taskCategory, taskPriority, taskDate
+    );
+    const tasks = await getTasks(boardId);
+    res.status(201).json(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.put('/:boardId/tasks/:taskId', async (req, res) => {
-    const boardId = req.params.boardId;
-    const taskTitle = req.body.title;
-    const taskDescription = req.body.description;
-    const taskDate = req.body.date;
-    const taskId = req.params.taskId;
-    const user = req.user;
-    
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
+  const boardId = req.params.boardId;
+  const taskTitle = req.body.title;
+  const taskDescription = req.body.description;
+  const taskDate = req.body.date;
+  const taskId = req.params.taskId;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
+  if (!taskId || !taskTitle || !taskDescription) {
+    res.status(500).json({ error: "Invalid input" });
+  };
 
-    if (!taskId || !taskTitle || !taskDescription) {
-      res.status(500).json({error: "Invalid input"});
-    };
-
-    try {
-      await updateTask(taskId, taskTitle, taskDescription, taskDate);
-      const tasks = await getTasks(boardId);
-      res.status(200).json(tasks);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  try {
+    await updateTask(taskId, taskTitle, taskDescription, taskDate);
+    const tasks = await getTasks(boardId);
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.delete('/:boardId/tasks/:taskId', async (req, res) => {
-    const boardId = req.params.boardId
-    const taskId = req.params.taskId;
-    const user = req.user;
-    
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
+  const boardId = req.params.boardId
+  const taskId = req.params.taskId;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in"} );
+  };
 
-    try {
-      const result = await deleteTask(taskId);
-      const tasks = await getTasks(boardId);
-      res.status(200).json(tasks);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  try {
+    const result = await deleteTask(taskId);
+    const tasks = await getTasks(boardId);
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.delete('/:boardId', async (req, res) => {
-    const boardId = req.params.boardId;
-    const user = req.user;
-    
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
+  const boardId = req.params.boardId;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({error: "Not logged in"});
+  };
 
-    try {
-      const result = await deleteBoard(boardId);
-      const projects = await getBoards(user);
-      res.status(200).json(projects);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  try {
+    const result = await deleteBoard(boardId);
+    const boards = await getBoards(user);
+    res.status(200).json(boards);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 });
 
 router.put('/:boardId', async (req, res) => {
-    const boardId = req.params.boardId;
-    const boardTitle = req.body.title;
-    const user = req.user;
+  const boardId = req.params.boardId;
+  const boardTitle = req.body.title;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
+  if (!boardTitle) {
+    res.status(500).json({ error: "Board already exists." })
+  }
 
-    if (!user) {
-      res.status(500).json({error: "Not logged in"});
-    };
+  try {
+    const result = await updateBoard(boardTitle, boardId);
+    const boards = await getBoards(user);
+    res.status(200).json(boards);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
+})
 
-    if (!boardTitle) {
-      res.status(500).json({error: "Board already exists."})
-    }
+router.post('/:boardId/members', async (req, res) => {
+  const boardId = req.params.boardId;
+  const inviteEmail = req.body.email;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
+  if (!inviteEmail) {
+    res.status(500).json({ error: "Missing invite email." })
+  }
 
-    try {
-      const result = await updateBoard(boardTitle, boardId);
-      const projects = await getBoards(user);
-      res.status(200).json(projects);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({message: error.message});
-    };
+  try {
+    const inviteUserId = await getUserId(inviteEmail);
+    const result = await createBoardUser(inviteUserId, boardId, 'MEMBER');
+    res.status(201).json({ message: "Invite Sent." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
 })
 
 module.exports = router;
