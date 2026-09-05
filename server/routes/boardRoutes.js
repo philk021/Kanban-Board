@@ -9,7 +9,8 @@ const {
   createTask, 
   updateTask, 
   deleteTask, 
-  createBoardUser, 
+  createBoardUser,
+  getBoardUsers, 
   getUserId
 } = require('../db/db_connection');
 
@@ -180,7 +181,7 @@ router.put('/:boardId', async (req, res) => {
   };
 })
 
-router.post('/:boardId/members', async (req, res) => {
+router.post('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
   const inviteEmail = req.body.email;
   const user = req.user;
@@ -196,6 +197,23 @@ router.post('/:boardId/members', async (req, res) => {
     const inviteUserId = await getUserId(inviteEmail);
     const result = await createBoardUser(inviteUserId, boardId, 'MEMBER');
     res.status(201).json({ message: "Invite Sent." });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  };
+})
+
+router.get('/:boardId/users', async (req, res) => {
+  const boardId = req.params.boardId;
+  const user = req.user;
+  
+  if (!user) {
+    res.status(500).json({ error: "Not logged in" });
+  };
+
+  try {
+    const result = await getBoardUsers(boardId);
+    res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

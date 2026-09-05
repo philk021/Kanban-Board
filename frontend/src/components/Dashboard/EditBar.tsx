@@ -81,7 +81,7 @@ function EditBar() {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/members`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
