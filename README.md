@@ -2,6 +2,8 @@
 
 A collaborative kanban board that allows users to track and visualize project progress.
 
+![UI](UI.png)
+
 ## Installation
 
 1. Clone project and install dependencies
