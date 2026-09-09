@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      <AuthContext value={{isLoggedIn, login, logout, token, userEmail}}>
+      <AuthContext value={{ isLoggedIn, login, logout, token, userEmail }}>
         {isLoggedIn ? 
           <Routes>
             <Route path='/boards/*' element={ <Dashboard/> }/>

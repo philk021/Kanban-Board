@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import EditBar from "./EditBar";
-import type { Task } from "../../types/Task";
+import type { TaskResponse } from "../../types/TaskResponse";
 import type { CategorizedTasks } from "../../types/CategorizedTasks";
 import AuthContext from "../../context/AuthContext";
 import "./styles/board.css";
@@ -9,12 +9,18 @@ import { useParams } from "react-router-dom";
 import BoardsNav from "./BoardsNav";
 import { FaPlus } from "react-icons/fa6";
 import TaskContext from "../../context/TaskContext";
+import { useBoardSocket } from "../../hooks/useBoardSocket";
 
 function Board() {
   const {boardId} = useParams();
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<TaskResponse[]>([]);
   const {token} = useContext(AuthContext);
   const [showNewColumnCard, setShowNewColumnCard] = useState(false);
+
+  const { sendTaskCreate } = useBoardSocket({
+    boardId: boardId,
+    onTaskCreated: (task) => setTasks((prev) => [...prev, task])
+  });
 
   async function getTasks() {
     try {
@@ -49,7 +55,7 @@ function Board() {
 
   return (
     <>
-      <TaskContext value={{tasks, setTasks}}>
+      <TaskContext value={{tasks, setTasks, sendTaskCreate }}>
         <BoardsNav/>
         <EditBar/>    
         <div className="board">         

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import type { Task } from "../../types/Task";
+import type { TaskResponse } from "../../types/TaskResponse";
 import "./styles/taskcolumn.css";
 import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
@@ -9,7 +9,7 @@ import TaskContext from "../../context/TaskContext";
 function TaskColumn({newColumn, boardId, title} 
     : {newColumn: boolean, boardId: string | undefined, title: string}) {
     
-  const [categorisedTasks, setCategorizedTasks] = useState<Task[]>([]);
+  const [categorisedTasks, setCategorizedTasks] = useState<TaskResponse[]>([]);
   const [isNewColumn, setIsNewColumn] = useState(newColumn);
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
@@ -19,10 +19,10 @@ function TaskColumn({newColumn, boardId, title}
     
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const {token} = useContext(AuthContext);
-  const {tasks, setTasks} = useContext(TaskContext);
+  const {tasks, setTasks, sendTaskCreate} = useContext(TaskContext);
 
   useEffect(() => {
-    setCategorizedTasks(tasks.filter((item: Task) => item.task_category == title));
+    setCategorizedTasks(tasks.filter((item: TaskResponse) => item.task_category == title));
   }, [tasks]);
 
   async function handleSubmit(e: any) {
@@ -34,11 +34,12 @@ function TaskColumn({newColumn, boardId, title}
     }
 
     const task = {
-      title: taskTitle,
-      description: taskDescription,
-      category: columnTitle,
-      priority: selectedPriority,
-      date: "10/10/10"
+      task_title: taskTitle,
+      task_description: taskDescription,
+      task_category: columnTitle,
+      task_priority: selectedPriority,
+      task_date: "10/10/10",
+      board_id: Number(boardId)
     };
         
     try {
@@ -57,6 +58,7 @@ function TaskColumn({newColumn, boardId, title}
         setTaskTitle("");
         setTaskDescription("");
         setSelectedPriority("");
+        sendTaskCreate(task);
       } else {
         console.log(data.message);
       }

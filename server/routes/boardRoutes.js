@@ -70,11 +70,11 @@ router.get('/:boardId', async (req, res) => {
 
 router.post('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
-  const taskTitle = req.body.title;
-  const taskDescription = req.body.description;
-  const taskCategory = req.body.category;
-  const taskPriority = req.body.priority;
-  const taskDate = req.body.date;
+  const taskTitle = req.body.task_title;
+  const taskDescription = req.body.task_description;
+  const taskCategory = req.body.task_category;
+  const taskPriority = req.body.task_priority;
+  const taskDate = req.body.task_date;
   const user = req.user;
   
   if (!user) {

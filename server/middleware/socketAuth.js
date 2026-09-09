@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 function authenticateSocketToken(socket, next) {
     const token = socket.handshake.auth;
     

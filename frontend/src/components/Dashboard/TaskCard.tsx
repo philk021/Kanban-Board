@@ -5,12 +5,12 @@ import AuthContext from "../../context/AuthContext";
 import TaskContext from "../../context/TaskContext";
 
 function TaskCard({boardId, taskId, title, description, priority} : 
-    {boardId: string | undefined, taskId: number, title: string, description: string, priority: string}) {
+    {boardId: string | undefined, taskId: number | undefined, title: string, description: string, priority: string}) {
     
   const [showDelete, setShowDelete] = useState(false);
   const {token} = useContext(AuthContext);
   const {setTasks} = useContext(TaskContext);
-
+  
   async function deleteTask(e: any) {
     e.preventDefault();
     try {

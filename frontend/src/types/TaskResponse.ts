@@ -1,5 +1,5 @@
-export type Task = {
-    task_id: number,
+export type TaskResponse = {
+    task_id?: number | undefined,
     task_title: string,
     task_description: string,
     task_date: string,
