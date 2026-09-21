@@ -7,11 +7,14 @@ import Nav from './components/Home/Nav';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import PageNotFound from './components/Shared/PageNotFound';
 import AuthContext from '../src/context/AuthContext';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { registerTokenAccessor } from './core/axiosClient';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState("");
+  const tokenRef = useRef(token);
+  tokenRef.current = token;
   const [userEmail, setUserEmail] = useState("");
   const navigate = useNavigate();
 
@@ -20,13 +23,22 @@ function App() {
     setToken(token);
     setUserEmail(email);
     navigate("/boards");
-  }
+  };
 
   function logout() {
     setIsLoggedIn(false);
     setToken("");
     navigate("/");
-  }
+  };
+
+  useEffect(() => {
+    registerTokenAccessor({
+      getAccessToken: () => tokenRef.current,
+      getRefreshToken: () => null,
+      setAccessToken: (t) => setToken(t),
+      clearTokens: () => setToken(''),
+    });
+  }, []);
 
   return (
     <>

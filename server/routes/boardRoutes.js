@@ -15,6 +15,7 @@ const {
 } = require('../db/db_connection');
 
 router.get('/', async (req, res) => {
+  const user = req.user;
   try {
     const boards = await getBoards(user);
     res.status(200).json(boards);
@@ -25,14 +26,15 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const boardTitle = req.body.boardTitle;
+  const title = req.body.title;
+  const user = req.user;
   
-  if (!boardTitle || !user) {
+  if (!title || !user) {
     res.status(500).json({ error: "Invalid input" });
   };
   
   try {
-    await createBoard(boardTitle, user, 'OWNER');
+    await createBoard(title, user, 'OWNER');
     const boards = await getBoards(user);
     res.status(201).json(boards);
   } catch (error) {
@@ -55,19 +57,19 @@ router.get('/:boardId', async (req, res) => {
 
 router.post('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
-  const taskTitle = req.body.task_title;
-  const taskDescription = req.body.task_description;
-  const taskCategory = req.body.task_category;
-  const taskPriority = req.body.task_priority;
-  const taskDate = req.body.task_date;
+  const title = req.body.task_title;
+  const description = req.body.task_description;
+  const category = req.body.task_category;
+  const priority = req.body.task_priority;
+  const date = req.body.task_date;
   
-  if (!taskTitle || !taskDescription) {
+  if (!title || !description) {
     res.status(500).json({ error: "Invalid input" });
   };
   
   try {
-    const result = await createTask(boardId, taskTitle, taskDescription, 
-      taskCategory, taskPriority, taskDate
+    const result = await createTask(boardId, title, description, 
+      category, priority, date
     );
     const tasks = await getTasks(boardId);
     res.status(201).json(tasks);
@@ -79,9 +81,9 @@ router.post('/:boardId', async (req, res) => {
 
 router.put('/:boardId/tasks/:taskId', async (req, res) => {
   const boardId = req.params.boardId;
-  const taskTitle = req.body.title;
-  const taskDescription = req.body.description;
-  const taskDate = req.body.date;
+  const title = req.body.title;
+  const description = req.body.description;
+  const date = req.body.date;
   const taskId = req.params.taskId;
   
   if (!taskId || !taskTitle || !taskDescription) {
@@ -89,7 +91,7 @@ router.put('/:boardId/tasks/:taskId', async (req, res) => {
   };
 
   try {
-    await updateTask(taskId, taskTitle, taskDescription, taskDate);
+    await updateTask(taskId, title, description, date);
     const tasks = await getTasks(boardId);
     res.status(200).json(tasks);
   } catch (error) {
@@ -114,6 +116,7 @@ router.delete('/:boardId/tasks/:taskId', async (req, res) => {
 
 router.delete('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
+  const user = req.user;
 
   try {
     const result = await deleteBoard(boardId);
@@ -127,39 +130,40 @@ router.delete('/:boardId', async (req, res) => {
 
 router.put('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
-  const boardTitle = req.body.title;
+  const title = req.body.title;
+  const user = req.user;
   
-  if (!boardTitle) {
+  if (!title) {
     res.status(500).json({ error: "Board already exists." })
   }
 
   try {
-    const result = await updateBoard(boardTitle, boardId);
+    const result = await updateBoard(title, boardId);
     const boards = await getBoards(user);
     res.status(200).json(boards);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-})
+});
 
 router.post('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
-  const inviteEmail = req.body.email;
+  const email = req.body.email;
   
-  if (!inviteEmail) {
+  if (!email) {
     res.status(500).json({ error: "Missing invite email." })
   }
 
   try {
-    const inviteUserId = await getUserId(inviteEmail);
+    const inviteUserId = await getUserId(email);
     const result = await createBoardUser(inviteUserId, boardId, 'MEMBER');
     res.status(201).json({ message: "Invite Sent." });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-})
+});
 
 router.get('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
@@ -171,6 +175,6 @@ router.get('/:boardId/users', async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-})
+});
 
 module.exports = router;

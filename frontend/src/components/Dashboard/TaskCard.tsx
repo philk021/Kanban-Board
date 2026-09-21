@@ -1,26 +1,20 @@
 import { useContext, useState } from "react";
 import "./styles/taskcard.css";
 import { FaPenToSquare, FaTrash } from "react-icons/fa6";
-import AuthContext from "../../context/AuthContext";
 import TaskContext from "../../context/TaskContext";
+import { deleteTask } from "../../core/http";
 
 function TaskCard({boardId, taskId, title, description, priority} : 
     {boardId: string | undefined, taskId: number | undefined, title: string, description: string, priority: string}) {
     
   const [showDelete, setShowDelete] = useState(false);
-  const {token} = useContext(AuthContext);
   const {setTasks} = useContext(TaskContext);
   
-  async function deleteTask(e: any) {
+  async function handleDelete(e: any) {
     e.preventDefault();
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/tasks/${taskId}`, {
-        method: 'DELETE',
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-      const data = await response.json(); 
+      const response = await deleteTask(boardId, taskId);
+      const data = await response.data;
             
       if (response.status == 200) {
         setTasks(data);
@@ -37,7 +31,7 @@ function TaskCard({boardId, taskId, title, description, priority} :
       <div className="task-card-header">
         <div className={priority}>{priority}</div>
         <div>
-          {showDelete && <button type="button" onClick={(e) => deleteTask(e)}><FaTrash/></button>}
+          {showDelete && <button type="button" onClick={(e) => handleDelete(e)}><FaTrash/></button>}
           <button type="button" onClick={() => setShowDelete(prev => !prev)}><FaPenToSquare/></button>
         </div>
       </div>

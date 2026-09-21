@@ -1,6 +1,5 @@
 import SideMenu from "./SideMenu";
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../../context/AuthContext";
+import { useEffect, useState } from "react";
 import type { BoardInfo } from "../../types/BoardInfo";
 import { Route, Routes } from "react-router-dom";
 import Boards from "./Boards";
@@ -10,10 +9,10 @@ import NewBoard from "./NewBoard";
 import "./styles/dashboard.css";
 import DashboardContext from "../../context/DashboardContext";
 import Settings from "./Settings";
+import { fetchBoards } from "../../core/http";
 
 function Dashboard() {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
-  const {token} = useContext(AuthContext);
 
   useEffect(()=>{
     getBoards();
@@ -21,12 +20,8 @@ function Dashboard() {
 
   async function getBoards() {
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL_BOARDS, {
-        "headers": {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-      const data = await response.json();
+      const response = await fetchBoards();
+      const data = await response.data;
             
       if (response.status == 200) {
         setBoards(data);
@@ -36,7 +31,7 @@ function Dashboard() {
     } catch (err: any) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <DashboardContext value={{boards, setBoards}}>

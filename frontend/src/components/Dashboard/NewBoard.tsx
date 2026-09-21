@@ -1,33 +1,22 @@
 import { useContext, useState } from "react";
-import AuthContext from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./styles/newboard.css";
 import DashboardContext from "../../context/DashboardContext";
+import { addBoard } from "../../core/http";
 
 function NewBoard() {
   const {setBoards} = useContext(DashboardContext);
   const [title, setTitle] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
 
-  const {token} = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    const board = {
-      boardTitle: title
-    };
         
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL_BOARDS, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(board)
-      });
-      const data = await response.json();
+      const response = await addBoard(title);
+      const data = await response.data;
            
       if (response.status == 201) {
         setBoards(data);

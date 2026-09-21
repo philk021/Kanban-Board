@@ -2,41 +2,28 @@ import { useContext, useRef, useState } from "react";
 import "./styles/editbar.css";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import DashboardContext from "../../context/DashboardContext";
-import AuthContext from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import useBoardTitle from "../../hooks/useBoardTitle";
+import { deleteBoard, updateBoard, addUserToBoard } from "../../core/http";
 
 function EditBar() {
   const {boardId} = useParams();
   const boardTitle = useBoardTitle(boardId);
   const [newBoardTitle, setNewBoardTitle] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
-  const {token} = useContext(AuthContext);
   const {setBoards} = useContext(DashboardContext);
   const editDialogRef = useRef<HTMLDialogElement | null>(null);
   const inviteDialogRef = useRef<HTMLDialogElement | null>(null);
   const navigate = useNavigate();
 
-  async function editBoard() {
+  async function handleEdit() {
     if (!newBoardTitle || newBoardTitle === boardTitle) {
       return;
     }
-
-    const boardUpdate = {
-      title: newBoardTitle
-    };
-
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(boardUpdate)
-      });
-            
-      const data = await response.json();
+      const response = await updateBoard(boardId, newBoardTitle);
+      const data = await response.data;
+      
       if (response.status == 200) {
         setBoards(data);
         editDialogRef.current?.close();
@@ -47,18 +34,13 @@ function EditBar() {
     } catch (err: any) {
       console.log(err);
     }
-  }
+  };
 
-  async function deleteBoard() {
+  async function handleDelete() {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-            
-      const data = await response.json();
+      const response = await deleteBoard(boardId);          
+      const data = await response.data;
+      
       if (response.status == 200) {
         setBoards(data);
         navigate("/boards");
@@ -69,28 +51,16 @@ function EditBar() {
     } catch (err: any) {
       console.log(err);
     }
-  }
+  };
 
-  async function inviteToBoard() {
+  async function handleInvite() {
     if (!inviteEmail) {
       return;
     }
-
-    const invite = {
-      email: inviteEmail
-    };
-
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(invite)
-      });
-            
-      const data = await response.json();
+      const response = await addUserToBoard(boardId, inviteEmail)      
+      const data = await response.data;
+      
       if (response.status == 201) {
         editDialogRef.current?.close();
       } else {
@@ -100,7 +70,7 @@ function EditBar() {
     } catch (err: any) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <div className="edit-bar">
@@ -116,11 +86,11 @@ function EditBar() {
 
           <div className="edit-buttons">
             <button type="button" className="edit-buttons-delete"
-              onClick={() => deleteBoard()}>
+              onClick={() => handleDelete()}>
                 Delete
             </button>
             <button type="button" className="edit-buttons-save"
-              onClick={() => editBoard()}>
+              onClick={() => handleEdit()}>
                 Save
             </button>
             <button type="button" className="edit-buttons-close" 
@@ -147,7 +117,7 @@ function EditBar() {
 
           <div className="invite-buttons">
             <button type="button" className="invite-buttons-invite"
-              onClick={() => inviteToBoard()}>
+              onClick={() => handleInvite()}>
                 Invite
             </button>
             <button type="button" className="invite-buttons-close" 

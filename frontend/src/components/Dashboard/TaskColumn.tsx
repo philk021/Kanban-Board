@@ -3,8 +3,8 @@ import type { TaskResponse } from "../../types/TaskResponse";
 import "./styles/taskcolumn.css";
 import TaskCard from "./TaskCard";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
-import AuthContext from "../../context/AuthContext";
 import TaskContext from "../../context/TaskContext";
+import { addTask } from "../../core/http";
 
 function TaskColumn({newColumn, boardId, title} 
     : {newColumn: boolean, boardId: string | undefined, title: string}) {
@@ -18,7 +18,6 @@ function TaskColumn({newColumn, boardId, title}
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
     
   const dialogRef = useRef<HTMLDialogElement | null>(null);
-  const {token} = useContext(AuthContext);
   const {tasks, setTasks, sendTaskCreate} = useContext(TaskContext);
 
   useEffect(() => {
@@ -43,15 +42,8 @@ function TaskColumn({newColumn, boardId, title}
     };
         
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(task)
-      });
-      const data = await response.json();
+      const response = await addTask(boardId, task);
+      const data = await response.data;
            
       if (response.status == 201) {
         setTasks(data);

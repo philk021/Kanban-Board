@@ -1,8 +1,7 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import EditBar from "./EditBar";
 import type { TaskResponse } from "../../types/TaskResponse";
 import type { CategorizedTasks } from "../../types/CategorizedTasks";
-import AuthContext from "../../context/AuthContext";
 import "./styles/board.css";
 import TaskColumn from "./TaskColumn";
 import { useParams } from "react-router-dom";
@@ -10,11 +9,11 @@ import BoardsNav from "./BoardsNav";
 import { FaPlus } from "react-icons/fa6";
 import TaskContext from "../../context/TaskContext";
 import { useBoardSocket } from "../../hooks/useBoardSocket";
+import { fetchTasks } from "../../core/http";
 
 function Board() {
   const {boardId} = useParams();
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
-  const {token} = useContext(AuthContext);
   const [showNewColumnCard, setShowNewColumnCard] = useState(false);
 
   const { sendTaskCreate } = useBoardSocket({
@@ -24,12 +23,8 @@ function Board() {
 
   async function getTasks() {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_BOARDS}/${boardId}`, {
-        "headers": {
-          "Authorization": `Bearer ${token}`
-        },
-      });
-      const data = await response.json();      
+      const response = await fetchTasks(boardId);
+      const data = await response.data;     
       if (response.status == 200) {
         setTasks(data);
       } else {
@@ -38,7 +33,7 @@ function Board() {
     } catch (err: any) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     getTasks();
