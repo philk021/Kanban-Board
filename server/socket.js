@@ -1,5 +1,4 @@
 const { authenticateSocketToken } = require('./middleware/socketAuth');
-const { getUserId } = require('./db/db_connection');
 const { Server } = require('socket.io');
 const express = require('express');
 const http = require('http');
@@ -11,11 +10,11 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.API_URL,
-    credentials: false
+    credentials: true,
   }
 });
 
-//io.use(authenticateSocketToken);
+io.use(authenticateSocketToken);
 
 io.on('connection', async (socket) => {
   console.log(`socket connected: ${socket.id}`);

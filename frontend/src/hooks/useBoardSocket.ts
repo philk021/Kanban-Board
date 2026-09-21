@@ -1,6 +1,7 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useContext } from 'react';
 import { io, type Socket } from 'socket.io-client';
 import type { TaskResponse } from '../types/TaskResponse';
+import AuthContext from '../context/AuthContext';
 
 interface UseBoardSocketOptions {
   boardId: string | undefined;
@@ -18,7 +19,7 @@ export function useBoardSocket({
   onTaskCreated,
 }: UseBoardSocketOptions): UseBoardSocketResult {
   const socketRef = useRef<Socket | null>(null);
-  
+  const {token} = useContext(AuthContext);
   const onTaskCreatedRef = useRef(onTaskCreated);
 
   useEffect(() => {
@@ -29,7 +30,10 @@ export function useBoardSocket({
     if (!boardId) return;
 
     const socket = io(serverUrl, { 
-      transports: ['websocket']
+      transports: ['websocket'],
+      auth: {
+        token: token,
+      }
     });
     socketRef.current = socket;
 

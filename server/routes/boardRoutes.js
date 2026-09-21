@@ -15,11 +15,6 @@ const {
 } = require('../db/db_connection');
 
 router.get('/', async (req, res) => {
-  const user = req.user;
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
-
   try {
     const boards = await getBoards(user);
     res.status(200).json(boards);
@@ -31,11 +26,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const boardTitle = req.body.boardTitle;
-  const user = req.user;
-  
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
   
   if (!boardTitle || !user) {
     res.status(500).json({ error: "Invalid input" });
@@ -53,12 +43,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
-  const user = req.user;
   
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
-
   try {
     const tasks = await getTasks(boardId);
     res.status(200).json(tasks);
@@ -75,11 +60,6 @@ router.post('/:boardId', async (req, res) => {
   const taskCategory = req.body.task_category;
   const taskPriority = req.body.task_priority;
   const taskDate = req.body.task_date;
-  const user = req.user;
-  
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
   
   if (!taskTitle || !taskDescription) {
     res.status(500).json({ error: "Invalid input" });
@@ -103,11 +83,7 @@ router.put('/:boardId/tasks/:taskId', async (req, res) => {
   const taskDescription = req.body.description;
   const taskDate = req.body.date;
   const taskId = req.params.taskId;
-  const user = req.user;
   
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
   if (!taskId || !taskTitle || !taskDescription) {
     res.status(500).json({ error: "Invalid input" });
   };
@@ -125,11 +101,6 @@ router.put('/:boardId/tasks/:taskId', async (req, res) => {
 router.delete('/:boardId/tasks/:taskId', async (req, res) => {
   const boardId = req.params.boardId
   const taskId = req.params.taskId;
-  const user = req.user;
-  
-  if (!user) {
-    res.status(500).json({ error: "Not logged in"} );
-  };
 
   try {
     const result = await deleteTask(taskId);
@@ -143,11 +114,6 @@ router.delete('/:boardId/tasks/:taskId', async (req, res) => {
 
 router.delete('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
-  const user = req.user;
-  
-  if (!user) {
-    res.status(500).json({error: "Not logged in"});
-  };
 
   try {
     const result = await deleteBoard(boardId);
@@ -162,11 +128,7 @@ router.delete('/:boardId', async (req, res) => {
 router.put('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
   const boardTitle = req.body.title;
-  const user = req.user;
   
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
   if (!boardTitle) {
     res.status(500).json({ error: "Board already exists." })
   }
@@ -184,11 +146,7 @@ router.put('/:boardId', async (req, res) => {
 router.post('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
   const inviteEmail = req.body.email;
-  const user = req.user;
   
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
   if (!inviteEmail) {
     res.status(500).json({ error: "Missing invite email." })
   }
@@ -205,11 +163,6 @@ router.post('/:boardId/users', async (req, res) => {
 
 router.get('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
-  const user = req.user;
-  
-  if (!user) {
-    res.status(500).json({ error: "Not logged in" });
-  };
 
   try {
     const result = await getBoardUsers(boardId);
