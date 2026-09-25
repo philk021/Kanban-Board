@@ -1,7 +1,7 @@
 function Settings() {
   return (
     <>
-            Settings
+      Settings
     </>
   );
 }

@@ -7,9 +7,9 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
 
-  const {login} = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
-  function validInput() {
+  function isValidInput() {
     if (email == null || password == null) {
       return false;
     }
@@ -18,7 +18,7 @@ function Login() {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    if (!validInput()) {
+    if (!isValidInput()) {
       setResponseMessage("Email or password invalid.");
       return;
     }
@@ -50,30 +50,27 @@ function Login() {
     <main>
       <form className="login-form" onSubmit={handleSubmit}>
         <p>Welcome back</p>
-
         <div className="form-control">
           <input 
             className="form-input" 
             type="text"
             required 
             placeholder="Email"
-            onChange={(e)=>{setEmail(e.target.value);}}/>
-
+            onChange={(e)=> { setEmail(e.target.value) }}/>
           <input 
             className="form-input" 
             type={showPassword ? "text" : "password"}
             required 
             placeholder="Password"
             maxLength={32}
-            onChange={(e)=>{setPassword(e.target.value);}}/>
-        </div>
-        
+            onChange={(e)=> { setPassword(e.target.value) }}/>
+        </div>     
         <div className="form-control">
           <label>Show password</label>
           <input
             className="checkbox"
             type="checkbox"
-            onChange={()=>setShowPassword(prev => !prev)}/>
+            onChange={() => setShowPassword(prev => !prev)}/>
         </div>
         <p>{responseMessage}</p>
         <button className="login-form-btn">Login</button>

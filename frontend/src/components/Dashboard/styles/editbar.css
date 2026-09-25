@@ -7,7 +7,7 @@
     justify-content: space-between;
 }
 .edit-bar h1 {
-    font-size: 1.5rem;
+    font-size: var(--font-medium);
     font-weight: 400;
 }
 .edit-search {
@@ -17,7 +17,7 @@
     gap: 10px;
 }
 .edit-search-field {
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-border);
     border-radius: 15px;
     padding: 5px 10px;
 }
@@ -29,13 +29,13 @@
 }
 .edit-utility-buttons button {
     padding: 5px 10px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-border);
     border-radius: 5px;
-    background: var(--bg-subtle);
+    background: var(--color-bg-subtle);
 }
 .edit-utility-buttons button:hover {
     cursor: pointer;
-    background: var(--bg-subtle-hover);
+    background: var(--color-bg-subtle-hover);
 }
 .edit-buttons, .invite-buttons {
     width: 100%;

@@ -1,24 +1,28 @@
 :root {
-  --text: #28282B;
-  --text-subtle: #767679;
-  --bg-card: #fff;
-  --bg: #f7f7f7;
-  --bg-subtle: #eeeeee;
-  --bg-subtle-hover: #dfdfdf;
-  --border: #E5E4E2;
-  --primary: #1fa0fc;
-  --primary-hover: #3ba5f0;
-  --overlay: #b2b2b687;
+  --color-text: #28282B;
+  --color-text-subtle: #767679;
+  --color-border: #E5E4E2;
+  --color-bg: #f7f7f7;
+  --color-bg-subtle: #EEE;
+  --color-bg-card: #fff;
+  --color-bg-subtle-hover: #dfdfdf;
+  --color-primary: #1fa0fc;
+  --color-primary-hover: #3ba5f0;
+  --color-bg-overlay: #b2b2b687;
   
-  --low-priority: rgb(28, 125, 28);
-  --medium-priority: rgb(137, 137, 4);
-  --high-priority: rgb(232, 51, 51);
-  --low-priority-bg: rgb(221, 249, 221);
-  --medium-priority-bg: rgb(242, 242, 163);
-  --high-priority-bg: rgb(249, 220, 220);
+  --color-low-priority: rgb(28, 125, 28);
+  --color-medium-priority: rgb(137, 137, 4);
+  --color-high-priority: rgb(232, 51, 51);
+  --color-low-priority-bg: rgb(221, 249, 221);
+  --color-medium-priority-bg: rgb(242, 242, 163);
+  --color-high-priority-bg: rgb(249, 220, 220);
 
   --breakpoint-small: 480px;
   --breakpoint-medium: 600px;
   --breakpoint-large: 900px;
   --breakpoint-extra-large: 1024px;
+
+  --font-small: 16px;
+  --font-medium: 24px;
+  --font-large: 32px;
 }

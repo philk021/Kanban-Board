@@ -1,9 +1,9 @@
 .task-card {
-    background-color: var(--bg-card);
+    width: 300px;
     margin: 15px auto;
     padding: 15px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--color-bg-card);
+    border: 1px;
     border-radius: 8px;
 }
 .task-card-header {
@@ -17,38 +17,36 @@
     border: none;
     border-radius: 5px;
     padding: 5px;
-    background: var(--bg-card);
+    background: var(--color-bg-card);
 }
 .task-card-header button:hover {
     cursor: pointer;
-    background: var(--bg-subtle-hover);
+    background: var(--color-bg-subtle-hover);
 }
 .low, .medium, .high {
     width: min-content;
     padding: 3px 8px;
     border-radius: 12px;
+    font-size: var(--font-small);
 }
 .low {
-    color: var(--low-priority);
-    background: var(--low-priority-bg);
+    color: var(--color-low-priority);
+    background: var(--color-low-priority-bg);
 }
 .medium {
-    color: var(--medium-priority);
-    background: var(--medium-priority-bg);
+    color: var(--color-medium-priority);
+    background: var(--color-medium-priority-bg);
 }
 .high {
-    color: var(--high-priority);
-    background: var(--high-priority-bg);
-}
-.task-info {
-    margin: 0 0 10px 0;
+    color: var(--color-high-priority);
+    background: var(--color-high-priority-bg);
 }
 .task-info-title {
     margin: 0 0 10px 0;
-    font-size: 0.5rem;
+    font-size: var(--font-small);
     font-weight: 500;
 }
-.task-info-description {
-    color: var(--text-subtle);
+.task-info-date {
+    color: var(--color-text-subtle);
     font-weight: 400;
 }

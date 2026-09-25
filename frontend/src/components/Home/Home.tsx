@@ -7,10 +7,10 @@ function Home() {
       <div>
         <div className="banner">Kanban Board</div>
         <div className="sub-banner">
-                    Get started in seconds. Signing up is free.
+          Get started in seconds. Signing up is free.
         </div>
         <div>
-          <li><Link className="join-btn" to="/signup">Sign up</Link></li>
+          <Link className="join-btn" to="/signup">Sign up</Link>
         </div>
       </div>
     </main>

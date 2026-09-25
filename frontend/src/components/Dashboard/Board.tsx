@@ -12,7 +12,7 @@ import { useBoardSocket } from "../../hooks/useBoardSocket";
 import { fetchTasks } from "../../core/http";
 
 function Board() {
-  const {boardId} = useParams();
+  const { boardId } = useParams();
   const [tasks, setTasks] = useState<TaskResponse[]>([]);
   const [showNewColumnCard, setShowNewColumnCard] = useState(false);
 
@@ -27,8 +27,6 @@ function Board() {
       const data = await response.data;     
       if (response.status == 200) {
         setTasks(data);
-      } else {
-        console.log(data);
       }
     } catch (err: any) {
       console.log(err);
@@ -50,22 +48,29 @@ function Board() {
 
   return (
     <>
-      <TaskContext value={{tasks, setTasks, sendTaskCreate }}>
+      <TaskContext value={{ tasks, setTasks, sendTaskCreate }}>
         <BoardsNav/>
         <EditBar/>    
         <div className="board">         
           {Object.entries(categorized).map(([category]) =>
-            <TaskColumn key={category} newColumn={false} boardId={boardId} title={category}/>
+            <TaskColumn 
+              key={category} 
+              newColumn={false} 
+              boardId={boardId} 
+              title={category}
+            />
           )}
-
-          {showNewColumnCard && <TaskColumn newColumn={true} boardId={boardId} title="Untitled"/>}         
-
-          <button className="new-column-card" type="button" 
+          {showNewColumnCard && (
+            <TaskColumn 
+              newColumn={true} 
+              boardId={boardId} 
+              title="Untitled"
+            />
+          )}         
+          <button 
+            className="new-column-btn"
             onClick={() => setShowNewColumnCard(prev => !prev)}>
-            <div className="new-column-btn">
-              <FaPlus/>
-              <h1>New Category</h1>
-            </div>
+            <FaPlus/>
           </button>
         </div>
       </TaskContext>

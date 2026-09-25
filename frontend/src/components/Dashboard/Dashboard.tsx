@@ -21,12 +21,9 @@ function Dashboard() {
   async function getBoards() {
     try {
       const response = await fetchBoards();
-      const data = await response.data;
-            
+      const data = await response.data;  
       if (response.status == 200) {
         setBoards(data);
-      } else {
-        console.log(data);
       }
     } catch (err: any) {
       console.log(err);

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import { EMAIL_FORMAT } from "./constants";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -7,7 +8,6 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   const {login} = useContext(AuthContext);
 
@@ -16,7 +16,7 @@ function Signup() {
             || password == null || confirmPassword == null) {
       return false;
     }
-    if (!emailRegex.test(email)) {
+    if (!EMAIL_FORMAT.test(email)) {
       return false;
     }
     return true;

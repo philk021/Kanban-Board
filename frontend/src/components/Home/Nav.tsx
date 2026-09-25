@@ -7,7 +7,9 @@ function Nav() {
         <Link to="/"><h1>Logo</h1></Link>
       </div>
       <ul>
-        <li><Link className="login-btn" to="/login">Login</Link></li>
+        <li>
+          <Link className="login-btn" to="/login">Login</Link>
+        </li>
       </ul>
     </nav>
   );
