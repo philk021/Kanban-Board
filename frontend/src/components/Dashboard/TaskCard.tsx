@@ -1,12 +1,17 @@
 import { useContext, useState } from "react";
 import "./styles/taskcard.css";
-import { FaPenToSquare, FaTrash } from "react-icons/fa6";
+import { FaEllipsisVertical, FaTrash } from "react-icons/fa6";
 import TaskContext from "../../context/TaskContext";
 import { deleteTask } from "../../core/http";
 
 function TaskCard({boardId, taskId, title, description, priority} : 
-    {boardId: string | undefined, taskId: number | undefined, title: string, description: string, priority: string}) {
-    
+    {
+      boardId: string | undefined, 
+      taskId: number | undefined, 
+      title: string, 
+      description: string, 
+      priority: string
+    }) {
   const [showDelete, setShowDelete] = useState(false);
   const {setTasks} = useContext(TaskContext);
   
@@ -31,8 +36,13 @@ function TaskCard({boardId, taskId, title, description, priority} :
       <div className="task-card-header">
         <div className={priority}>{priority}</div>
         <div>
-          {showDelete && <button type="button" onClick={(e) => handleDelete(e)}><FaTrash/></button>}
-          <button type="button" onClick={() => setShowDelete(prev => !prev)}><FaPenToSquare/></button>
+          {showDelete && 
+            <button type="button" onClick={(e) => handleDelete(e)}>
+              <FaTrash/>
+            </button>}
+          <button type="button" onClick={() => setShowDelete(prev => !prev)}>
+            <FaEllipsisVertical/>
+          </button>
         </div>
       </div>
       <div className="task-info">

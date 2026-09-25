@@ -1,5 +1,5 @@
 export const BOARD_ROLES = {
-    OWNER: 'OWNER',
-    MEMBER: 'MEMBER',
-    VIEWER: 'VIEWER'
-}
+  OWNER: 'OWNER',
+  MEMBER: 'MEMBER',
+  VIEWER: 'VIEWER'
+};

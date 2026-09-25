@@ -13,6 +13,7 @@ const {
   getBoardUsers, 
   getUserId
 } = require('../db/db_connection');
+const { BOARD_ROLES } = require('../constants');
 
 router.get('/', async (req, res) => {
   const user = req.user;
@@ -34,7 +35,7 @@ router.post('/', async (req, res) => {
   };
   
   try {
-    await createBoard(title, user, 'OWNER');
+    await createBoard(title, user, BOARD_ROLES.OWNER);
     const boards = await getBoards(user);
     res.status(201).json(boards);
   } catch (error) {
@@ -44,8 +45,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:boardId', async (req, res) => {
-  const boardId = req.params.boardId;
-  
+  const boardId = req.params.boardId; 
   try {
     const tasks = await getTasks(boardId);
     res.status(200).json(tasks);
@@ -84,12 +84,12 @@ router.put('/:boardId/tasks/:taskId', async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const date = req.body.date;
-  const taskId = req.params.taskId;
+  const taskId = req.params.taskId;  
   
-  if (!taskId || !taskTitle || !taskDescription) {
+  if (!taskId || !title || !description) {
     res.status(500).json({ error: "Invalid input" });
   };
-
+  
   try {
     await updateTask(taskId, title, description, date);
     const tasks = await getTasks(boardId);
@@ -103,7 +103,6 @@ router.put('/:boardId/tasks/:taskId', async (req, res) => {
 router.delete('/:boardId/tasks/:taskId', async (req, res) => {
   const boardId = req.params.boardId
   const taskId = req.params.taskId;
-
   try {
     const result = await deleteTask(taskId);
     const tasks = await getTasks(boardId);
@@ -117,7 +116,6 @@ router.delete('/:boardId/tasks/:taskId', async (req, res) => {
 router.delete('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
   const user = req.user;
-
   try {
     const result = await deleteBoard(boardId);
     const boards = await getBoards(user);
@@ -132,11 +130,9 @@ router.put('/:boardId', async (req, res) => {
   const boardId = req.params.boardId;
   const title = req.body.title;
   const user = req.user;
-  
   if (!title) {
     res.status(500).json({ error: "Board already exists." })
   }
-
   try {
     const result = await updateBoard(title, boardId);
     const boards = await getBoards(user);
@@ -150,14 +146,12 @@ router.put('/:boardId', async (req, res) => {
 router.post('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
   const email = req.body.email;
-  
   if (!email) {
     res.status(500).json({ error: "Missing invite email." })
   }
-
   try {
     const inviteUserId = await getUserId(email);
-    const result = await createBoardUser(inviteUserId, boardId, 'MEMBER');
+    const result = await createBoardUser(inviteUserId, boardId, BOARD_ROLES.MEMBER);
     res.status(201).json({ message: "Invite Sent." });
   } catch (error) {
     console.log(error);
@@ -167,7 +161,6 @@ router.post('/:boardId/users', async (req, res) => {
 
 router.get('/:boardId/users', async (req, res) => {
   const boardId = req.params.boardId;
-
   try {
     const result = await getBoardUsers(boardId);
     res.status(200).json(result);

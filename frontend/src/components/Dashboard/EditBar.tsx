@@ -58,7 +58,7 @@ function EditBar() {
       return;
     }
     try {
-      const response = await addUserToBoard(boardId, inviteEmail)      
+      const response = await addUserToBoard(boardId, inviteEmail);      
       const data = await response.data;
       
       if (response.status == 201) {

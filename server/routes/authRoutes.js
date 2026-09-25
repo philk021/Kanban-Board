@@ -3,8 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {createUser, loginUser, storeRefreshToken} = require('../db/db_connection');
-
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const { EMAIL_FORMAT } = require('../constants');
 
 router.post('/signup', async (req, res) => {
     const email = req.body.email;
@@ -14,7 +13,7 @@ router.post('/signup', async (req, res) => {
     if (!email || !password) {
         res.status(500).json({message: "Invalid email or password."})
     };
-    if (!emailRegex.test(email)) {
+    if (!EMAIL_FORMAT.test(email)) {
         res.status(500).json({message: "Invalid email."})
     }
 
@@ -33,7 +32,7 @@ router.post('/signup', async (req, res) => {
         await createUser(email, hashedPassword);
         const accessToken = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'});
         const refreshToken = jwt.sign({email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1d'}); 
-        await storeRefreshToken(refreshToken);
+        await storeRefreshToken(refreshToken);   
         res.cookie('refresh-token', refreshToken, {httpOnly: true}, {maxAge: 24 * 60 * 60 * 1000});
         res.status(201).json({message: accessToken});
     } catch (error) {
@@ -76,5 +75,9 @@ router.post('/login', async (req, res) => {
         res.status(500).json({error: error.message});
     }
 });
+
+router.get('/refresh', async (req, res) => {
+
+})
 
 module.exports = router;
