@@ -29,8 +29,7 @@ export function useBoardSocket({
   useEffect(() => {
     if (!boardId) return;
 
-    const socket = io(serverUrl, { 
-      transports: ['websocket'],
+    const socket = io(serverUrl, {
       auth: {
         token: token,
       }
