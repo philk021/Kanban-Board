@@ -63,11 +63,13 @@ function TaskColumn({ newColumn, boardId, title } :
             className="form-input" 
             type="text"
             placeholder="Name"
+            value={taskTitle}
             onChange={(e) => setTaskTitle(e.target.value)}
           />
           <textarea 
             className="form-input"
             placeholder="Description"
+            value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
           />
           <label htmlFor="priority">Priority: </label>               
@@ -80,7 +82,7 @@ function TaskColumn({ newColumn, boardId, title } :
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
-          </select>          
+          </select>        
           <div className="task-btns">
             <button 
               type="submit" 

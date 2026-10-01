@@ -14,6 +14,6 @@ export default function useBoardTitle(id: string | undefined) {
     } else {
       setBoardTitle("Untitled");
     }
-  });
+  }, [id]);
   return boardTitle;
 };

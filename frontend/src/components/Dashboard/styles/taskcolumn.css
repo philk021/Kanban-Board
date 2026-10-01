@@ -1,6 +1,7 @@
 .task-column {
     min-width: 300px;
-    height: min-content;
+    height: 500px;
+    overflow-y: scroll;
     background: var(--color-bg-subtle);
     padding: 15px;
     border-radius: 8px;
