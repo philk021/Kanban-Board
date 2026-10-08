@@ -1,13 +1,12 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addBoard } from "../../../../core/http";
-import "./NewBoard.css";
 import DashboardContext from "../../../../shared/context/DashboardContext";
+import { addBoard } from "../../api/dashboardApi";
+import "./NewBoardPage.css";
 
-export function NewBoard() {
+export function NewBoardPage() {
   const {setBoards} = useContext(DashboardContext);
   const [title, setTitle] = useState("");
-  const [responseMessage, setResponseMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -22,7 +21,6 @@ export function NewBoard() {
       }
     } catch (err: any) {
       console.log(err);
-      setResponseMessage(err);
     }
   }
 

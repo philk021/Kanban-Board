@@ -1,22 +1,22 @@
-import type { TaskResponse } from "../shared/types/TaskResponse";
-import axiosClient from "./axiosClient";
+import axiosClient from "../../../core/axiosClient";
+import type { TaskResponse } from "../../../shared/types/TaskResponse";
 
-export async function fetchTasks(boardId: string | undefined) {
+export async function getTasks(boardId?: string) {
   const response = await axiosClient.get(`/boards/${boardId}`);
   return response;
 };
 
-export async function addTask(boardId: string | undefined, task: TaskResponse) {
+export async function addTask(task: TaskResponse, boardId?: string) {
   const response = await axiosClient.post(`/boards/${boardId}`, task);
   return response;
 };
 
-export async function deleteTask(boardId: string | undefined, taskId: number | undefined) {
+export async function deleteTask(boardId?: string, taskId?: number) {
   const response = await axiosClient.delete(`/boards/${boardId}/tasks/${taskId}`);
   return response;
 };
 
-export async function fetchBoards() {
+export async function getBoards() {
   const response = await axiosClient.get(`/boards`);
   return response;
 };

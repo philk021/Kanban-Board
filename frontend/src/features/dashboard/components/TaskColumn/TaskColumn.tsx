@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import type { TaskResponse } from "../../../../shared/types/TaskResponse";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
-import { addTask } from "../../../../core/http";
 import { TaskCard } from "../TaskCard/TaskCard";
-import "./TaskColumn.css";
 import TaskContext from "../../../../shared/context/TaskContext";
+import { addTask } from "../../api/dashboardApi";
+import "./TaskColumn.css";
 
 function TaskColumn({ newColumn, boardId, title } : 
   { newColumn: boolean, boardId: string | undefined, title: string }) { 
@@ -23,10 +23,6 @@ function TaskColumn({ newColumn, boardId, title } :
     setCategorizedTasks(tasks.filter((item: TaskResponse) => item.task_category == title));
   }, [tasks]);
 
-  const updateTask = () => {
-
-  }
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!taskTitle || !taskDescription) {
@@ -42,7 +38,7 @@ function TaskColumn({ newColumn, boardId, title } :
       board_id: Number(boardId)
     };    
     try {
-      const response = await addTask(boardId, task);
+      const response = await addTask(task, boardId);
       const data = await response.data;    
       if (response.status == 201) {
         setTasks(data);

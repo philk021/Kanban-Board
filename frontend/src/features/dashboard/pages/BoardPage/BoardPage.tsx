@@ -1,41 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import type { TaskResponse } from "../../../../shared/types/TaskResponse";
 import type { CategorizedTasks } from "../../../../shared/types/CategorizedTasks";
-import TaskColumn from "../TaskColumn/TaskColumn";
-import { fetchTasks } from "../../../../core/http";
+import TaskColumn from "../../components/TaskColumn/TaskColumn";
 import { useBoardSocket } from "../../hooks/useBoardSocket";
-import { BoardNav } from "../BoardNav/BoardNav";
-import { EditBar } from "../EditBar/EditBar";
+import { BoardNav } from "../../components/BoardNav/BoardNav";
+import { EditBar } from "../../components/EditBar/EditBar";
 import TaskContext from "../../../../shared/context/TaskContext";
-import "./Board.css";
+import { useTasks } from "../../hooks/useTasks";
+import "./BoardPage.css";
 
-export function Board() {
+export function BoardPage() {
   const { boardId } = useParams();
-  const [tasks, setTasks] = useState<TaskResponse[]>([]);
   const [showNewColumnCard, setShowNewColumnCard] = useState(false);
-
+  const { tasks, setTasks } = useTasks(boardId);
   const { sendTaskCreate } = useBoardSocket({
     boardId: boardId,
     onTaskCreated: (task) => setTasks((prev) => [...prev, task])
   });
-
-  async function getTasks() {
-    try {
-      const response = await fetchTasks(boardId);
-      const data = await response.data;     
-      if (response.status == 200) {
-        setTasks(data);
-      }
-    } catch (err: any) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getTasks();
-  }, []);
 
   const categorized = useMemo(() => {
     return tasks.reduce<CategorizedTasks>((groups, item) => {

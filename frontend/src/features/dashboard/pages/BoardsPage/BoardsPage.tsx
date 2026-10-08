@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import type { BoardInfo } from "../../../../shared/types/BoardInfo";
 import { useContext } from "react";
-import { BoardCard } from "../BoardCard/BoardCard";
 import DashboardContext from "../../../../shared/context/DashboardContext";
-import "./Boards.css";
+import type { BoardInfo } from "../../../../shared/types/BoardInfo";
+import { BoardCard } from "../../components/BoardCard/BoardCard";
+import "./BoardsPage.css";
 
-export function Boards() {
+export function BoardsPage() {
   const { boards } = useContext(DashboardContext);
     
   return (

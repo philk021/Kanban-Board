@@ -1,8 +1,8 @@
 import { useContext, useRef } from "react";
 import { FaEllipsisVertical } from "react-icons/fa6";
-import { deleteTask } from "../../../../core/http";
-import "./TaskCard.css";
 import TaskContext from "../../../../shared/context/TaskContext";
+import { deleteTask } from "../../api/dashboardApi";
+import "./TaskCard.css";
 
 export function TaskCard({ boardId, taskId, title, description, priority, date } : 
   {
@@ -30,7 +30,7 @@ export function TaskCard({ boardId, taskId, title, description, priority, date }
   };
 
   async function handleSubmit(e: any) {
-
+    e.preventDefault();
   }
     
   return (
@@ -66,6 +66,7 @@ export function TaskCard({ boardId, taskId, title, description, priority, date }
             <button 
               type="submit" 
               className="create-task-btn"
+              onClick={(e) => handleDelete(e)}
             >
               Delete
             </button>
