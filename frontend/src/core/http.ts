@@ -1,4 +1,4 @@
-import type { TaskResponse } from "../types/TaskResponse";
+import type { TaskResponse } from "../shared/types/TaskResponse";
 import axiosClient from "./axiosClient";
 
 export async function fetchTasks(boardId: string | undefined) {

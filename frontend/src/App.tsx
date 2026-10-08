@@ -1,14 +1,14 @@
-import './App.css';
-import Home from './components/Home/Home';
-import Dashboard from './components/Dashboard/Dashboard';
-import Login from './components/Home/Login';
-import Signup from './components/Home/Signup';
-import Nav from './components/Home/Nav';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import PageNotFound from './components/Shared/PageNotFound';
-import AuthContext from '../src/context/AuthContext';
-import { useEffect, useRef, useState } from 'react';
+import { DashboardPage } from './features/dashboard/pages/DashboardPage/DashboardPage';
+import { LoginPage } from './features/home/pages/LoginPage/LoginPage';
+import { SignupPage } from './features/home/pages/SignupPage/SignupPage';
+import { HomePage } from './features/home/pages/HomePage/HomePage';
+import { Nav } from './features/home/components/Nav/Nav';
+import PageNotFound from './features/error/pages/PageNotFound';
+import AuthContext from './shared/context/AuthContext';
 import { registerTokenAccessor } from './core/axiosClient';
+import { useEffect, useRef, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,16 +45,16 @@ function App() {
       <AuthContext value={{ isLoggedIn, login, logout, token, userEmail }}>
         {isLoggedIn ? 
           <Routes>
-            <Route path='/boards/*' element={ <Dashboard/> }/>
-            <Route path='*' element={ <PageNotFound/> }/>
+            <Route path='/boards/*' element={ <DashboardPage /> }/>
+            <Route path='*' element={ <PageNotFound /> }/>
           </Routes> :
           <>
             <Nav/> 
             <Routes>
-              <Route path='/' element={ <Home/> }/>
-              <Route path='/login' element={ <Login /> }/>
-              <Route path='/signup' element={ < Signup /> }/>
-              <Route path='*' element={ <PageNotFound/> }/>
+              <Route path='/' element={ <HomePage /> }/>
+              <Route path='/login' element={ <LoginPage /> }/>
+              <Route path='/signup' element={ < SignupPage /> }/>
+              <Route path='*' element={ <PageNotFound /> }/>
             </Routes>
           </>}
       </AuthContext>
