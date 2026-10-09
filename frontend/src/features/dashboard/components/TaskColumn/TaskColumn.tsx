@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import type { TaskResponse } from "../../../../shared/types/TaskResponse";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
 import { TaskCard } from "../TaskCard/TaskCard";
-import TaskContext from "../../../../shared/context/TaskContext";
+import TaskContext from "../../context/TaskContext";
 import { addTask } from "../../api/dashboardApi";
 import "./TaskColumn.css";
 

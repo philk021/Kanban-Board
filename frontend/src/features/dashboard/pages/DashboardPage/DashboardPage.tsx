@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import PageNotFound from "../../../error/pages/PageNotFound";
+import { PageNotFound } from "../../../error";
 import { SettingsPage } from "../../../settings/pages/SettingsPage/SettingsPage";
 import { SideMenu } from "../../components/SideMenu/SideMenu";
-import DashboardContext from "../../../../shared/context/DashboardContext";
+import DashboardContext from "../../context/DashboardContext";
 import { useBoards } from "../../hooks/useBoards";
 import { BoardsPage } from "../BoardsPage/BoardsPage";
 import { BoardPage } from "../BoardPage/BoardPage";

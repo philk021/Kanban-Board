@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import type {AuthContextType} from "../types/AuthContextType";
+import type { AuthContextType } from "../types/AuthContextType";
 
 const AuthContext = createContext<AuthContextType>({
-  isLoggedIn: false,
+  loggedIn: false,
   login: () => {}, 
   logout: () => {},
   token: "",

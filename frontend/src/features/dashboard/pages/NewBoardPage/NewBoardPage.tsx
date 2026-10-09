@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardContext from "../../../../shared/context/DashboardContext";
+import DashboardContext from "../../context/DashboardContext";
 import { addBoard } from "../../api/dashboardApi";
 import "./NewBoardPage.css";
 

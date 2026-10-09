@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useContext } from 'react';
 import { io, type Socket } from 'socket.io-client';
-import type { TaskResponse } from '../../../shared/types/TaskResponse';
+import type { TaskResponse } from '../../../shared/types/Task';
 import AuthContext from '../../../shared/context/AuthContext';
 
 interface UseBoardSocketOptions {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import DashboardContext from "../../../../shared/context/DashboardContext";
+import DashboardContext from "../../context/DashboardContext";
 import type { BoardInfo } from "../../../../shared/types/BoardInfo";
 import { BoardCard } from "../../components/BoardCard/BoardCard";
 import "./BoardsPage.css";

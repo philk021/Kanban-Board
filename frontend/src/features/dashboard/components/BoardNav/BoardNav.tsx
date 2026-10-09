@@ -2,7 +2,7 @@ import { useContext } from "react";
 import AuthContext from "../../../../shared/context/AuthContext";
 import { useParams } from "react-router-dom";
 import "./BoardNav.css"
-import DashboardContext from "../../../../shared/context/DashboardContext";
+import DashboardContext from "../../context/DashboardContext";
 
 export function BoardNav() {
   const { boardId } = useParams();

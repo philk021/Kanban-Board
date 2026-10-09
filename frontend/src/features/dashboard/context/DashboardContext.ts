@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { DashboardContextType } from "../types/DashboardContextType";
+import type { DashboardContextType } from "../../../shared/types/DashboardContextType";
 
 const DashboardContext = createContext<DashboardContextType>({
   boards: [],

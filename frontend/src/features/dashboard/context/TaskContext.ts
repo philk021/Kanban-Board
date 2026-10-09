@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import type { TaskContextType } from "../types/TaskContextType";
-import type { TaskResponse } from "../types/TaskResponse";
+import type { TaskContextType } from "../../../shared/types/TaskContextType";
+import type { TaskResponse } from "../../../shared/types/TaskResponse";
 
 const TaskContext = createContext<TaskContextType>({
   tasks: [],

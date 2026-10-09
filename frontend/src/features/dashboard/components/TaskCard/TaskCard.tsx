@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
 import { FaEllipsisVertical } from "react-icons/fa6";
-import TaskContext from "../../../../shared/context/TaskContext";
+import TaskContext from "../../context/TaskContext";
 import { deleteTask } from "../../api/dashboardApi";
 import "./TaskCard.css";
 

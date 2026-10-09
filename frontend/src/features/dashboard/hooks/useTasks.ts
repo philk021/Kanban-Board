@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { TaskResponse } from "../../../shared/types/TaskResponse";
+import type { TaskResponse } from "../../../shared/types/Task";
 import { getTasks } from "../api/dashboardApi";
 
 export function useTasks(boardId?: string) {

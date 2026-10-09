@@ -1,32 +1,30 @@
-import { DashboardPage } from './features/dashboard/pages/DashboardPage/DashboardPage';
-import { LoginPage } from './features/home/pages/LoginPage/LoginPage';
-import { SignupPage } from './features/home/pages/SignupPage/SignupPage';
-import { HomePage } from './features/home/pages/HomePage/HomePage';
+import { DashboardPage } from './features/dashboard';
 import { Nav } from './features/home/components/Nav/Nav';
-import PageNotFound from './features/error/pages/PageNotFound';
-import AuthContext from './shared/context/AuthContext';
+import { HomePage, LoginPage, SignupPage } from './features/home';
+import { PageNotFound } from './features/error';
 import { registerTokenAccessor } from './core/axiosClient';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import AuthContext from './shared/context/AuthContext';
 import './App.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState("");
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [token, setToken] = useState<string>('');
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const navigate = useNavigate();
   const tokenRef = useRef(token);
   tokenRef.current = token;
-  const [userEmail, setUserEmail] = useState("");
-  const navigate = useNavigate();
 
-  function login(token: string, email: string) {
-    setIsLoggedIn(true);
+  const login = (token: string, email: string) => {
+    setLoggedIn(true);
     setToken(token);
     setUserEmail(email);
     navigate("/boards");
   };
 
-  function logout() {
-    setIsLoggedIn(false);
+  const logout = () => {
+    setLoggedIn(false);
     setToken("");
     navigate("/");
   };
@@ -42,8 +40,8 @@ function App() {
 
   return (
     <>
-      <AuthContext value={{ isLoggedIn, login, logout, token, userEmail }}>
-        {isLoggedIn ? 
+      <AuthContext value={{ loggedIn, login, logout, token, userEmail }}>
+        {loggedIn ? 
           <Routes>
             <Route path='/boards/*' element={ <DashboardPage /> }/>
             <Route path='*' element={ <PageNotFound /> }/>

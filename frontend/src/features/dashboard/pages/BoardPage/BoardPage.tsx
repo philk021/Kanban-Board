@@ -6,7 +6,7 @@ import TaskColumn from "../../components/TaskColumn/TaskColumn";
 import { useBoardSocket } from "../../hooks/useBoardSocket";
 import { BoardNav } from "../../components/BoardNav/BoardNav";
 import { EditBar } from "../../components/EditBar/EditBar";
-import TaskContext from "../../../../shared/context/TaskContext";
+import TaskContext from "../../context/TaskContext";
 import { useTasks } from "../../hooks/useTasks";
 import "./BoardPage.css";
 
