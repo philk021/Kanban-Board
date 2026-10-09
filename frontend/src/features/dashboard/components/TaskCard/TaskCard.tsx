@@ -16,22 +16,18 @@ export function TaskCard({ boardId, taskId, title, description, priority, date }
   const { setTasks } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   
-  async function handleDelete(e: any) {
+  const handleDelete = async (e: any) => {
     e.preventDefault();
-    try {
-      const response = await deleteTask(boardId, taskId);
-      const data = await response.data;      
-      if (response.status == 200) {
-        setTasks(data);
-      }
-    } catch (err: any) {
-      console.log(err);
+    const response = await deleteTask(boardId, taskId);
+    const data = await response.data;      
+    if (response.status == 200) {
+      setTasks(data);
     }
   };
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-  }
+  };
     
   return (
     <>

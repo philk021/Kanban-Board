@@ -1,11 +1,11 @@
-import { DashboardPage } from './features/dashboard';
-import { Nav } from './features/home/components/Nav/Nav';
-import { HomePage, LoginPage, SignupPage } from './features/home';
-import { PageNotFound } from './features/error';
-import { registerTokenAccessor } from './core/axiosClient';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import AuthContext from './shared/context/AuthContext';
+import { registerTokenAccessor } from '../core/axiosClient';
+import AuthContext from '../shared/context/AuthContext';
+import { DashboardPage } from '../features/dashboard';
+import { PageNotFound } from '../features/error';
+import { Nav } from '../features/home/components/Nav/Nav';
+import { HomePage, LoginPage, SignupPage } from '../features/home';
 import './App.css';
 
 function App() {

@@ -1,33 +1,33 @@
-.side-menu {
+.side-menu-wrap {
     min-width: 200px;
     height: 100vh;
     background-color: var(--color-bg-card);
     border-right: 1px solid var(--color-border);
     padding: 15px 25px;
 }
-.logo {
+.side-menu-logo {
     display: flex;
     align-items: center;
     gap: 10px;
     margin: 0 0 15px 0;
     font-size: var(--font-small);
 }
-.logo button {
+.side-menu-logo button {
     border: none;
     background: none;
 }
-.logo button:hover {
+.side-menu-logo button:hover {
     cursor: pointer;
 }
-.logo svg {
+.side-menu-logo svg {
     height: 20px;
     width: 20px;
 }
-a.board-link {
+a.side-menu-link {
     margin: 0 auto 15px auto;
     padding: 0;
 }
-.board-link{
+.side-menu-link{
     display: block;
     white-space: nowrap;
     display: flex;
@@ -36,7 +36,7 @@ a.board-link {
     justify-content: start;
     gap: 10px;
 }
-.board-link h1 {
+.side-menu-link h1 {
     font-weight: 600;
 }
 .new-board-btn {

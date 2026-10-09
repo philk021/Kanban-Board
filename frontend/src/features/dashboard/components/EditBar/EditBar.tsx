@@ -15,46 +15,34 @@ export function EditBar() {
   const navigate = useNavigate();
   const boardTitle = boards.find((item) => item.board_id == boardId)?.board_title ?? 'Undefined';
 
-  async function handleEdit() {
+  const handleEdit = async () => {
     if (!newBoardTitle || newBoardTitle === boardTitle) {
       return;
     }
-    try {
-      const response = await updateBoard(boardId, newBoardTitle);
-      const data = await response.data;
-      if (response.status == 200) {
-        setBoards(data);
-        editDialogRef.current?.close();
-      }
-    } catch (err: any) {
-      console.log(err);
+    const response = await updateBoard(boardId, newBoardTitle);
+    const data = await response.data;
+    if (response.status == 200) {
+      setBoards(data);
+      editDialogRef.current?.close();
     }
   };
 
-  async function handleDelete() {
-    try {
-      const response = await deleteBoard(boardId);          
-      const data = await response.data;
-      if (response.status == 200) {
-        setBoards(data);
-        navigate("/boards");
-      }
-    } catch (err: any) {
-      console.log(err);
+  const handleDelete = async () => {
+    const response = await deleteBoard(boardId);          
+    const data = await response.data;
+    if (response.status == 200) {
+      setBoards(data);
+      navigate("/boards");
     }
   };
 
-  async function handleInvite() {
+  const handleInvite = async () => {
     if (!inviteEmail) {
       return;
     }
-    try {
-      const response = await addUserToBoard(boardId, inviteEmail);      
-      if (response.status == 201) {
-        editDialogRef.current?.close();
-      }
-    } catch (err: any) {
-      console.log(err);
+    const response = await addUserToBoard(boardId, inviteEmail);      
+    if (response.status == 201) {
+      editDialogRef.current?.close();
     }
   };
 
