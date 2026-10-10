@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { FaPlus } from "react-icons/fa6";
 import type { CategorizedTasks } from "../../../../shared/types/CategorizedTasks";
 import TaskColumn from "../../components/TaskColumn/TaskColumn";
 import { useBoardSocket } from "../../hooks/useBoardSocket";
@@ -12,7 +11,6 @@ import "./BoardPage.css";
 
 export function BoardPage() {
   const { boardId } = useParams();
-  const [showNewColumnCard, setShowNewColumnCard] = useState(false);
   const { tasks, setTasks } = useTasks(boardId);
   const { sendTaskCreate } = useBoardSocket({
     boardId: boardId,
@@ -35,25 +33,13 @@ export function BoardPage() {
         <EditBar/>    
         <div className="board">         
           {Object.entries(categorized).map(([category]) =>
-            <TaskColumn 
+            <TaskColumn
               key={category} 
-              newColumn={false} 
               boardId={boardId} 
+              newColumn={false} 
               title={category}
             />
           )}
-          {showNewColumnCard && (
-            <TaskColumn 
-              newColumn={true} 
-              boardId={boardId} 
-              title="Untitled"
-            />
-          )}         
-          <button 
-            className="new-column-btn"
-            onClick={() => setShowNewColumnCard(prev => !prev)}>
-            <FaPlus/>
-          </button>
         </div>
       </TaskContext>
     </>

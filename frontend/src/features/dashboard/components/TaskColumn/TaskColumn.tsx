@@ -1,57 +1,63 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import type { TaskResponse } from "../../../../shared/types/TaskResponse";
+import type { Task } from "../../../../shared/types/Task";
 import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
 import { TaskCard } from "../TaskCard/TaskCard";
 import TaskContext from "../../context/TaskContext";
 import { addTask } from "../../api/dashboardApi";
 import "./TaskColumn.css";
 
-function TaskColumn({ newColumn, boardId, title } : 
-  { newColumn: boolean, boardId: string | undefined, title: string }) { 
-  const [categorisedTasks, setCategorizedTasks] = useState<TaskResponse[]>([]);
-  const [isNewColumn, setIsNewColumn] = useState(newColumn);
+export interface TaskChanges {
+  task_title?: string,
+  task_description?: string,
+  task_priority?: string,
+}
+
+function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
+  const [categorisedTasks, setCategorizedTasks] = useState<Task[]>([]);
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("low");
-  const [columnTitle, setColumnTitle] = useState(title);
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
-    
+  const { tasks, setTasks, sendTaskCreate } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
-  const {tasks, setTasks, sendTaskCreate} = useContext(TaskContext);
 
   useEffect(() => {
-    setCategorizedTasks(tasks.filter((item: TaskResponse) => item.task_category == title));
+    setCategorizedTasks(tasks.filter((item: Task) => item.task_category == title));
   }, [tasks]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!taskTitle || !taskDescription) {
-      console.log("Invalid input");
       return;
     }
     const task = {
+      task_id: crypto.randomUUID(),
       task_title: taskTitle,
       task_description: taskDescription,
-      task_category: columnTitle,
+      task_category: title,
       task_priority: selectedPriority,
       task_date: new Date().toLocaleString(),
-      board_id: Number(boardId)
-    };    
+    };
     try {
       const response = await addTask(task, boardId);
       const data = await response.data;    
       if (response.status == 201) {
         setTasks(data);
-        setTaskTitle("");
-        setTaskDescription("");
-        setSelectedPriority("");
+        setTaskTitle('');
+        setTaskDescription('');
+        setSelectedPriority('');
         sendTaskCreate(task);
       }
     } catch (err: any) {
       console.log(err);
     }
     dialogRef.current?.close();
-  }
+  };
+
+  const onUpdate = (changes: TaskChanges, id?: string) => {
+    setTasks(prev => prev.filter((item) => 
+      item.task_id === id ? { ...item, ...changes} : item));
+  };
 
   return (
     <>
@@ -104,24 +110,7 @@ function TaskColumn({ newColumn, boardId, title } :
       </dialog>    
       <div className="task-column-wrap">
         <div className="task-column-header">
-          {isNewColumn ? (
-            <div>
-              <input 
-                className="task-column-title"
-                type="text" 
-                placeholder={title} 
-                onChange={(e) => setColumnTitle(e.target.value)}
-              />
-              <button 
-                type="button" 
-                onClick={() => setIsNewColumn(false)}
-              >
-                Save
-              </button>
-            </div>
-          ) : (
-            <h1 className="task-column-title">{columnTitle}</h1>
-          )}           
+          <h1 className="task-column-title">{title}</h1>        
           <div className="task-column-header-btns">
             <button 
               type="button" 
@@ -141,14 +130,10 @@ function TaskColumn({ newColumn, boardId, title } :
         <div className="task-column-tasks">
           {categorisedTasks && (
             categorisedTasks.map((item) =>
-              <TaskCard 
+              <TaskCard
                 key={item.task_id} 
-                boardId={boardId}
-                taskId={item.task_id}
-                title={item.task_title} 
-                description={item.task_description}
-                priority={item.task_priority}
-                date={item.task_date}
+                task={item}
+                onUpdate={onUpdate}
               />
             )
           )}

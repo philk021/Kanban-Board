@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import DashboardContext from "../../context/DashboardContext";
-import type { BoardInfo } from "../../../../shared/types/BoardInfo";
+import type { Board } from "../../../../shared/types/Board";
 import { BoardCard } from "../../components/BoardCard/BoardCard";
 import "./BoardsPage.css";
 
@@ -11,7 +11,7 @@ export function BoardsPage() {
   return (
     <div className="boards-container">
       {boards ? (
-        boards.map((item: BoardInfo)=> 
+        boards.map((item: Board)=> 
           <Link to={'/boards/' + item.board_id} key={item.board_id}>
             <BoardCard title={item.board_title} role={item.board_role}/>
           </Link>) 

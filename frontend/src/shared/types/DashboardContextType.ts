@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { BoardInfo } from "./BoardInfo";
+import type { Board } from "./Board";
 
 export type DashboardContextType =  {
-  boards: BoardInfo[];
-  setBoards: Dispatch<SetStateAction<BoardInfo[]>>;
+  boards: Board[];
+  setBoards: Dispatch<SetStateAction<Board[]>>;
 }

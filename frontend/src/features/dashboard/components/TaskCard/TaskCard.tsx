@@ -2,23 +2,20 @@ import { useContext, useRef } from "react";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import TaskContext from "../../context/TaskContext";
 import { deleteTask } from "../../api/dashboardApi";
+import type { TaskChanges } from "../TaskColumn/TaskColumn";
+import type { Task } from "../../../../shared/types/Task";
 import "./TaskCard.css";
 
-export function TaskCard({ boardId, taskId, title, description, priority, date } : 
-  {
-    boardId: string | undefined, 
-    taskId: number | undefined, 
-    title: string, 
-    description: string, 
-    priority: string,
-    date: string,
-  }) {
+export function TaskCard({task, onUpdate}: {
+  task: Task,
+  onUpdate: (changes: TaskChanges, id?: string) => void
+}) {
   const { setTasks } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   
   const handleDelete = async (e: any) => {
     e.preventDefault();
-    const response = await deleteTask(boardId, taskId);
+    const response = await deleteTask(task.board_id, task.task_id);
     const data = await response.data;      
     if (response.status == 200) {
       setTasks(data);
@@ -38,21 +35,21 @@ export function TaskCard({ boardId, taskId, title, description, priority, date }
             className="form-input" 
             type="text"
             placeholder="Name"
-            value={title}
-            onChange={() => true}
+            value={task.task_title}
+            onChange={(e) => onUpdate({ task_title: e.target.value }, task.task_id)}
           />
           <textarea 
             className="form-input"
             placeholder="Description"
-            value={description}
-            onChange={() => true}
+            value={task.task_description}
+            onChange={(e) => onUpdate({ task_description: e.target.value }, task.task_id)}
           />
           <label htmlFor="priority">Priority: </label>               
           <select 
             name="priority" 
             className="priority-dropdown"
-            value={priority}
-            onChange={() => true}
+            value={task.task_priority}
+            onChange={(e) => onUpdate({ task_priority: e.target.value }, task.task_id)}
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -87,7 +84,7 @@ export function TaskCard({ boardId, taskId, title, description, priority, date }
       </dialog> 
       <div className="task-card">
         <div className="task-card-header">
-          <div className={priority}>{priority}</div>
+          <div className={task.task_priority}>{task.task_priority}</div>
           <div>
             <button 
               type="button" 
@@ -98,8 +95,8 @@ export function TaskCard({ boardId, taskId, title, description, priority, date }
           </div>
         </div>
         <div className="task-info">
-          <h1 className="task-info-title">{title}</h1>
-          <p className="task-info-date">{date}</p>
+          <h1 className="task-info-title">{task.task_title}</h1>
+          <p className="task-info-date">{task.task_date}</p>
         </div>
       </div>  
     </>

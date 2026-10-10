@@ -1,16 +1,16 @@
 import { useEffect, useRef, useCallback, useContext } from 'react';
 import { io, type Socket } from 'socket.io-client';
-import type { TaskResponse } from '../../../shared/types/Task';
 import AuthContext from '../../../shared/context/AuthContext';
+import type { Task } from '../../../shared/types/Task';
 
 interface UseBoardSocketOptions {
   boardId: string | undefined;
   serverUrl?: string;
-  onTaskCreated?: (task: TaskResponse) => void;
+  onTaskCreated?: (task: Task) => void;
 }
 
 interface UseBoardSocketResult {
-  sendTaskCreate: (task: TaskResponse) => void;
+  sendTaskCreate: (task: Task) => void;
 }
 
 export function useBoardSocket({
@@ -40,7 +40,7 @@ export function useBoardSocket({
       socket.emit('board:join', boardId);
     });
 
-    socket.on('task:created', (task: TaskResponse) => onTaskCreatedRef.current?.(task));
+    socket.on('task:created', (task: Task) => onTaskCreatedRef.current?.(task));
 
     return () => {
       socket.emit('board:leave', boardId);
@@ -50,7 +50,7 @@ export function useBoardSocket({
   }, [boardId, serverUrl]);
 
   const sendTaskCreate = useCallback(
-    (task: TaskResponse) => {
+    (task: Task) => {
       socketRef.current?.emit('task:create', { boardId, task });
     },
     [boardId]

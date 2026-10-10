@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import type { BoardInfo } from "../../../shared/types/BoardInfo";
+import type { Board } from "../../../shared/types/Board";
 import { getBoards } from "../api/dashboardApi";
 
 export function useBoards() {
-  const [boards, setBoards] = useState<BoardInfo[]>([]);
+  const [boards, setBoards] = useState<Board[]>([]);
 
   useEffect(() => {
     const fetchBoards = async () => {

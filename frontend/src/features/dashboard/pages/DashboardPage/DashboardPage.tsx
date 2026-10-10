@@ -13,7 +13,7 @@ export function DashboardPage() {
   const { boards, setBoards } = useBoards();
 
   return (
-    <DashboardContext value={{boards, setBoards}}>
+    <DashboardContext value={{ boards, setBoards }}>
       <div className="dashboard-container">
         <SideMenu />
         <div className="dashboard">

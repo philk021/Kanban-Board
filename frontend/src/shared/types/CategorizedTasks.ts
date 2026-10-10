@@ -1,3 +1,3 @@
-import type { TaskResponse } from "./TaskResponse";
+import type { Task } from "./Task";
 
-export type CategorizedTasks = Record<string, TaskResponse[]>;
+export type CategorizedTasks = Record<string, Task[]>;

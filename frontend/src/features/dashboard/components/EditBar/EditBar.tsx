@@ -19,7 +19,7 @@ export function EditBar() {
     if (!newBoardTitle || newBoardTitle === boardTitle) {
       return;
     }
-    const response = await updateBoard(boardId, newBoardTitle);
+    const response = await updateBoard(newBoardTitle, boardId);
     const data = await response.data;
     if (response.status == 200) {
       setBoards(data);
@@ -40,7 +40,7 @@ export function EditBar() {
     if (!inviteEmail) {
       return;
     }
-    const response = await addUserToBoard(boardId, inviteEmail);      
+    const response = await addUserToBoard(inviteEmail, boardId);      
     if (response.status == 201) {
       editDialogRef.current?.close();
     }

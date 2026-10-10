@@ -1,8 +1,8 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { TaskResponse } from "./TaskResponse";
+import type { Task } from "./Task";
 
 export type TaskContextType = {
-    tasks: TaskResponse[];
-    setTasks: Dispatch<SetStateAction<TaskResponse[]>>;
-    sendTaskCreate: (task: TaskResponse) => void;
+    tasks: Task[];
+    setTasks: Dispatch<SetStateAction<Task[]>>;
+    sendTaskCreate: (task: Task) => void;
 }
