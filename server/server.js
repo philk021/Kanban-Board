@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const authRouter = require('./routes/authRoutes');
-const boardRouter = require('./routes/boardRoutes');
-const { authenticateToken } = require('./middleware/auth');
+const authRouter = require('./src/routes/authRoutes');
+const boardRouter = require('./src/routes/boardRoutes');
+const { authenticateToken } = require('./src/middleware/auth');
 const { app, server } = require('./socket');
 
 app.use(cors({

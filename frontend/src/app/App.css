@@ -7,13 +7,22 @@
   letter-spacing: 0.4px;
 }
 dialog {
-    margin: 0 auto;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    position: fixed;
-    top: 20vh;
-    border-radius: 8px;
+  margin: 0 auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  position: fixed;
+  top: 20vh;
+  border-radius: 8px;
 }
 dialog::backdrop {
-    background: var(--color-bg-overlay);
+  background: var(--color-bg-overlay);
+}
+.plus-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 5px;
+}
+.plus-btn:hover {
+  cursor: pointer;
 }

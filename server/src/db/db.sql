@@ -3,7 +3,8 @@ CREATE DATABASE project_management_db;
 CREATE TABLE users(
   user_id binary(16) PRIMARY KEY,
   user_email varchar(255) NOT NULL UNIQUE,
-  user_password varchar(255) NOT NULL
+  user_password varchar(64) NOT NULL,
+  created_at varchar(64) NOT NULL,
 );
 
 CREATE TABLE refresh_tokens(
@@ -20,17 +21,26 @@ CREATE TABLE boards(
   REFERENCES users(user_id)
 );
 
+CREATE TABLE categories(
+  category_id binary(16) PRIMARY KEY,
+  category_title varchar(255) NOT NULL,
+  board_id binary(16),
+  CONSTRAINT fk_boards 
+  FOREIGN KEY (board_id) 
+  REFERENCES boards(board_id)
+);
+
 CREATE TABLE tasks(
   task_id binary(16) PRIMARY KEY,
   task_title varchar(255) NOT NULL,
   task_description varchar(255) NOT NULL,
-  task_date varchar(64),
   task_category varchar(255),
   task_priority varchar(255),
-  board_id binary(16),
-  CONSTRAINT fk_boards
-  FOREIGN KEY (board_id)
-  REFERENCES boards(board_id)
+  created_at varchar(64),
+  category_id binary(16),
+  CONSTRAINT fk_categories
+  FOREIGN KEY (category_id)
+  REFERENCES categories(category_id)
 );
 
 CREATE TABLE board_users (

@@ -5,9 +5,8 @@ import { addBoard } from "../../api/dashboardApi";
 import "./NewBoardPage.css";
 
 export function NewBoardPage() {
-  const {setBoards} = useContext(DashboardContext);
-  const [title, setTitle] = useState("");
-
+  const [title, setTitle] = useState('');
+  const { setBoards } = useContext(DashboardContext);
   const navigate = useNavigate();
 
   async function handleSubmit(e: any) {

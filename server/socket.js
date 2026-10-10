@@ -1,4 +1,4 @@
-const { authenticateSocketToken } = require('./middleware/socketAuth');
+const { authenticateSocketToken } = require('./src/middleware/socketAuth');
 const { Server } = require('socket.io');
 const express = require('express');
 const http = require('http');

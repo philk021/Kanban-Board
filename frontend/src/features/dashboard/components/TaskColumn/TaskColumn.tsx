@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import type { Task } from "../../../../shared/types/Task";
-import { FaPlus, FaEllipsisVertical, FaTrash } from "react-icons/fa6";
+import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
 import { TaskCard } from "../TaskCard/TaskCard";
 import TaskContext from "../../context/TaskContext";
 import { addTask } from "../../api/dashboardApi";
@@ -17,7 +17,6 @@ function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("low");
-  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
   const { tasks, setTasks, sendTaskCreate } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
 
@@ -118,10 +117,9 @@ function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
             >
               <FaPlus />
             </button>
-            {showDeleteBtn && (<button><FaTrash/></button>)}
             <button 
               type="button" 
-              onClick={() => setShowDeleteBtn(prev => !prev)}
+              onClick={() => true}
             >
               <FaEllipsisVertical />
             </button>
