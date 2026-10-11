@@ -12,6 +12,7 @@ export const login = async (req, res) => {
     user = await loginUser(email);
     if (!user[0]) return res.status(400).json({ message: 'Incorrect email or password' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 
@@ -24,6 +25,7 @@ export const login = async (req, res) => {
       res.status(200).json({ message: accessToken });
     } else res.status(400).json({ message: 'Incorrect email or password' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 };
@@ -39,6 +41,7 @@ export const signup = async (req, res) => {
     user = await loginUser(email);
     if (user[0]) return res.status(400).json({ message: 'Email already in use' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
   
@@ -51,6 +54,7 @@ export const signup = async (req, res) => {
     res.cookie('refresh-token', refreshToken, { httpOnly: true }, { maxAge: 24 * 60 * 60 * 1000 });
     res.status(201).json({ message: accessToken });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 };

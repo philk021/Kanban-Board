@@ -6,6 +6,7 @@ export const getTasks = async (req, res) => {
     const tasks = await fetchTasks(boardId);
     res.status(200).json(tasks);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 }
@@ -25,6 +26,7 @@ export const postTask = async (req, res) => {
     const tasks = await fetchTasks(boardId);
     res.status(201).json(tasks);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 }
@@ -43,6 +45,7 @@ export const putTask = async (req, res) => {
     const tasks = await fetchTasks(boardId);
     res.status(200).json(tasks);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 }
@@ -55,6 +58,7 @@ export const deleteTask = async (req, res) => {
     const tasks = await fetchTasks(boardId);
     res.status(200).json(tasks);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 }

@@ -7,6 +7,7 @@ export const getBoards = async (req, res) => {
     const boards = await fetchBoards(user);
     res.status(200).json(boards);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 };
@@ -22,6 +23,7 @@ export const postBoard = async (req, res) => {
     const boards = await fetchBoards(user);
     res.status(201).json(boards);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 };
@@ -38,6 +40,7 @@ export const putBoard = async (req, res) => {
     const boards = await fetchBoards(user);
     res.status(200).json(boards);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 };
@@ -50,6 +53,7 @@ export const deleteBoard = async (req, res) => {
     const boards = await fetchBoards(user);
     res.status(200).json(boards);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 };

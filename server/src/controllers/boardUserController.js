@@ -13,6 +13,7 @@ export const postBoardUser = async (req, res) => {
     await createBoardUser(inviteUserId, boardId, BOARD_ROLES.MEMBER);
     res.status(201).json({ message: 'Invite Sent' });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   };
 }
