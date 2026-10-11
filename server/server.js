@@ -1,23 +1,27 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const authRouter = require('./src/routes/authRoutes');
-const boardRouter = require('./src/routes/boardRoutes');
-const { authenticateToken } = require('./src/middleware/auth');
-const { app, server } = require('./socket');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import { authRouter } from './src/routes/authRoutes.js';
+import { boardRouter } from './src/routes/boardRoutes.js';
+import { taskRouter } from './src/routes/taskRoutes.js';
+import { boardUserRouter } from './src/routes/boardUserRoutes.js';
+import { authenticateToken } from './src/middleware/auth.js';
+import { app, server } from './socket.js';
 
 app.use(cors({
   origin: process.env.API_URL,
-  credentials: true
+  credentials: true,
 }));
 
 app.use(express.json());
 app.use('/auth', authRouter);
 app.use(authenticateToken);
 app.use('/boards', boardRouter);
+app.use('/boards/:boardId/tasks', taskRouter);
+app.use('/boards/:boardId/users', boardUserRouter);
 
-app.use((req, res, next) => {
-  res.status(404).json({message: "404 Error: Resource not Found."});
+app.use((res) => {
+  res.status(404).json({ message: 'Error: Resource not Found' });
 });
 
 server.listen(process.env.PORT, () => {

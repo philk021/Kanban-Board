@@ -1,13 +1,12 @@
-const { authenticateSocketToken } = require('./src/middleware/socketAuth');
-const { Server } = require('socket.io');
-const express = require('express');
-const http = require('http');
+import { authenticateSocketToken } from './src/middleware/socketAuth.js';
+import { Server } from 'socket.io';
+import express from 'express';
+import http from 'http';
 
 const users = {};
-const app = express();
-const server = http.createServer(app);
-
-const io = new Server(server, {
+export const app = express();
+export const server = http.createServer(app);
+export const io = new Server(server, {
   cors: {
     origin: process.env.API_URL,
     credentials: true,
@@ -46,5 +45,3 @@ io.on('connection', async (socket) => {
 function roomName(boardId) {
   return `board:${boardId}`;
 }
-
-module.exports = { io, app, server };
