@@ -2,14 +2,16 @@ import { fetchTasks, createTask, updateTask, removeTask } from '../services/task
 
 export const getTasks = async (req, res) => {
   const boardId = req.params.boardId;
+  const user = req.user;
+  
   try {
-    const tasks = await fetchTasks(boardId);
+    const tasks = await fetchTasks(user, boardId);
     res.status(200).json(tasks);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-}
+};
 
 export const postTask = async (req, res) => {
   const boardId = req.params.boardId;
@@ -19,6 +21,7 @@ export const postTask = async (req, res) => {
   const category = req.body.task_category;
   const priority = req.body.task_priority;
   const createdAt = req.body.created_at;
+  const user = req.user;
   
   if (!taskId || !title || !description || !category || !createdAt) {
     res.status(500).json({ message: 'Missing task fields' });
@@ -28,13 +31,13 @@ export const postTask = async (req, res) => {
     const result = await createTask(
       taskId, boardId, title, description, category, priority, createdAt
     );
-    const tasks = await fetchTasks(boardId);
+    const tasks = await fetchTasks(user, boardId);
     res.status(201).json(tasks);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-}
+};
 
 export const putTask = async (req, res) => {
   const boardId = req.params.boardId;
@@ -44,30 +47,33 @@ export const putTask = async (req, res) => {
   const category = req.body.task_category;
   const priority = req.body.task_priority;
   const createdAt = req.body.created_at;
+  const user = req.user;
   
   if (!title || !description || !category || !priority || !createdAt) {
     res.status(500).json({ message: 'Missing task fields' });
   };
   
   try {
-    await updateTask(taskId, title, description, date);
-    const tasks = await fetchTasks(boardId);
+    await updateTask(taskId, title, description, category, priority, createdAt);
+    const tasks = await fetchTasks(user, boardId);
     res.status(200).json(tasks);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-}
+};
 
 export const deleteTask = async (req, res) => {
   const boardId = req.params.boardId
   const taskId = req.params.taskId;
+  const user = req.user;
+  
   try {
     await removeTask(taskId);
-    const tasks = await fetchTasks(boardId);
+    const tasks = await fetchTasks(user, boardId);
     res.status(200).json(tasks);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   };
-}
+};

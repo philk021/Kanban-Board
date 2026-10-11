@@ -1,51 +1,51 @@
 CREATE DATABASE kanban_db;
 
 CREATE TABLE users(
-  user_id binary(16) PRIMARY KEY,
-  user_email varchar(255) NOT NULL UNIQUE,
-  user_password varchar(64) NOT NULL,
-  created_at varchar(64) NOT NULL
+  user_id BINARY(16) PRIMARY KEY,
+  user_email VARCHAR(255) NOT NULL UNIQUE,
+  user_password VARCHAR(64) NOT NULL,
+  created_at VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE refresh_tokens(
-  token_id int PRIMARY KEY AUTO_INCREMENT,
-  token text NOT NULL
+  token_id INT PRIMARY KEY AUTO_INCREMENT,
+  token TEXT NOT NULL
 );
 
 CREATE TABLE boards(
-  board_id binary(16) PRIMARY KEY,
-  board_title varchar(255) NOT NULL,
-  user_id binary(16),
+  board_id BINARY(16) PRIMARY KEY,
+  board_title VARCHAR(255) NOT NULL,
+  user_id BINARY(16),
   CONSTRAINT fk_users
   FOREIGN KEY (user_id)
-  REFERENCES users(user_id)
+  REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE categories(
-  category_id binary(16) PRIMARY KEY,
-  category_title varchar(255) NOT NULL,
-  board_id binary(16),
+  category_id BINARY(16) PRIMARY KEY,
+  category_title VARCHAR(255) NOT NULL,
+  board_id BINARY(16),
   CONSTRAINT fk_boards 
   FOREIGN KEY (board_id) 
-  REFERENCES boards(board_id)
+  REFERENCES boards(board_id) ON DELETE CASCADE
 );
 
 CREATE TABLE tasks(
-  task_id binary(16) PRIMARY KEY,
-  task_title varchar(255) NOT NULL,
-  task_description varchar(255) NOT NULL,
-  task_category varchar(255),
-  task_priority varchar(255),
-  created_at varchar(64),
-  category_id binary(16),
+  task_id BINARY(16) PRIMARY KEY,
+  task_title VARCHAR(255) NOT NULL,
+  task_description VARCHAR(255) NOT NULL,
+  task_category VARCHAR(255),
+  task_priority VARCHAR(255),
+  created_at VARCHAR(64),
+  category_id BINARY(16),
   CONSTRAINT fk_categories
   FOREIGN KEY (category_id)
-  REFERENCES categories(category_id)
+  REFERENCES categories(category_id) ON DELETE CASCADE
 );
 
 CREATE TABLE board_users (
-  board_id binary(16) REFERENCES boards(board_id),
-  user_id binary(16) REFERENCES users(user_id),
-  board_role varchar(255) DEFAULT 'VIEWER',
+  board_id BINARY(16) REFERENCES boards(board_id) ON DELETE CASCADE,
+  user_id BINARY(16) REFERENCES users(user_id) ON DELETE CASCADE,
+  board_role VARCHAR(255) DEFAULT 'VIEWER',
   PRIMARY KEY (board_id, user_id)
 );

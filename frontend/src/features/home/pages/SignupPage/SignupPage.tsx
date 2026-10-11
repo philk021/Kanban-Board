@@ -9,7 +9,6 @@ export function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
-
   const { login } = useContext(AuthContext);
 
   function validInput() {
@@ -30,6 +29,7 @@ export function SignupPage() {
       return;
     }
     const user = {
+      id: crypto.randomUUID(),
       email: email, 
       password: password
     };
@@ -65,7 +65,6 @@ export function SignupPage() {
             placeholder="Email"
             maxLength={255}
             onChange={(e)=>{setEmail(e.target.value);}}/>
-
           <input 
             className="form-input" 
             type={showPassword ? "text" : "password"}
@@ -73,7 +72,6 @@ export function SignupPage() {
             placeholder="Password"
             maxLength={32}
             onChange={(e)=>{setPassword(e.target.value);}}/>
-
           <input 
             className="form-input" 
             type={showPassword ? "text" : "password"}
@@ -81,8 +79,7 @@ export function SignupPage() {
             placeholder="Confirm password"
             maxLength={32}
             onChange={(e)=>{setConfirmPassword(e.target.value);}}/>
-        </div>
-        
+        </div>      
         <div className="form-control">
           <label>Show password</label>
           <input 

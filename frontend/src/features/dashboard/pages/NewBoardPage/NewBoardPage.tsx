@@ -10,9 +10,13 @@ export function NewBoardPage() {
   const navigate = useNavigate();
 
   async function handleSubmit(e: any) {
-    e.preventDefault(); 
+    e.preventDefault();
+    const board = {
+      board_id: crypto.randomUUID(),
+      board_title: title,
+    }
     try {
-      const response = await addBoard(title);
+      const response = await addBoard(board);
       const data = await response.data;     
       if (response.status == 201) {
         setBoards(data);

@@ -7,7 +7,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
   let user = [];
   
-  if (!email || !password) res.status(500).json({ message: 'Missing email or password' });
+  if (!email || !password) res.status(500).json({ message: 'Missing user fields' });
   if (!EMAIL_FORMAT.test(email)) res.status(500).json({ message: "Invalid email" });
   
   try {
@@ -33,10 +33,11 @@ export const login = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { id, email, password } = req.body;
+  const createdAt = new Date().toLocaleString();
   let user = [];
     
-  if (!email || !password) res.status(500).json({ message: 'Invalid email or password' });
+  if (!id || !email || !password) res.status(500).json({ message: 'Missing user fields' });
   if (!EMAIL_FORMAT.test(email)) res.status(500).json({ message: 'Invalid email' });
   
   try {
@@ -49,7 +50,7 @@ export const signup = async (req, res) => {
   
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await createUser(email, hashedPassword);
+    await createUser(id, email, hashedPassword, createdAt);
     const accessToken = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
     const refreshToken = jwt.sign({ email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' }); 
     await storeRefreshToken(refreshToken);   

@@ -13,13 +13,14 @@ export const getBoards = async (req, res) => {
 };
 
 export const postBoard = async (req, res) => {
-  const title = req.body.title;
+  const id = req.body.board_id;
+  const title = req.body.board_title;
   const user = req.user;
 
-  if (!title) res.status(500).json({ message: 'Missing board title' });
+  if (!id || !title) res.status(500).json({ message: 'Missing board fields' });
   
   try {
-    await createBoard(title, user, BOARD_ROLES.OWNER);
+    await createBoard(id, user, title, BOARD_ROLES.OWNER);
     const boards = await fetchBoards(user);
     res.status(201).json(boards);
   } catch (error) {
@@ -36,7 +37,7 @@ export const putBoard = async (req, res) => {
   if (!title) res.status(500).json({ message: 'Missing board title' });
   
   try {
-    await updateBoard(title, boardId);
+    await updateBoard(boardId, user, title);
     const boards = await fetchBoards(user);
     res.status(200).json(boards);
   } catch (error) {
@@ -49,7 +50,7 @@ export const deleteBoard = async (req, res) => {
   const boardId = req.params.boardId;
   const user = req.user;
   try {
-    await removeBoard(boardId);
+    await removeBoard(boardId, user);
     const boards = await fetchBoards(user);
     res.status(200).json(boards);
   } catch (error) {

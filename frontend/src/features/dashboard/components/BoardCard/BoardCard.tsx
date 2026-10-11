@@ -1,6 +1,6 @@
 import "./BoardCard.css"
 
-export function BoardCard({ title, role } : { title: string, role: string }) {
+export function BoardCard({ title, role } : { title: string, role?: string }) {
   return (
     <div className="board-card">
         <div className="board-card-info">
