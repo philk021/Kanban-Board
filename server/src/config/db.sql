@@ -1,10 +1,10 @@
-CREATE DATABASE project_management_db;
+CREATE DATABASE kanban_db;
 
 CREATE TABLE users(
   user_id binary(16) PRIMARY KEY,
   user_email varchar(255) NOT NULL UNIQUE,
   user_password varchar(64) NOT NULL,
-  created_at varchar(64) NOT NULL,
+  created_at varchar(64) NOT NULL
 );
 
 CREATE TABLE refresh_tokens(

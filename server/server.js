@@ -20,7 +20,7 @@ app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
 app.use('/boards/:boardId/users', boardUserRouter);
 
-app.use((res) => {
+app.use((req, res, next) => {
   res.status(404).json({ message: 'Error: Resource not Found' });
 });
 

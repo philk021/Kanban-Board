@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import { loginUser, createUser, storeRefreshToken } from '../services/authService.js';
 import { EMAIL_FORMAT } from '../constants.js';
 

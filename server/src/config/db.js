@@ -8,7 +8,7 @@ export const db = mysql2.createPool({
 
 export const getUserId = async (user) => {
   const [result] = await db.query(
-    'SELECT * FROM project_management_db.users WHERE user_email = ?', 
+    'SELECT * kanban_db.users WHERE user_email = ?', 
   [user]);
   return result[0].user_id;
 };

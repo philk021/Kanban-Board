@@ -35,7 +35,7 @@ function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
       task_description: taskDescription,
       task_category: title,
       task_priority: selectedPriority,
-      task_date: new Date().toLocaleString(),
+      created_at: new Date().toLocaleString(),
     };
     try {
       const response = await addTask(task, boardId);

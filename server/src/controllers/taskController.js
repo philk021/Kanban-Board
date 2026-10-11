@@ -13,15 +13,20 @@ export const getTasks = async (req, res) => {
 
 export const postTask = async (req, res) => {
   const boardId = req.params.boardId;
-  const { title, description, category, priority, date } = req.body
+  const taskId = req.body.taskId;
+  const title = req.body.task_title;
+  const description = req.body.task_description;
+  const category = req.body.task_category;
+  const priority = req.body.task_priority;
+  const createdAt = req.body.created_at;
   
-  if (!title || !description || !category || !date) {
+  if (!taskId || !title || !description || !category || !createdAt) {
     res.status(500).json({ message: 'Missing task fields' });
   };
   
   try {
     const result = await createTask(
-      boardId, title, description, category, priority, date
+      taskId, boardId, title, description, category, priority, createdAt
     );
     const tasks = await fetchTasks(boardId);
     res.status(201).json(tasks);
@@ -34,10 +39,14 @@ export const postTask = async (req, res) => {
 export const putTask = async (req, res) => {
   const boardId = req.params.boardId;
   const taskId = req.params.taskId;
-  const { title, description, category, priority } = req.body;
+  const title = req.body.task_title;
+  const description = req.body.task_description;
+  const category = req.body.task_category;
+  const priority = req.body.task_priority;
+  const createdAt = req.body.created_at;
   
-  if (!title || !description || !category, !priority) {
-    res.status(500).json({ error: 'Missing task fields' });
+  if (!title || !description || !category || !priority || !createdAt) {
+    res.status(500).json({ message: 'Missing task fields' });
   };
   
   try {

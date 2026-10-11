@@ -96,7 +96,7 @@ export function TaskCard({task, onUpdate}: {
         </div>
         <div className="task-info">
           <h1 className="task-info-title">{task.task_title}</h1>
-          <p className="task-info-date">{task.task_date}</p>
+          <p className="task-info-date">{task.created_at}</p>
         </div>
       </div>  
     </>

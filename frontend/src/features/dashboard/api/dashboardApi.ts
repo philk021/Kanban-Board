@@ -2,12 +2,12 @@ import axiosClient from "../../../core/axiosClient";
 import type { Task } from "../../../shared/types/Task";
 
 export async function getTasks(boardId?: string) {
-  const response = await axiosClient.get(`/boards/${boardId}`);
+  const response = await axiosClient.get(`/boards/${boardId}/tasks`);
   return response;
 };
 
 export async function addTask(task: Task, boardId?: string) {
-  const response = await axiosClient.post(`/boards/${boardId}`, task);
+  const response = await axiosClient.post(`/boards/${boardId}/tasks`, task);
   return response;
 };
 
