@@ -12,14 +12,14 @@ import { addCategory } from "../../api/dashboardApi";
 
 export function BoardPage() {
   const { boardId } = useParams();
-  const [newCategory, setNewCategory] = useState('');
+  const [categoryTitle, setCategoryTitle] = useState('');
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   
   const { tasks, setTasks } = useTasks(boardId);
   const { sendTaskCreate } = useBoardSocket({
     boardId: boardId,
     onTaskCreated: (task) => setTasks((prev) => prev.map((item) => {
-        if (item.category === task.task_category) item.tasks.push(task);
+        if (item.category_title === task.task_category) item.tasks.push(task);
         return item;
       }
     ))
@@ -27,10 +27,10 @@ export function BoardPage() {
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    const categoryId = crypto.randomUUID();
     const category = {
-      category_id: crypto.randomUUID(),
-      category_title: newCategory,
+      category_id: categoryId,
+      category_title: categoryTitle,
       board_id: boardId,
     };
 
@@ -39,14 +39,18 @@ export function BoardPage() {
       const data = await response.data;
       
       if (response.status == 201) {
-        setTasks(prev => [...prev, { category: newCategory, tasks: []}]);
-        setNewCategory('');
+        setTasks(prev => [...prev, { 
+          category_id: categoryId, 
+          category_title: categoryTitle, 
+          tasks: []
+        }]);
+        setCategoryTitle('');
         //sendCategoryCreate(task);
         console.log(data);
       }
-      } catch (err: any) {
-        console.log(err);
-      }
+    } catch (err: any) {
+      console.log(err);
+    }
   };
 
   return (
@@ -57,9 +61,9 @@ export function BoardPage() {
         <div className="board-page">        
           {tasks && tasks.map((item) =>
             <TaskColumn
-              key={item.category} 
+              key={item.category_id} 
               boardId={boardId}
-              category={item.category}
+              category={item.category_title}
               tasks={item.tasks}
             />
           )}
@@ -76,8 +80,8 @@ export function BoardPage() {
               <input 
                 className="form-input" 
                 type="text"
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
+                value={categoryTitle}
+                onChange={(e) => setCategoryTitle(e.target.value)}
               />      
               <div className="task-btns">
                 <button 

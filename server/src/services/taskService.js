@@ -2,14 +2,21 @@ import { db, getUserId } from '../config/db.js';
 
 export const fetchTasks = async (user, boardId) => {
   const userId = await getUserId(user);
-  const [result] = await db.query(
-    'SELECT BIN_TO_UUID(t.task_id) as task_id, t.task_title, t.task_priority, t.created_at, c.category_title, b.board_id \
+  const [categories] = await db.query(
+    'SELECT BIN_TO_UUID(c.category_id) AS category_id, c.category_title \
+     FROM kanban_db.categories c \
+     JOIN kanban_db.board_users bu ON bu.board_id = c.board_id \
+     WHERE c.board_id = UUID_TO_BIN(?) \
+       AND bu.user_id = ?', [boardId, userId]);
+  
+  const [tasks] = await db.query(
+    'SELECT BIN_TO_UUID(t.task_id) AS task_id, BIN_TO_UUID(t.category_id) AS category_id, t.task_title \
      FROM kanban_db.tasks t \
      JOIN kanban_db.categories c ON c.category_id = t.category_id \
-     JOIN kanban_db.boards b ON b.board_id = c.board_id \
-     WHERE b.user_id = ? and b.board_id = ?',
-  [userId, boardId]);
-  return result;
+     JOIN kanban_db.board_users bu ON bu.board_id = c.board_id \
+     WHERE c.board_id = UUID_TO_BIN(?) \
+       AND bu.user_id = ?', [boardId, userId]);
+  return { categories, tasks };
 };
 
 export const createTask = async (

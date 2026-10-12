@@ -5,9 +5,8 @@ export const getTasks = async (req, res) => {
   const boardId = req.params.boardId;
   const user = req.user;
   try {
-    const tasks = await fetchTasks(user, boardId);
-    const categorized = groupByCategory(tasks);
-    console.log(categorized);
+    const { categories, tasks } = await fetchTasks(user, boardId);
+    const categorized = groupByCategory(categories, tasks);
     res.status(200).json(categorized);
   } catch (error) {
     console.log(error);

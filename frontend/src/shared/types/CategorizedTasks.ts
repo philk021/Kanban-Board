@@ -1,6 +1,7 @@
 import type { Task } from "./Task";
 
 export type CategorizedTasks = {
-  category: string,
+  category_id: string,
+  category_title: string,
   tasks: Task[],
 };
