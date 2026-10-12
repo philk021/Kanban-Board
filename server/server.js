@@ -5,6 +5,7 @@ import { authRouter } from './src/routes/authRoutes.js';
 import { boardRouter } from './src/routes/boardRoutes.js';
 import { taskRouter } from './src/routes/taskRoutes.js';
 import { boardUserRouter } from './src/routes/boardUserRoutes.js';
+import { categoryRouter } from './src/routes/categoryRoutes.js';
 import { authenticateToken } from './src/middleware/auth.js';
 import { app, server } from './socket.js';
 
@@ -19,6 +20,7 @@ app.use(authenticateToken);
 app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
 app.use('/boards/:boardId/users', boardUserRouter);
+app.use('/boards/:boardId/categories', categoryRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Error: Resource not Found' });

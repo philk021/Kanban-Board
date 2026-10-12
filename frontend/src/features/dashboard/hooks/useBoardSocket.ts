@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback, useContext } from 'react';
 import { io, type Socket } from 'socket.io-client';
 import AuthContext from '../../../shared/context/AuthContext';
 import type { Task } from '../../../shared/types/Task';
+import { BASE_URL } from '../../../core/constants';
 
 interface UseBoardSocketOptions {
   boardId: string | undefined;
@@ -15,11 +16,11 @@ interface UseBoardSocketResult {
 
 export function useBoardSocket({
   boardId,
-  serverUrl = 'http://localhost:3000',
+  serverUrl = BASE_URL,
   onTaskCreated,
 }: UseBoardSocketOptions): UseBoardSocketResult {
   const socketRef = useRef<Socket | null>(null);
-  const {token} = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const onTaskCreatedRef = useRef(onTaskCreated);
 
   useEffect(() => {
@@ -28,12 +29,8 @@ export function useBoardSocket({
 
   useEffect(() => {
     if (!boardId) return;
-
-    const socket = io(serverUrl, {
-      auth: {
-        token: token,
-      }
-    });
+    
+    const socket = io(serverUrl, { auth: { token: token } });
     socketRef.current = socket;
 
     socket.on('connect', () => {
@@ -49,12 +46,9 @@ export function useBoardSocket({
     };
   }, [boardId, serverUrl]);
 
-  const sendTaskCreate = useCallback(
-    (task: Task) => {
-      socketRef.current?.emit('task:create', { boardId, task });
-    },
-    [boardId]
-  );
+  const sendTaskCreate = useCallback((task: Task) => {
+    socketRef.current?.emit('task:create', { boardId, task });
+  }, [boardId]);
 
   return { sendTaskCreate };
 }

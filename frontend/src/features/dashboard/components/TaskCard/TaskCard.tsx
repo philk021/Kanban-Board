@@ -2,14 +2,10 @@ import { useContext, useRef } from "react";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import TaskContext from "../../context/TaskContext";
 import { deleteTask } from "../../api/dashboardApi";
-import type { TaskChanges } from "../TaskColumn/TaskColumn";
-import type { Task } from "../../../../shared/types/Task";
 import "./TaskCard.css";
+import type { Task } from "../../../../shared/types/Task";
 
-export function TaskCard({task, onUpdate}: {
-  task: Task,
-  onUpdate: (changes: TaskChanges, id?: string) => void
-}) {
+export function TaskCard({ task }: { task: Task }) {
   const { setTasks } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   
@@ -36,20 +32,17 @@ export function TaskCard({task, onUpdate}: {
             type="text"
             placeholder="Name"
             value={task.task_title}
-            onChange={(e) => onUpdate({ task_title: e.target.value }, task.task_id)}
           />
           <textarea 
             className="form-input"
             placeholder="Description"
             value={task.task_description}
-            onChange={(e) => onUpdate({ task_description: e.target.value }, task.task_id)}
           />
           <label htmlFor="priority">Priority: </label>               
           <select 
             name="priority" 
             className="priority-dropdown"
             value={task.task_priority}
-            onChange={(e) => onUpdate({ task_priority: e.target.value }, task.task_id)}
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>

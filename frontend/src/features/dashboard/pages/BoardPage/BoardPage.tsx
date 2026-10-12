@@ -1,6 +1,5 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import type { CategorizedTasks } from "../../../../shared/types/CategorizedTasks";
 import TaskColumn from "../../components/TaskColumn/TaskColumn";
 import { useBoardSocket } from "../../hooks/useBoardSocket";
 import { BoardNav } from "../../components/BoardNav/BoardNav";
@@ -9,30 +8,46 @@ import TaskContext from "../../context/TaskContext";
 import { useTasks } from "../../hooks/useTasks";
 import "./BoardPage.css";
 import { FaPlus } from "react-icons/fa6";
+import { addCategory } from "../../api/dashboardApi";
 
 export function BoardPage() {
   const { boardId } = useParams();
-  const { tasks, setTasks } = useTasks(boardId);
-  const [newColumn, setNewColumn] = useState('');
+  const [newCategory, setNewCategory] = useState('');
   const dialogRef = useRef<HTMLDialogElement | null>(null)
+  
+  const { tasks, setTasks } = useTasks(boardId);
   const { sendTaskCreate } = useBoardSocket({
     boardId: boardId,
-    onTaskCreated: (task) => setTasks((prev) => [...prev, task])
+    onTaskCreated: (task) => setTasks((prev) => prev.map((item) => {
+        if (item.category === task.task_category) item.tasks.push(task);
+        return item;
+      }
+    ))
   });
-
-  const categorized = useMemo(() => {
-    return tasks.reduce<CategorizedTasks>((groups, item) => {
-      const category = item.task_category || "No Category";
-      if (!groups[category]) groups[category] = [];
-      groups[category].push(item);
-      return groups;
-    }, {});
-  }, [tasks]);
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-  }
+    const category = {
+      category_id: crypto.randomUUID(),
+      category_title: newCategory,
+      board_id: boardId,
+    };
+
+    try {
+      const response = await addCategory(category);
+      const data = await response.data;
+      
+      if (response.status == 201) {
+        setTasks(prev => [...prev, { category: newCategory, tasks: []}]);
+        setNewCategory('');
+        //sendCategoryCreate(task);
+        console.log(data);
+      }
+      } catch (err: any) {
+        console.log(err);
+      }
+  };
 
   return (
     <>
@@ -40,11 +55,12 @@ export function BoardPage() {
         <BoardNav/>
         <EditBar/>    
         <div className="board-page">        
-          {Object.entries(categorized).map(([category]) =>
+          {tasks && tasks.map((item) =>
             <TaskColumn
-              key={category} 
+              key={item.category} 
               boardId={boardId}
-              title={category}
+              category={item.category}
+              tasks={item.tasks}
             />
           )}
           <button
@@ -60,8 +76,8 @@ export function BoardPage() {
               <input 
                 className="form-input" 
                 type="text"
-                value={newColumn}
-                onChange={(e) => setNewColumn(e.target.value)}
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
               />      
               <div className="task-btns">
                 <button 

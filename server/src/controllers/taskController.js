@@ -1,12 +1,14 @@
 import { fetchTasks, createTask, updateTask, removeTask } from '../services/taskService.js';
+import { groupByCategory } from '../utils/groupByCategory.js';
 
 export const getTasks = async (req, res) => {
   const boardId = req.params.boardId;
   const user = req.user;
-  
   try {
     const tasks = await fetchTasks(user, boardId);
-    res.status(200).json(tasks);
+    const categorized = groupByCategory(tasks);
+    console.log(categorized);
+    res.status(200).json(categorized);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -67,7 +69,6 @@ export const deleteTask = async (req, res) => {
   const boardId = req.params.boardId
   const taskId = req.params.taskId;
   const user = req.user;
-  
   try {
     await removeTask(taskId);
     const tasks = await fetchTasks(user, boardId);

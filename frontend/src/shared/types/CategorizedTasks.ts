@@ -1,3 +1,6 @@
 import type { Task } from "./Task";
 
-export type CategorizedTasks = Record<string, Task[]>;
+export type CategorizedTasks = {
+  category: string,
+  tasks: Task[],
+};

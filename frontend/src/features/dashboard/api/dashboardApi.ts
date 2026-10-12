@@ -1,5 +1,6 @@
 import axiosClient from "../../../core/axiosClient";
 import type { Board } from "../../../shared/types/Board";
+import type { Category } from "../../../shared/types/Category";
 import type { Task } from "../../../shared/types/Task";
 
 export async function getTasks(boardId?: string) {
@@ -45,3 +46,8 @@ export async function addUserToBoard(email: string, boardId?: string) {
   });
   return response;
 };
+
+export async function addCategory(category: Category) {
+  const response = await axiosClient.post(`boards/${category.board_id}/categories`, category);
+  return response;
+}

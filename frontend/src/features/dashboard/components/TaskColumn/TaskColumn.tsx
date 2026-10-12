@@ -1,10 +1,10 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import type { Task } from "../../../../shared/types/Task";
+import { useContext, useRef, useState } from "react";
 import { FaPlus, FaEllipsisVertical } from "react-icons/fa6";
 import { TaskCard } from "../TaskCard/TaskCard";
 import TaskContext from "../../context/TaskContext";
 import { addTask } from "../../api/dashboardApi";
 import "./TaskColumn.css";
+import type { Task } from "../../../../shared/types/Task";
 
 export interface TaskChanges {
   task_title?: string,
@@ -12,34 +12,31 @@ export interface TaskChanges {
   task_priority?: string,
 }
 
-function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
-  const [categorisedTasks, setCategorizedTasks] = useState<Task[]>([]);
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
-  const [selectedPriority, setSelectedPriority] = useState("low");
-  const { tasks, setTasks, sendTaskCreate } = useContext(TaskContext);
+function TaskColumn({ boardId, category, tasks }: { boardId?: string, category: string, tasks: Task[] }) {
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [selectedPriority, setSelectedPriority] = useState('low');
+  const { setTasks, sendTaskCreate } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
 
-  useEffect(() => {
-    setCategorizedTasks(tasks.filter((item: Task) => item.task_category == title));
-  }, [tasks]);
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!taskTitle || !taskDescription) {
-      return;
-    }
+    
+    if (!taskTitle || !taskDescription || !selectedPriority) return;
+    
     const task = {
       task_id: crypto.randomUUID(),
       task_title: taskTitle,
       task_description: taskDescription,
-      task_category: title,
+      task_category: category,
       task_priority: selectedPriority,
       created_at: new Date().toLocaleString(),
     };
+    
     try {
       const response = await addTask(task, boardId);
       const data = await response.data;    
+      
       if (response.status == 201) {
         setTasks(data);
         setTaskTitle('');
@@ -53,17 +50,12 @@ function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
     dialogRef.current?.close();
   };
 
-  const onUpdate = (changes: TaskChanges, id?: string) => {
-    setTasks(prev => prev.filter((item) => 
-      item.task_id === id ? { ...item, ...changes} : item));
-  };
-
   return (
     <>
       <dialog ref={dialogRef} className="dialog">
         <form className="task-form" onSubmit={(e) => handleSubmit(e)}>
           <h3>Add task</h3>            
-          <input 
+          <input
             className="form-input" 
             type="text"
             placeholder="Name"
@@ -109,7 +101,7 @@ function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
       </dialog>    
       <div className="task-column-wrap">
         <div className="task-column-header">
-          <h1 className="task-column-title">{title}</h1>        
+          <h1 className="task-column-title">{category}</h1>        
           <div className="task-column-header-btns">
             <button 
               type="button" 
@@ -126,12 +118,11 @@ function TaskColumn({ boardId, title }: { boardId?: string, title: string }) {
           </div>
         </div>
         <div className="task-column-tasks">
-          {categorisedTasks && (
-            categorisedTasks.map((item) =>
+          {tasks && (
+            tasks.map((item) =>
               <TaskCard
                 key={item.task_id} 
                 task={item}
-                onUpdate={onUpdate}
               />
             )
           )}

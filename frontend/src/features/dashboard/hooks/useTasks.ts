@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getTasks } from "../api/dashboardApi";
-import type { Task } from "../../../shared/types/Task";
+import type { CategorizedTasks } from "../../../shared/types/CategorizedTasks";
 
 export function useTasks(boardId?: string) {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<CategorizedTasks[]>([]);
   
   useEffect(() => {
     const fetchTasks = async () => {
@@ -17,4 +17,4 @@ export function useTasks(boardId?: string) {
   }, [boardId]);
   
   return { tasks, setTasks };
-}
+};
