@@ -12,7 +12,8 @@ export interface TaskChanges {
   task_priority?: string,
 }
 
-function TaskColumn({ boardId, category, tasks }: { boardId?: string, category: string, tasks: Task[] }) {
+function TaskColumn({ boardId, category, tasks, categoryId }: 
+  { boardId?: string, category: string, tasks: Task[], categoryId: string }) {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('low');
@@ -29,16 +30,21 @@ function TaskColumn({ boardId, category, tasks }: { boardId?: string, category: 
       task_title: taskTitle,
       task_description: taskDescription,
       task_category: category,
+      category_id: categoryId,
       task_priority: selectedPriority,
       created_at: new Date().toLocaleString(),
     };
     
     try {
       const response = await addTask(task, boardId);
-      const data = await response.data;    
+      const data = await response.data;
+      console.log(data);    
       
       if (response.status == 201) {
-        setTasks(data);
+        setTasks((prev) => prev.map((item) => {
+          if (item.category_id === task.category_id) item.tasks.push(task);
+          return item;
+      }));
         setTaskTitle('');
         setTaskDescription('');
         setSelectedPriority('');

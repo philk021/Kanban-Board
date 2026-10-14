@@ -7,7 +7,7 @@ export const getTasks = async (req, res) => {
   try {
     const { categories, tasks } = await fetchTasks(user, boardId);
     const categorized = groupByCategory(categories, tasks);
-    res.status(200).json(categorized);
+    return res.status(200).json(categorized);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -16,24 +16,24 @@ export const getTasks = async (req, res) => {
 
 export const postTask = async (req, res) => {
   const boardId = req.params.boardId;
-  const taskId = req.body.taskId;
+  const taskId = req.body.task_id;
   const title = req.body.task_title;
   const description = req.body.task_description;
   const category = req.body.task_category;
+  const categoryId = req.body.category_id;
   const priority = req.body.task_priority;
   const createdAt = req.body.created_at;
   const user = req.user;
   
-  if (!taskId || !title || !description || !category || !createdAt) {
-    res.status(500).json({ message: 'Missing task fields' });
+  if (!taskId || !categoryId || !title || !description || !category || !priority || !createdAt) {
+    return res.status(500).json({ message: 'Missing task fields' });
   };
   
   try {
-    const result = await createTask(
-      taskId, boardId, title, description, category, priority, createdAt
+    await createTask(
+      user, taskId, boardId, categoryId, title, description, category, priority, createdAt
     );
-    const tasks = await fetchTasks(user, boardId);
-    res.status(201).json(tasks);
+    return res.status(201).json({ message: 'Task created' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

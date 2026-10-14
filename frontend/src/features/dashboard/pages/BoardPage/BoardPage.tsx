@@ -64,6 +64,7 @@ export function BoardPage() {
               key={item.category_id} 
               boardId={boardId}
               category={item.category_title}
+              categoryId={item.category_id}
               tasks={item.tasks}
             />
           )}

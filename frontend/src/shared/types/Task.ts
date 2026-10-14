@@ -5,5 +5,5 @@ export type Task = {
     created_at: string,
     task_category: string,
     task_priority: string,
-    board_id?: string,
+    category_id?: string,
 }
