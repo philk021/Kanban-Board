@@ -41,7 +41,7 @@ export async function updateBoard(title: string, boardId?: string) {
 };
 
 export async function addUserToBoard(email: string, boardId?: string) {
-  const response = await axiosClient.post(`/boards/${boardId}`, {
+  const response = await axiosClient.post(`/boards/${boardId}/users`, {
     email,
   });
   return response;
