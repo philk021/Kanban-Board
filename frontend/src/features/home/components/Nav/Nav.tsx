@@ -5,7 +5,7 @@ export function Nav() {
   return (
     <nav>
       <div className="landing-page-logo">
-        <Link to="/"><h1>Logo</h1></Link>
+        <Link to="/"><h1>Kanban Board</h1></Link>
       </div>
       <ul>
         <li>

@@ -14,9 +14,9 @@ export function DashboardPage() {
 
   return (
     <DashboardContext value={{ boards, setBoards }}>
-      <div className="dashboard-container">
+      <div className="dashboard-page-wrap">
         <SideMenu />
-        <div className="dashboard">
+        <div className="dashboard-page">
           <Routes>
             <Route path="/" element={ <BoardsPage /> }/>
             <Route path=":boardId" element={ <BoardPage /> }/>

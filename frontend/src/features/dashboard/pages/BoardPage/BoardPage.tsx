@@ -53,27 +53,29 @@ export function BoardPage() {
   };
 
   return (
-    <>
+    <div className="board-page-wrap">
       <TaskContext value={{ tasks, setTasks, sendTaskCreate }}>
         <BoardNav/>
         <EditBar/>    
-        <div className="board-page">        
-          {tasks && tasks.map((item) =>
-            <TaskColumn
-              key={item.category_id} 
-              boardId={boardId}
-              category={item.category_title}
-              categoryId={item.category_id}
-              tasks={item.tasks}
-            />
-          )}
-          <button
-            className="plus-btn"
-            type="button" 
-            onClick={() => dialogRef.current?.showModal()}
-          >
-            <FaPlus />
-          </button>
+        <div className="board-page">
+          <div className="board-page-columns">
+            {tasks && tasks.map((item) =>
+              <TaskColumn
+                key={item.category_id} 
+                boardId={boardId}
+                category={item.category_title}
+                categoryId={item.category_id}
+                tasks={item.tasks}
+              />
+            )}
+            <button
+              className="plus-btn"
+              type="button" 
+              onClick={() => dialogRef.current?.showModal()}
+            >
+              <FaPlus />
+            </button>
+          </div>
           <dialog ref={dialogRef} className="dialog">
             <form className="task-form" onSubmit={(e) => handleSubmit(e)}>
               <h3>Add column</h3>          
@@ -106,6 +108,6 @@ export function BoardPage() {
           </dialog>
         </div>
       </TaskContext>
-    </>
+    </div>
   );
 }

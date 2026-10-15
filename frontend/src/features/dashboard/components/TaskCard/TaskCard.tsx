@@ -88,21 +88,23 @@ export function TaskCard({ boardId, task, onUpdate }: {
           </div>          
         </form>
       </dialog> 
-      <div className="task-card">
-        <div className="task-card-header">
-          <div className={task.task_priority}>{task.task_priority}</div>
-          <div>
-            <button 
-              type="button" 
-              onClick={() => dialogRef.current?.showModal()}
-            >
-              <FaEllipsisVertical/>
-            </button>
+      <div className="task-card-wrap">
+        <div className="task-card">
+          <div className="task-card-header">
+            <div className={task.task_priority}>{task.task_priority}</div>
+            <div>
+              <button 
+                type="button" 
+                onClick={() => dialogRef.current?.showModal()}
+              >
+                <FaEllipsisVertical/>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="task-info">
-          <h1 className="task-info-title">{task.task_title}</h1>
-          <p className="task-info-date">{task.created_at}</p>
+          <div className="task-info">
+            <h1 className="task-info-title">{task.task_title}</h1>
+            <p className="task-info-date">{task.created_at}</p>
+          </div>
         </div>
       </div>  
     </>

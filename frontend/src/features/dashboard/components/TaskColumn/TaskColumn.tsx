@@ -114,34 +114,36 @@ function TaskColumn({ boardId, category, tasks, categoryId }:
         </form>
       </dialog>    
       <div className="task-column-wrap">
-        <div className="task-column-header">
-          <h1 className="task-column-title">{category}</h1>        
-          <div className="task-column-header-btns">
-            <button 
-              type="button" 
-              onClick={() => dialogRef.current?.showModal()}
-            >
-              <FaPlus />
-            </button>
-            <button 
-              type="button" 
-              onClick={() => true}
-            >
-              <FaEllipsisVertical />
-            </button>
+        <div className="task-column">
+          <div className="task-column-header">
+            <h1 className="task-column-title">{category}</h1>        
+            <div className="task-column-header-btns">
+              <button
+                type="button" 
+                onClick={() => dialogRef.current?.showModal()}
+              >
+                <FaPlus />
+              </button>
+              <button 
+                type="button" 
+                onClick={() => true}
+              >
+                <FaEllipsisVertical />
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="task-column-tasks">
-          {tasks && (
-            tasks.map((item) =>
-              <TaskCard
-                key={item.task_id}
-                boardId={boardId} 
-                task={item}
-                onUpdate={handleUpdate}
-              />
-            )
-          )}
+          <div className="task-column-tasks">
+            {tasks && (
+              tasks.map((item) =>
+                <TaskCard
+                  key={item.task_id}
+                  boardId={boardId} 
+                  task={item}
+                  onUpdate={handleUpdate}
+                />
+              )
+            )}
+          </div>
         </div>
       </div>
     </>

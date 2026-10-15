@@ -1,10 +1,12 @@
-.task-card {
-    width: 300px;
+.task-card-wrap {
+    width: 100%;
     margin: 15px auto;
-    padding: 15px;
     background: var(--color-bg-card);
     border: 1px;
     border-radius: 8px;
+}
+.task-card {
+    padding: 15px;
 }
 .task-card-header {
     margin: 0 0 15px 0;
@@ -25,7 +27,7 @@
 }
 .low, .medium, .high {
     width: min-content;
-    padding: 3px 8px;
+    padding: 3px 9px;
     border-radius: 12px;
     font-size: var(--font-small);
 }

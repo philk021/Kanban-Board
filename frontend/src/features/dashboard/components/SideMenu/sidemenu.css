@@ -1,9 +1,18 @@
 .side-menu-wrap {
+    margin: 0;
     min-width: 200px;
-    height: 100vh;
+    height: 100%;
     background-color: var(--color-bg-card);
     border-right: 1px solid var(--color-border);
-    padding: 15px 25px;
+}
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 15px;
+}
+.side-menu--closed {
+    min-width: 50px;
 }
 .side-menu-logo {
     display: flex;
@@ -39,36 +48,17 @@ a.side-menu-link {
 .side-menu-link h1 {
     font-weight: 600;
 }
-.new-board-btn {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 10px;
-    width: min-content;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background: var(--color-primary);
-    font-size: var(--font-small);
-}
-.new-board-btn:hover {
-    cursor: pointer;
-    background: var(--color-primary-hover);
-}
-.new-board-btn div {
-    padding: none;
-    margin: none;
-    white-space: nowrap;
+.side-menu-link-icon {
+    position: relative;
+    bottom: 2px;
 }
 .logout-btn {
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid var(--color-primary);
     background: var(--color-bg-card);
+    border: none;
 }
 .logout-btn:hover {
     cursor: pointer;
@@ -77,12 +67,16 @@ a.side-menu-link {
     position: relative;
     top: -1px;
 }
+.logout-btn--open {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid var(--color-primary);
+}
+.logout-btn-closed {
+    background: none;
+    border: none;
+}
 .new-board-btn svg {
     position: relative;
     top: -1px;
-}
-@media screen and (max-width: 900px) {
-    .side-menu {
-        display: none;
-    }
 }

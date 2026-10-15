@@ -6,6 +6,10 @@
   font-family: Helvetica, sans-serif;
   letter-spacing: 0.4px;
 }
+html, body {
+  width: 100vw;
+  height: 100vh;
+}
 dialog {
   margin: 0 auto;
   border: 1px solid var(--color-border);
@@ -18,8 +22,10 @@ dialog::backdrop {
   background: var(--color-bg-overlay);
 }
 .plus-btn {
-  width: 32px;
-  height: 32px;
+  min-width: 32px;
+  max-width: 32px;
+  min-height: 32px;
+  max-height: 32px;
   border: none;
   border-radius: 5px;
 }

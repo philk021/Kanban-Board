@@ -1,8 +1,10 @@
 .task-column-wrap {
     min-width: 300px;
     background: var(--color-bg-subtle);
-    padding: 15px;
     border-radius: 8px;
+}
+.task-column {
+    padding: 15px;
 }
 .task-column-header {
     display: flex;

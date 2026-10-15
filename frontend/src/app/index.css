@@ -10,12 +10,12 @@
   --color-primary-hover: #3ba5f0;
   --color-bg-overlay: #b2b2b687;
   
-  --color-low-priority: rgb(28, 125, 28);
-  --color-medium-priority: rgb(137, 137, 4);
-  --color-high-priority: rgb(232, 51, 51);
-  --color-low-priority-bg: rgb(221, 249, 221);
-  --color-medium-priority-bg: rgb(242, 242, 163);
-  --color-high-priority-bg: rgb(249, 220, 220);
+  --color-low-priority: rgb(16, 110, 16);
+  --color-medium-priority: rgb(95, 95, 10);
+  --color-high-priority: rgb(210, 22, 22);
+  --color-low-priority-bg: rgb(198, 247, 198);
+  --color-medium-priority-bg: rgb(246, 246, 139);
+  --color-high-priority-bg: rgb(255, 215, 215);
 
   --breakpoint-small: 480px;
   --breakpoint-medium: 600px;
