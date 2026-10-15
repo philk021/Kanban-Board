@@ -3,7 +3,8 @@ import mysql2 from 'mysql2';
 export const db = mysql2.createPool({
   host: process.env.HOST,
   user: process.env.USERNAME,
-  password: process.env.PASSWORD
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE_NAME,
 }).promise();
 
 export const getUserId = async (user) => {

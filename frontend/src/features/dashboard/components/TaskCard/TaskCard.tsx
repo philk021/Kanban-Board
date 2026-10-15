@@ -4,17 +4,27 @@ import TaskContext from "../../context/TaskContext";
 import { deleteTask } from "../../api/dashboardApi";
 import "./TaskCard.css";
 import type { Task } from "../../../../shared/types/Task";
+import type { TaskChanges } from "../TaskColumn/TaskColumn";
 
-export function TaskCard({ task }: { task: Task }) {
+export function TaskCard({ boardId, task, onUpdate }: { 
+  boardId?: string,
+  task: Task, 
+  onUpdate: (changes: TaskChanges, id?: string) => void 
+}) {
   const { setTasks } = useContext(TaskContext);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   
   const handleDelete = async (e: any) => {
     e.preventDefault();
-    const response = await deleteTask(task.board_id, task.task_id);
-    const data = await response.data;      
+    const response = await deleteTask(boardId, task.task_id);
+    const data = await response.data;
+    console.log(data);    
     if (response.status == 200) {
-      setTasks(data);
+      setTasks((prev) => prev.map(c =>
+        c.category_id === task.category_id
+          ? { ...c, tasks: c.tasks.filter(t => t.task_id !== task.task_id) }
+          : c
+      ))
     }
   };
 
@@ -32,17 +42,20 @@ export function TaskCard({ task }: { task: Task }) {
             type="text"
             placeholder="Name"
             value={task.task_title}
+            onChange={(e) => onUpdate({ task_title: e.target.value }, task.task_id)}
           />
           <textarea 
             className="form-input"
             placeholder="Description"
             value={task.task_description}
+            onChange={(e) => onUpdate({ task_description: e.target.value }, task.task_id)}
           />
           <label htmlFor="priority">Priority: </label>               
           <select 
             name="priority" 
             className="priority-dropdown"
             value={task.task_priority}
+            onChange={(e) => onUpdate({ task_priority: e.target.value }, task.task_id)}
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>

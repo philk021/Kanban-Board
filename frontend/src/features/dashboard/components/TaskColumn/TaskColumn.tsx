@@ -10,7 +10,8 @@ export interface TaskChanges {
   task_title?: string,
   task_description?: string,
   task_priority?: string,
-}
+  task_category?: string,
+};
 
 function TaskColumn({ boardId, category, tasks, categoryId }: 
   { boardId?: string, category: string, tasks: Task[], categoryId: string }) {
@@ -41,10 +42,9 @@ function TaskColumn({ boardId, category, tasks, categoryId }:
       console.log(data);    
       
       if (response.status == 201) {
-        setTasks((prev) => prev.map((item) => {
-          if (item.category_id === task.category_id) item.tasks.push(task);
-          return item;
-      }));
+        setTasks((prev) => prev.map((c) =>
+          c.category_id === categoryId ? { ...c, tasks: [...c.tasks, task]} : c
+        ));
         setTaskTitle('');
         setTaskDescription('');
         setSelectedPriority('');
@@ -55,6 +55,14 @@ function TaskColumn({ boardId, category, tasks, categoryId }:
     }
     dialogRef.current?.close();
   };
+
+  const handleUpdate = (changes: TaskChanges, id?: string) => {
+    setTasks(prev =>  
+     prev.map(c =>
+      c.category_id === categoryId
+        ? { ...c, tasks: c.tasks.map(t => (t.task_id === id ? { ...t, ...changes } : t)) }
+        : c
+    ))};
 
   return (
     <>
@@ -127,8 +135,10 @@ function TaskColumn({ boardId, category, tasks, categoryId }:
           {tasks && (
             tasks.map((item) =>
               <TaskCard
-                key={item.task_id} 
+                key={item.task_id}
+                boardId={boardId} 
                 task={item}
+                onUpdate={handleUpdate}
               />
             )
           )}

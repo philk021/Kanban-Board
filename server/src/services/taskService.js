@@ -60,10 +60,15 @@ export const updateTask = async (id, name, description, createdAt) => {
   return result;
 };
 
-export const removeTask = async (id) => {
+export const removeTask = async (user, taskId) => {
+  const userId = await getUserId(user);
   const result = await db.query(
-    'DELETE FROM kanban_db.tasks \
-     WHERE task_id = ?', 
-  [id]);
+    'DELETE t \
+     FROM kanban_db.tasks t \
+     JOIN kanban_db.categories c ON c.category_id = t.category_id \
+     JOIN kanban_db.board_users bu ON bu.board_id = c.board_id \
+     WHERE t.task_id = UUID_TO_BIN(?) \
+        AND bu.user_id = ?',
+  [taskId, userId]);
   return result;
 };

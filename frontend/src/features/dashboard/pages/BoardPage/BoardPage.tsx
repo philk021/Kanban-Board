@@ -18,11 +18,10 @@ export function BoardPage() {
   const { tasks, setTasks } = useTasks(boardId);
   const { sendTaskCreate } = useBoardSocket({
     boardId: boardId,
-    onTaskCreated: (task) => setTasks((prev) => prev.map((item) => {
-        if (item.category_title === task.task_category) item.tasks.push(task);
-        return item;
-      }
-    ))
+    onTaskCreated: (task) => 
+      setTasks((prev) => prev.map((c) =>
+        c.category_id === task.category_id ? { ...c, tasks: [...c.tasks, task]} : c
+      ))
   });
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -83,11 +82,12 @@ export function BoardPage() {
                 type="text"
                 value={categoryTitle}
                 onChange={(e) => setCategoryTitle(e.target.value)}
-              />      
+              />    
               <div className="task-btns">
                 <button 
                   type="submit" 
                   className="create-task-btn"
+                  
                 >
                   Create
                 </button>

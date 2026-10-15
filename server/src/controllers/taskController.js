@@ -65,13 +65,11 @@ export const putTask = async (req, res) => {
 };
 
 export const deleteTask = async (req, res) => {
-  const boardId = req.params.boardId
   const taskId = req.params.taskId;
   const user = req.user;
   try {
-    await removeTask(taskId);
-    const tasks = await fetchTasks(user, boardId);
-    res.status(200).json(tasks);
+    await removeTask(user, taskId);
+    return res.status(200).json({ message: 'Task deleted' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
